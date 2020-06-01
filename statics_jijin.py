@@ -60,7 +60,7 @@ class StaticsJijin():
             data = datas[0]
             dwjz = data.dwjz
             # 使用单位净值进行计算百分比
-            return (record.dwjz-dwjz)/record.dwjz
+            return (float(record.dwjz)-float(dwjz))/float(record.dwjz)
 
 
     '''
