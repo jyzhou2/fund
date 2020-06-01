@@ -105,8 +105,8 @@ class JijinStatics(Model):
     class Meta:
         database=database
     staticmethod
-    def updateJiJinStatics(jjdm,date,three_day,one_week,one_month, three_months, half_year,one_year):
+    def updateJiJinStatics(jjdm,date,type,incr,standard, squard,position_score):
         try:
-            JijinStatics.get(jjdm=jjdm,date=date)
+            JijinStatics.get(jjdm=jjdm,date=date,type=type)
         except Exception as e:
-            JijinStatics.create(jjdm=jjdm,date=date,three_day=three_day,one_month=one_month,three_months=three_months,half_year=half_year,one_year=one_year)
+            JijinStatics.create(jjdm=jjdm,date=date,type=type,incr=incr,standard=standard,squard=squard,position_score=position_score)
