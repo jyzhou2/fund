@@ -98,7 +98,7 @@ class JijinStatics(Model):
     date = CharField() # 日期
     type = CharField() # 类型 三日  一周 三周 一个月 三个月  半年  一年
     incr = DoubleField()
-    stanard = CharField()# 标准差
+    standard = CharField()# 标准差
     squard=CharField() # 方差
     position_score = DoubleField() # 当前净值所属位置
 
