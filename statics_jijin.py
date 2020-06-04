@@ -1,5 +1,5 @@
 import pandas as pd
-from models import JiJinRecord,JijinStatics
+from models import JiJinRecord,JijinStatics,JiJinInfo
 import numpy as np
 class StaticsJijin():
     # 构造函数，获得基金代码
@@ -10,9 +10,9 @@ class StaticsJijin():
     def handle(self):
         # 得到所有有基金记录的日期，进行计算
         records = JiJinRecord.select().where(JiJinRecord.jjdm==self.jjdm)
-
         for record in records:
             date = record.date
+            print("正在处理："+self.jjdm+" 的"+date+"的数据")
             self.fillAllData(date, 1)
             self.fillAllData(date, 2)
             self.fillAllData(date, 3)
@@ -54,12 +54,12 @@ class StaticsJijin():
     '''
     def fillAllData(self,date, type):
         try:
-            # 当天没有找到记录的，则不统计当天的信息
-            jj_record = JiJinRecord.get(JiJinRecord.date == date & JiJinRecord.jjdm == self.jjdm)
+            # 当天没有找到记录的，则不统计当天的信息，注意get 里面的与  自条件必须用小括号括起来
+            jj_record = JiJinRecord.get((JiJinRecord.date == date) & (JiJinRecord.jjdm == self.jjdm))
         except Exception as e:
             return
         try:
-            record = JijinStatics.get(date==date &  type==type & jjdm==self.jjdm)
+            record = JijinStatics.get((date==date) &  (type==type) & (jjdm==self.jjdm))
         except Exception as e:
             incr = self.computeIncr(date,type)
             standard = self.computeStandard(date,type)
@@ -145,4 +145,9 @@ class StaticsJijin():
         if type == 7:
             return index/360
         return 0
+
+jj_record = JiJinInfo.select()
+for item in jj_record:
+    model = StaticsJijin(item.jjdm)
+    model.handle()
 
