@@ -110,3 +110,20 @@ class JijinStatics(Model):
             JijinStatics.get(jjdm=jjdm,date=date,type=type)
         except Exception as e:
             JijinStatics.create(jjdm=jjdm,date=date,type=type,incr=incr,standard=standard,squard=squard,position_score=position_score)
+
+'''
+    基金统计更新进度
+'''
+class JiJinStaticsUpdate(Model):
+    jjdm = CharField()
+    date = CharField()
+    staticmethod
+    def updateJiJinStatics(jjdm, date):
+        try:
+            JiJinStaticsUpdate.get((JiJinStaticsUpdate.jjdm == jjdm) & (JiJinStaticsUpdate.date == date))
+        except Exception as e:
+            JiJinStaticsUpdate.create(date = date, jjdm = jjdm)
+        JiJinStaticsUpdate.update({'date': date}).where(JiJinStaticsUpdate.jjdm == jjdm).execute()
+
+    class Meta:
+        database = database

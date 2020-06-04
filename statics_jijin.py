@@ -1,25 +1,27 @@
 import pandas as pd
-from models import JiJinRecord,JijinStatics,JiJinInfo
+from models import JiJinRecord,JijinStatics,JiJinInfo,JiJinStaticsUpdate
 import numpy as np
+from peewee import DoesNotExist
 class StaticsJijin():
     # 构造函数，获得基金代码
     def __init__(self,jjdm):
         self.jjdm = jjdm
 
     # 依次填充记录
-    def handle(self):
+    def handle(self, date):
         # 得到所有有基金记录的日期，进行计算
-        records = JiJinRecord.select().where(JiJinRecord.jjdm==self.jjdm)
+        records = JiJinRecord.select().where((JiJinRecord.jjdm==self.jjdm) & (JiJinRecord.date == date)).limit(1)
+
         for record in records:
-            date = record.date
-            print("正在处理："+self.jjdm+" 的"+date+"的数据")
-            self.fillAllData(date, 1)
-            self.fillAllData(date, 2)
-            self.fillAllData(date, 3)
-            self.fillAllData(date, 4)
-            self.fillAllData(date, 5)
-            self.fillAllData(date, 6)
-            self.fillAllData(date, 7)
+            if record is not None:
+                print("正在处理："+self.jjdm+" 的"+date+"的数据")
+                self.fillAllData(date, 1)
+                self.fillAllData(date, 2)
+                self.fillAllData(date, 3)
+                self.fillAllData(date, 4)
+                self.fillAllData(date, 5)
+                self.fillAllData(date, 6)
+                self.fillAllData(date, 7)
 
     '''
         获得所有记录值
@@ -27,25 +29,25 @@ class StaticsJijin():
     def getAllRecord(self, date,type):
         if type == 1: # 三天
             records = JiJinRecord.select().where((JiJinRecord.jjdm==self.jjdm) & (JiJinRecord.date< date)).order_by(
-                JiJinRecord.date).limit(3)
+                -JiJinRecord.date).limit(3)
         if type == 2:  #一周
             records = JiJinRecord.select().where((JiJinRecord.jjdm == self.jjdm) & (JiJinRecord.date < date)).order_by(
-                JiJinRecord.date).limit(7)
+                -JiJinRecord.date).limit(7)
         if type == 3:  #三周
             records = JiJinRecord.select().where((JiJinRecord.jjdm == self.jjdm) & (JiJinRecord.date < date)).order_by(
-                JiJinRecord.date).limit(21)
+                -JiJinRecord.date).limit(21)
         if type == 4:  # 一个月
             records = JiJinRecord.select().where((JiJinRecord.jjdm == self.jjdm) & (JiJinRecord.date < date)).order_by(
-                JiJinRecord.date).limit(30)
+                -JiJinRecord.date).limit(30)
         if type == 5:  # 三个月
             records = JiJinRecord.select().where((JiJinRecord.jjdm == self.jjdm) & (JiJinRecord.date < date)).order_by(
-                JiJinRecord.date).limit(90)
+                -JiJinRecord.date).limit(90)
         if type == 6:  # 半年
             records = JiJinRecord.select().where((JiJinRecord.jjdm == self.jjdm) & (JiJinRecord.date < date)).order_by(
-                JiJinRecord.date).limit(180)
+                -JiJinRecord.date).limit(180)
         if type == 7:
             records = JiJinRecord.select().where((JiJinRecord.jjdm == self.jjdm) & (JiJinRecord.date < date)).order_by(
-                JiJinRecord.date).limit(360)
+                -JiJinRecord.date).limit(360)
         return records
 
 
@@ -56,16 +58,18 @@ class StaticsJijin():
         try:
             # 当天没有找到记录的，则不统计当天的信息，注意get 里面的与  自条件必须用小括号括起来
             jj_record = JiJinRecord.get((JiJinRecord.date == date) & (JiJinRecord.jjdm == self.jjdm))
-        except Exception as e:
+        except DoesNotExist as e:
             return
         try:
             record = JijinStatics.get((date==date) &  (type==type) & (jjdm==self.jjdm))
-        except Exception as e:
+            print(self.jjdm+":"+date+"："+str(type)+"已经处理完毕")
+        except DoesNotExist as e:
             incr = self.computeIncr(date,type)
             standard = self.computeStandard(date,type)
             squard = self.computeSquard(date, type)
             position_score = self.computePositionScore(date, type, jj_record)
-            JijinStatics.create(jjdm=self.jjdm,incr=incr,type=type,standard=standard,squard=squard,position_score=position_score,date=date)
+            JijinStatics.create(jjdm=self.jjdm,incr=incr,type=type,standard=standard,squard=squard,
+                                position_score=position_score,date=date)
     '''
         获得三天的增长记录
     '''
@@ -77,12 +81,12 @@ class StaticsJijin():
             return -1
         # 开始计算
         datas = self.getAllRecord(date, type)
-        if len(datas)>=1:
-            data = datas[0]
+        final_incr = 0
+        for data in datas:
             dwjz = data.dwjz
             # 使用单位净值进行计算百分比
-            return (float(record.dwjz)-float(dwjz))/float(record.dwjz)
-        return 0
+            final_incr = (float(record.dwjz) - float(dwjz)) / float(record.dwjz)
+        return final_incr
 
 
     '''
@@ -146,8 +150,66 @@ class StaticsJijin():
             return index/360
         return 0
 
-jj_record = JiJinInfo.select()
-for item in jj_record:
-    model = StaticsJijin(item.jjdm)
-    model.handle()
+'''
+    进行单个基金代码的数据统计
+'''
+def get_all_jijin_statics(jjdm):
+    print("正在处理基金"+jjdm)
+    # 获得当前，基金统计的最新进度的日期
+    try:
+        # 获得统计进度
+        statics_record = JiJinStaticsUpdate.get(JiJinStaticsUpdate.jjdm==jjdm)
+        try:
+            # 找到统计进度，进行大于统计进度的日期进行统计
+            records = JiJinRecord.select().where((JiJinRecord.jjdm == jjdm) & (JiJinRecord.date> statics_record.date)).order_by(JiJinRecord.date).limit(1)
+            record = None
+            for record_first in records:
+                record = record_first
+                break
+            if record is None:
+                return
+            model = StaticsJijin(jjdm)
+            model.handle(record.date)
+            JiJinStaticsUpdate.update({'date': record.date}).where(jjdm == jjdm).execute()
+            get_all_jijin_statics(jjdm)
+        except DoesNotExist as e:
+            print("找到更新记录，已经更新到最新，当前结束")
+            return
+    except DoesNotExist as e:
+        print("未找到更新记录，开始获取最原始的基金记录")
+        try:
+            # 没有找到统计进度，进行基金记录的最远的日期进行统计
+            records = JiJinRecord.select().where(
+                JiJinRecord.jjdm == jjdm).order_by(JiJinRecord.date).limit(
+                1)
+            record = None
+            for record_first in records:
+                record = record_first
+                break
+            if record is None:
+                return
+
+            # 如果找到了，
+            model = StaticsJijin(jjdm)
+            model.handle(record.date)
+            JiJinStaticsUpdate.create(jjdm=jjdm,date=record.date)
+            get_all_jijin_statics(jjdm)
+        except DoesNotExist as e:
+            # 当前已经执行完成
+            print("未找到更新记录，未找到基金记录，本次执行结束")
+            return
+
+'''
+model = StaticsJijin('000001')
+model.handle('2018-07-02')
+exit()
+'''
+jj_records = JiJinInfo.select()
+for item in jj_records:
+    jjdm = item.jjdm
+    get_all_jijin_statics(jjdm)
+
+
+
+
 
