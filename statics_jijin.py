@@ -72,7 +72,7 @@ class StaticsJijin():
     def computeIncr(self,date,type):
         # 首先判断今天有没有数据，没有则跳过
         try:
-            record = JiJinRecord.get(JiJinRecord.jjdm==self.jjdm, JiJinRecord.date==date)
+            record = JiJinRecord.get((JiJinRecord.jjdm==self.jjdm) & (JiJinRecord.date==date))
         except Exception as e:
             return -1
         # 开始计算
