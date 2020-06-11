@@ -182,3 +182,7 @@ class CollectJijinInfo():
 
 model = CollectJijinInfo()
 model.handle()
+
+'''
+https://www.jianshu.com/p/998cf125e9fc  这里是vue 和 饿了么 前端教程所在
+'''
