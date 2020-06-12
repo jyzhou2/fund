@@ -120,10 +120,10 @@ class JiJinStaticsUpdate(Model):
     staticmethod
     def updateJiJinStatics(jjdm, date):
         try:
-            JiJinStaticsUpdate.get((JiJinStaticsUpdate.jjdm == jjdm) & (JiJinStaticsUpdate.date == date))
+            JiJinStaticsUpdate.get((JiJinStaticsUpdate.jjdm == jjdm) & (JiJinStaticsUpdate.date == date) )
         except Exception as e:
             JiJinStaticsUpdate.create(date = date, jjdm = jjdm)
-        JiJinStaticsUpdate.update({'date': date}).where(JiJinStaticsUpdate.jjdm == jjdm).execute()
+        JiJinStaticsUpdate.update({JiJinStaticsUpdate.date: date}).where((JiJinStaticsUpdate.jjdm == jjdm) ).execute()
 
     class Meta:
         database = database

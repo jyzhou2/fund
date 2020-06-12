@@ -170,8 +170,10 @@ def get_all_jijin_statics(jjdm):
                 return
             model = StaticsJijin(jjdm)
             model.handle(record.date)
-            JiJinStaticsUpdate.update({'date': record.date}).where(jjdm == jjdm).execute()
+
+            JiJinStaticsUpdate.update({JiJinStaticsUpdate.date: record.date}).where(JiJinStaticsUpdate.jjdm == jjdm).execute()
             get_all_jijin_statics(jjdm)
+
         except DoesNotExist as e:
             print("找到更新记录，已经更新到最新，当前结束")
             return
@@ -206,8 +208,12 @@ exit()
 '''
 jj_records = JiJinInfo.select()
 for item in jj_records:
+    print('正在统计' + item.jjdm+'的相关信息 ')
     jjdm = item.jjdm
     get_all_jijin_statics(jjdm)
+
+
+
 
 
 
