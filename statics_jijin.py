@@ -65,6 +65,8 @@ class StaticsJijin():
             print(self.jjdm+":"+date+"："+str(type)+"已经处理完毕")
         except DoesNotExist as e:
             incr = self.computeIncr(date,type)
+            if incr == -1:
+                return
             standard = self.computeStandard(date,type)
             squard = self.computeSquard(date, type)
             position_score = self.computePositionScore(date, type, jj_record)
@@ -77,15 +79,20 @@ class StaticsJijin():
         # 首先判断今天有没有数据，没有则跳过
         try:
             record = JiJinRecord.get((JiJinRecord.jjdm==self.jjdm) & (JiJinRecord.date==date))
-        except Exception as e:
+        except DoesNotExist as e:
             return -1
+
+
         # 开始计算
         datas = self.getAllRecord(date, type)
         final_incr = 0
         for data in datas:
             dwjz = data.dwjz
             # 使用单位净值进行计算百分比
-            final_incr = (float(record.dwjz) - float(dwjz)) / float(record.dwjz)
+            try:
+                final_incr = (float(record.dwjz) - float(dwjz)) / float(record.dwjz)
+            except Exception as e:
+                return -1
         return final_incr
 
 
