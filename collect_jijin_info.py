@@ -103,10 +103,11 @@ class CollectJijinInfo():
     '''
         获得所有基金的基金规模，创建时间等信息
     '''
-    def UpdateAllJiJinOtherInfo(self):
+    def UpdateAllJiJinOtherInfo(self,least_jjdm):
         jjdm_list = JiJinInfo.select()
         for item in jjdm_list:
-
+            if item.jjdm < least_jjdm:
+                continue
             if item.jijin_type is None or len(item.jijin_type) == 0:
                 print("正在" + item.jjdm+'的基金规模等相关信息')
                 self.getJijinOtherInfo(item)
@@ -173,13 +174,15 @@ class CollectJijinInfo():
     '''
     def handle(self):
         # 首先进行处理,建立标准的基金库
-        self.collect_basic_jijin()
+        #self.collect_basic_jijin()
         # 完善基金信息，包括规模，创建时间，基金类型等
-        self.UpdateAllJiJinOtherInfo()
+        self.UpdateAllJiJinOtherInfo('002327')
         # 获得所有主题
         self.buildThemeJijinKu()
 
 
+JiJinInfo.create_table()
+JiJinTheme.create_table()
 model = CollectJijinInfo()
 model.handle()
 
