@@ -13,6 +13,9 @@ class JiJinInfo(Model):
     jijin_type = CharField(null=True)
     jijin_guimo = CharField(null=True)
     jijin_create_day = CharField(null=True)
+    gsl = CharField(null=True) #估算涨幅
+    guimo_number = CharField(null=True) #规模数字（亿为单位）
+    gsl_update_time = CharField(null=True) # 更新估算时间
 
     class Meta:
         database = database
