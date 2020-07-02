@@ -3,7 +3,7 @@ import datetime
 import time
 import json
 import re
-from models import JiJinInfo
+from models import JiJinInfo, JiJinGuSuan
 class RealTime():
 
     def __init__(self, jjdm):
@@ -32,8 +32,8 @@ class RealTime():
             response_json = json.loads(response_text)
         except Exception as e:
             res = {}
-            res['gsl'] = ''
-            res['gztime'] = ''
+            res['gsl'] = None
+            res['gztime'] = None
             return res
         # 基金代码
         jjdm = response_json['fundcode']
@@ -59,13 +59,14 @@ for i in jjdm_list:
     jijinguimo = i.jijin_guimo
     if jijinguimo is not None:
         number = getNumber(jijinguimo)
-        #开始更新数据库中基金规模数字信息
-        JiJinInfo.update({JiJinInfo.guimo_number:number}).where(JiJinInfo.jjdm==jjdm).execute()
+
         # 开始更新gsl，最新的基金净值
         rt = RealTime(jjdm)
         res = rt.getGuSuan()
         gsl = res['gsl']
+        if gsl is None:
+            continue
         gsl_update_time = res['gztime']
-        JiJinInfo.update({JiJinInfo.guimo_number:number,JiJinInfo.gsl:gsl,JiJinInfo.gsl_update_time:gsl_update_time}).where(JiJinInfo.jjdm==jjdm).execute()
+        JiJinGuSuan.updateGusuan(jjdm=jjdm,gsl=gsl,guimo_number=number,gsl_update_time=gsl_update_time)
 
 

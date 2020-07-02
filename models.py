@@ -1,6 +1,24 @@
 from peewee import *
 database = MySQLDatabase('new_jijin_info', **{'charset': 'utf8', 'use_unicode': True, 'host': 'localhost', 'user': 'root', 'password': 'hengda','port':3306})
 
+class JiJinGuSuan(Model):
+    jjdm = CharField(null=True)
+    gsl = CharField(null=True)  # 估算涨幅
+    guimo_number = CharField(null=True)  # 规模数字（亿为单位）
+    gsl_update_time = CharField(null=True)  # 更新估算时间
+    class Meta:
+        database = database
+    staticmethod
+    def updateGusuan(jjdm, gsl, guimo_number,gsl_update_time):
+        try:
+            JiJinGuSuan.get(jjdm = jjdm)
+        except Exception as e:
+            JiJinGuSuan.create(jjdm= jjdm, gsl=gsl,gsl_update_time=gsl_update_time,guimo_number=guimo_number)
+            return
+        # 存在记录则进行更新操作
+            JiJinGuSuan.update({JiJinGuSuan.gsl: gsl,JiJinGuSuan.gsl_update_time:gsl_update_time,JiJinGuSuan.guimo_number:guimo_number})\
+                .where(JiJinGuSuan.jjdm == jjdm).execute()
+
 '''
     基金相关信息
 '''
@@ -13,9 +31,7 @@ class JiJinInfo(Model):
     jijin_type = CharField(null=True)
     jijin_guimo = CharField(null=True)
     jijin_create_day = CharField(null=True)
-    gsl = CharField(null=True) #估算涨幅
-    guimo_number = CharField(null=True) #规模数字（亿为单位）
-    gsl_update_time = CharField(null=True) # 更新估算时间
+    
 
     class Meta:
         database = database
