@@ -59,7 +59,6 @@ for i in jjdm_list:
     jijinguimo = i.jijin_guimo
     if jijinguimo is not None:
         number = getNumber(jijinguimo)
-
         # 开始更新gsl，最新的基金净值
         rt = RealTime(jjdm)
         res = rt.getGuSuan()
@@ -67,6 +66,7 @@ for i in jjdm_list:
         if gsl is None:
             continue
         gsl_update_time = res['gztime']
+        # 更新一周内  一个月内   三个月内   六个月内水平值
         JiJinGuSuan.updateGusuan(jjdm=jjdm,gsl=gsl,guimo_number=number,gsl_update_time=gsl_update_time)
 
 

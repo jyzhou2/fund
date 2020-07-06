@@ -6,17 +6,24 @@ class JiJinGuSuan(Model):
     gsl = CharField(null=True)  # 估算涨幅
     guimo_number = CharField(null=True)  # 规模数字（亿为单位）
     gsl_update_time = CharField(null=True)  # 更新估算时间
+    one_week_level = CharField(null=True)  # 一周内水平
+    one_month_level = CharField(null=True)  # 一个月内水平
+    three_months_level = CharField(null=True)  # 三个月水平
+    six_months_level = CharField(null=True)  # 六个月水平
     class Meta:
         database = database
     staticmethod
-    def updateGusuan(jjdm, gsl, guimo_number,gsl_update_time):
+    def updateGusuan(jjdm, gsl, guimo_number,gsl_update_time, one_week_level, one_month_level, three_months_level,six_months_level):
         try:
             JiJinGuSuan.get(jjdm = jjdm)
         except Exception as e:
-            JiJinGuSuan.create(jjdm= jjdm, gsl=gsl,gsl_update_time=gsl_update_time,guimo_number=guimo_number)
+            JiJinGuSuan.create(jjdm= jjdm, gsl=gsl,gsl_update_time=gsl_update_time,guimo_number=guimo_number,one_week_level=one_week_level,
+                               one_month_level=one_month_level,three_months_level=three_months_level,six_months_level=six_months_level)
             return
         # 存在记录则进行更新操作
-            JiJinGuSuan.update({JiJinGuSuan.gsl: gsl,JiJinGuSuan.gsl_update_time:gsl_update_time,JiJinGuSuan.guimo_number:guimo_number})\
+            JiJinGuSuan.update({JiJinGuSuan.gsl: gsl,JiJinGuSuan.gsl_update_time:gsl_update_time,JiJinGuSuan.guimo_number:guimo_number,
+                                JiJinGuSuan.one_week_level:one_week_level,JiJinGuSuan.one_month_level:one_month_level,
+                                JiJinGuSuan.three_months_level:three_months_level,JiJinGuSuan.six_months_level:six_months_level})\
                 .where(JiJinGuSuan.jjdm == jjdm).execute()
 
 '''
