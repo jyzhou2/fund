@@ -1,5 +1,5 @@
 from peewee import *
-database = MySQLDatabase('new_jijin_info', **{'charset': 'utf8', 'use_unicode': True, 'host': 'localhost', 'user': 'root', 'password': 'hengda','port':3306})
+database = MySQLDatabase('new_jijin_info', **{'charset': 'utf8', 'use_unicode': True, 'host': '192.168.70.205', 'user': 'root', 'password': 'hengda','port':3306})
 
 class JiJinGuSuan(Model):
     jjdm = CharField(null=True)
