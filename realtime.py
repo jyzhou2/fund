@@ -63,7 +63,9 @@ def getLowerRate(jjdm, count_days, current_gsl):
     lower_day_count =  JiJinRecord.select().where((JiJinRecord.jjdm == jjdm) & (JiJinRecord.id in ids) & (JiJinRecord.dwjz <current_gsl)).count()
     return lower_day_count/(len(ids))
 
-jjdm_list = JiJinInfo.select()
+
+#jjdm_list = JiJinInfo.select().where(JiJinInfo.jjdm>'008311')
+jjdm_list = JiJinInfo.select().where()
 for i in jjdm_list:
     jjdm = i.jjdm
     jijinguimo = i.jijin_guimo
