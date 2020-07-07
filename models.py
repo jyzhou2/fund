@@ -10,14 +10,15 @@ class JiJinGuSuan(Model):
     one_month_level = CharField(null=True)  # 一个月内水平
     three_months_level = CharField(null=True)  # 三个月水平
     six_months_level = CharField(null=True)  # 六个月水平
+    gszzl = CharField(null=True)  # 六个月水平
     class Meta:
         database = database
     staticmethod
-    def updateGusuan(jjdm, gsl, guimo_number,gsl_update_time, one_week_level, one_month_level, three_months_level,six_months_level):
+    def updateGusuan(jjdm,gszzl,gsl, guimo_number,gsl_update_time, one_week_level, one_month_level, three_months_level,six_months_level):
         try:
             JiJinGuSuan.get(jjdm = jjdm)
         except Exception as e:
-            JiJinGuSuan.create(jjdm= jjdm, gsl=gsl,gsl_update_time=gsl_update_time,guimo_number=guimo_number,one_week_level=one_week_level,
+            JiJinGuSuan.create(jjdm= jjdm, gszzl=gszzl,gsl=gsl,gsl_update_time=gsl_update_time,guimo_number=guimo_number,one_week_level=one_week_level,
                                one_month_level=one_month_level,three_months_level=three_months_level,six_months_level=six_months_level)
             return
         # 存在记录则进行更新操作

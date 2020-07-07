@@ -42,6 +42,7 @@ class RealTime():
         gsz = response_json['gsz']
         res = {}
         res['gsl'] = gsz
+        res['gszzl'] = response_json['gszzl']
         res['gztime'] = gztime
         return res
 
@@ -75,6 +76,7 @@ for i in jjdm_list:
         if gsl is None:
             continue
         gsl_update_time = res['gztime']
+        gszzl = res['gszzl']
         # 更新一周内  一个月内   三个月内   六个月内水平值
         # 计算出 一周内小于当前估值的比例
         # 计算出 一个月内小于当前估值的比例
@@ -84,6 +86,6 @@ for i in jjdm_list:
         one_month_level = getLowerRate(jjdm,30,gsl)
         three_months_level = getLowerRate(jjdm,90,gsl)
         six_months_level = getLowerRate(jjdm,180,gsl)
-        JiJinGuSuan.updateGusuan(jjdm=jjdm,gsl=gsl,guimo_number=number,gsl_update_time=gsl_update_time,one_week_level=one_week_level,one_month_level=one_month_level, three_months_level=one_month_level, six_months_level=six_months_level)
+        JiJinGuSuan.updateGusuan(jjdm=jjdm,gszzl=gszzl,gsl=gsl,guimo_number=number,gsl_update_time=gsl_update_time,one_week_level=one_week_level,one_month_level=one_month_level, three_months_level=one_month_level, six_months_level=six_months_level)
 
 
