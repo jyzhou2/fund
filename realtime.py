@@ -65,7 +65,7 @@ def getLowerRate(jjdm, count_days, current_gsl):
 
 
 #jjdm_list = JiJinInfo.select().where(JiJinInfo.jjdm>'008311')
-jjdm_list = JiJinInfo.select().where()
+jjdm_list = JiJinInfo.select()
 for i in jjdm_list:
     jjdm = i.jjdm
     jijinguimo = i.jijin_guimo

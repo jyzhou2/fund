@@ -13,6 +13,8 @@ class JiJinGuSuan(Model):
     gszzl = CharField(null=True)  # 六个月水平
     class Meta:
         database = database
+        db_table = 'dlj_jijingusuan'
+
     staticmethod
     def updateGusuan(jjdm,gszzl,gsl, guimo_number,gsl_update_time, one_week_level, one_month_level, three_months_level,six_months_level):
         try:
@@ -43,6 +45,7 @@ class JiJinInfo(Model):
 
     class Meta:
         database = database
+        db_table = 'dlj_jijininfo'
 
     staticmethod
     def create_self(jjdm,py,name,type,quanpin):
@@ -61,6 +64,7 @@ class JiJinUpdateProcess(Model):
     is_processing = IntegerField(null=True, default=0)
     class Meta:
         database = database
+        db_table = 'dlj_jijinupdateprocess'
 
     staticmethod
     def updateJiJinRecord(jjdm, date):
@@ -83,6 +87,7 @@ class JiJinRecord(Model):
     rzzl = CharField(null=True)
     class Meta:
         database = database
+        db_table='dlj_jijinrecord'
 
     staticmethod
     def updateJiJinRecord(jjdm, date, dwjz, ljjz, rzzl):
@@ -109,6 +114,8 @@ class JiJinTheme(Model):
     name = CharField(null=True)
     class Meta:
         database = database
+        db_table='dlj_jijintheme'
+
 
     staticmethod
     def updateJiJinTheme(jjdm, name, theme_id):
@@ -131,6 +138,7 @@ class JijinStatics(Model):
 
     class Meta:
         database=database
+        db_table='dlj_jijinstatics'
     staticmethod
     def updateJiJinStatics(jjdm,date,type,incr,standard, squard,position_score):
         try:
@@ -154,3 +162,4 @@ class JiJinStaticsUpdate(Model):
 
     class Meta:
         database = database
+        db_table='dlj_jijinstaticsupdate'
