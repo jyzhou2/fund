@@ -17,15 +17,12 @@ class JiJinGuSuan(Model):
 
     staticmethod
     def updateGusuan(jjdm,gszzl,gsl, guimo_number,gsl_update_time, one_week_level, one_month_level, three_months_level,six_months_level):
-        try:
-            result = JiJinGuSuan.get(jjdm = jjdm)
-            print(jjdm+'已找到')
-            print(result)
-        except Exception as e:
-            print(jjdm+"查找估算值遇到问题"+e.message)
+        result = JiJinGuSuan.select().where(JiJinGuSuan.jjdm == jjdm)
+        if len(result) == 0:
             JiJinGuSuan.create(jjdm= jjdm, gszzl=gszzl,gsl=gsl,gsl_update_time=gsl_update_time,guimo_number=guimo_number,one_week_level=one_week_level,
                                one_month_level=one_month_level,three_months_level=three_months_level,six_months_level=six_months_level)
             print('插入操作已完成')
+        else:
         # 存在记录则进行更新操作
             JiJinGuSuan.update({JiJinGuSuan.gsl: gsl,JiJinGuSuan.gsl_update_time:gsl_update_time,JiJinGuSuan.guimo_number:guimo_number,
                                 JiJinGuSuan.one_week_level:one_week_level,JiJinGuSuan.one_month_level:one_month_level,
