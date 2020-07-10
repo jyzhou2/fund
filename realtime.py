@@ -91,5 +91,6 @@ for i in jjdm_list:
             JiJinGuSuan.updateGusuan(jjdm=jjdm,gszzl=gszzl,gsl=gsl,guimo_number=number,gsl_update_time=gsl_update_time,one_week_level=one_week_level,one_month_level=one_month_level, three_months_level=one_month_level, six_months_level=six_months_level)
             time.sleep(3)
         except Exception as e:
+            print(e.message)
             continue
 
