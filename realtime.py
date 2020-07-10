@@ -77,6 +77,7 @@ for i in jjdm_list:
             gsl = res['gsl']
             if gsl is None:
                 continue
+            print('开始计算'+jjdm+'的值')
             gsl_update_time = res['gztime']
             gszzl = res['gszzl']
             # 更新一周内  一个月内   三个月内   六个月内水平值
@@ -89,8 +90,8 @@ for i in jjdm_list:
             three_months_level = getLowerRate(jjdm,90,gsl)
             six_months_level = getLowerRate(jjdm,180,gsl)
             JiJinGuSuan.updateGusuan(jjdm=jjdm,gszzl=gszzl,gsl=gsl,guimo_number=number,gsl_update_time=gsl_update_time,one_week_level=one_week_level,one_month_level=one_month_level, three_months_level=one_month_level, six_months_level=six_months_level)
-            time.sleep(3)
+            print(jjdm+'更新完成')
         except Exception as e:
-            print(e.message)
+            print('jjdm 出现异常：'+e.message)
             continue
 
