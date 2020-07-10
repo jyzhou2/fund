@@ -22,12 +22,13 @@ class JiJinGuSuan(Model):
         except Exception as e:
             JiJinGuSuan.create(jjdm= jjdm, gszzl=gszzl,gsl=gsl,gsl_update_time=gsl_update_time,guimo_number=guimo_number,one_week_level=one_week_level,
                                one_month_level=one_month_level,three_months_level=three_months_level,six_months_level=six_months_level)
-            return
+            print('插入操作已完成')
         # 存在记录则进行更新操作
             JiJinGuSuan.update({JiJinGuSuan.gsl: gsl,JiJinGuSuan.gsl_update_time:gsl_update_time,JiJinGuSuan.guimo_number:guimo_number,
                                 JiJinGuSuan.one_week_level:one_week_level,JiJinGuSuan.one_month_level:one_month_level,
                                 JiJinGuSuan.three_months_level:three_months_level,JiJinGuSuan.six_months_level:six_months_level})\
                 .where(JiJinGuSuan.jjdm == jjdm).execute()
+            print('更新操作已完成')
 
 '''
     基金相关信息
