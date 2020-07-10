@@ -19,7 +19,9 @@ class JiJinGuSuan(Model):
     def updateGusuan(jjdm,gszzl,gsl, guimo_number,gsl_update_time, one_week_level, one_month_level, three_months_level,six_months_level):
         try:
             JiJinGuSuan.get(jjdm = jjdm)
+            print(jjdm+'已找到')
         except Exception as e:
+            print(jjdm+"查找估算值遇到问题"+e.message)
             JiJinGuSuan.create(jjdm= jjdm, gszzl=gszzl,gsl=gsl,gsl_update_time=gsl_update_time,guimo_number=guimo_number,one_week_level=one_week_level,
                                one_month_level=one_month_level,three_months_level=three_months_level,six_months_level=six_months_level)
             print('插入操作已完成')
