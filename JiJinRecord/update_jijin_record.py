@@ -1,5 +1,8 @@
+import sys
+sys.path.append("..")
 import datetime
-from models import JiJinInfo,JiJinUpdateProcess,JiJinRecord
+from models import JiJinUpdateProcess,JiJinRecord
+from JiJinInfo.models import JiJinInfo
 import time
 import requests
 import json
@@ -40,6 +43,8 @@ class UpdateJijinRecord():
         更新单个基金的记录
     '''
     def proc_single_jj(self,jjdm, date=''):
+        if date == '':
+            date = '2019-07-01'
         url = 'http://api.fund.eastmoney.com/f10/lsjz?callback=jQuery18309366863931227072_1587472982780&fundCode=' + str(
             jjdm) + '&pageIndex=0&pageSize=500&startDate=' + str(date) + '&endDate=&_=1587472982792'
         headers = {
@@ -76,7 +81,10 @@ class UpdateJijinRecord():
             rzzl = item['JZZZL']
             JiJinRecord.updateJiJinRecord(jjdm=jjdm, date=date, dwjz=dwjz, ljjz=ljjz, rzzl=rzzl)
 
+if not JiJinRecord.table_exists():
+    JiJinRecord.create_table()
 
-
+if not JiJinUpdateProcess.table_exists():
+    JiJinUpdateProcess.create_table()
 model=UpdateJijinRecord()
 model.update_all_jijin()
