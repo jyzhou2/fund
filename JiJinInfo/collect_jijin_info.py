@@ -181,8 +181,11 @@ class CollectJijinInfo():
         self.buildThemeJijinKu()
 
 
-JiJinInfo.create_table()
-JiJinTheme.create_table()
+if not JiJinInfo.table_exists():
+    JiJinInfo.create_table()
+if not JiJinTheme.table_exists():
+    JiJinTheme.create_table()
+
 model = CollectJijinInfo()
 model.handle()
 
