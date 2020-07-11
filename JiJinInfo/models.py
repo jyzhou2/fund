@@ -1,9 +1,10 @@
+# coding: UTF-8
 from peewee import *
 import datetime
-database = MySQLDatabase('new_jijin_info', **{'charset': 'utf8', 'use_unicode': True, 'host': '192.168.70.205', 'user': 'root', 'password': 'hengda','port':3306})
+database = MySQLDatabase('test', **{'charset': 'utf8', 'use_unicode': True, 'host': '127.0.0.1', 'user': 'root', 'password': 'hdlnmp','port':3306})
 
 '''
-    ??????
+    基金相关信息
 '''
 
 class JiJinInfo(Model):
@@ -19,19 +20,30 @@ class JiJinInfo(Model):
 
     class Meta:
         database = database
+        db_table = 'dlj_jijininfo'
+
 
     staticmethod
 
     def create_self(jjdm, py, name, type, quanpin):
-        model = JiJinInfo.select().where(JiJinInfo.jjdm==jjdm)
         today = datetime.datetime.now().strftime('%Y-%m-%d')
-        if len(model) == 0:
+        try:
+            model = JiJinInfo.get(JiJinInfo.jjdm==jjdm)
+            print('正在更新')
+            JiJinInfo.update(
+                {JiJinInfo.update_time: today, JiJinInfo.py: jjdm, JiJinInfo.name: name, JiJinInfo.type: type,
+                 JiJinInfo.quanpin: quanpin}).where(
+                (JiJinInfo.jjdm == jjdm)).execute()
+        except DoesNotExist:
+            print('正在插入')
             JiJinInfo.create(jjdm=jjdm, py=py, name=name, type=type, quanpin=quanpin, update_time = today)
+        else:
+
             return
 
 
 '''
-    ????????
+    基金主题相关信息
 '''
 class JiJinTheme(Model):
     jjdm = CharField(null=True)
@@ -39,6 +51,7 @@ class JiJinTheme(Model):
     name = CharField(null=True)
     class Meta:
         database = database
+        db_table = 'dlj_jijintheme'
 
     staticmethod
     def updateJiJinTheme(jjdm, name, theme_id):

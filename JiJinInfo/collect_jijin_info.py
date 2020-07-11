@@ -18,6 +18,7 @@ class CollectJijinInfo():
         url_main = 'http://fund.eastmoney.com/js/fundcode_search.js'
         all_fund_data = requests.get(url_main)
         fund_list = all_fund_data.text
+        print(fund_list)
         fund_list = re.findall('var r = (.*])', fund_list)[0]
         fund_list = json.loads(fund_list)
         data = pd.DataFrame(fund_list)
@@ -174,7 +175,7 @@ class CollectJijinInfo():
     '''
     def handle(self):
         # 首先进行处理,建立标准的基金库
-        #self.collect_basic_jijin()
+        self.collect_basic_jijin()
         # 完善基金信息，包括规模，创建时间，基金类型等
         self.UpdateAllJiJinOtherInfo('002327')
         # 获得所有主题
