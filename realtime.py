@@ -64,30 +64,34 @@ def getLowerRate(jjdm, count_days, current_gsl):
     return lower_day_count/(len(ids))
 
 
-#jjdm_list = JiJinInfo.select().where(JiJinInfo.jjdm>'008311')
-jjdm_list = JiJinInfo.select().where()
+jjdm_list = JiJinInfo.select()
 for i in jjdm_list:
     jjdm = i.jjdm
     jijinguimo = i.jijin_guimo
     if jijinguimo is not None:
-        number = getNumber(jijinguimo)
-        # 开始更新gsl，最新的基金净值
-        rt = RealTime(jjdm)
-        res = rt.getGuSuan()
-        gsl = res['gsl']
-        if gsl is None:
+        try:
+            number = getNumber(jijinguimo)
+            # 开始更新gsl，最新的基金净值
+            rt = RealTime(jjdm)
+            res = rt.getGuSuan()
+            gsl = res['gsl']
+            if gsl is None:
+                continue
+            print('开始计算'+jjdm+'的值')
+            gsl_update_time = res['gztime']
+            gszzl = res['gszzl']
+            # 更新一周内  一个月内   三个月内   六个月内水平值
+            # 计算出 一周内小于当前估值的比例
+            # 计算出 一个月内小于当前估值的比例
+            # 计算出 三个月内小于当前估值的比例
+            #    计算出 六个月内小于当前估值的比例
+            one_week_level = getLowerRate(jjdm,7,gsl)
+            one_month_level = getLowerRate(jjdm,30,gsl)
+            three_months_level = getLowerRate(jjdm,90,gsl)
+            six_months_level = getLowerRate(jjdm,180,gsl)
+            JiJinGuSuan.updateGusuan(jjdm=jjdm,gszzl=gszzl,gsl=gsl,guimo_number=number,gsl_update_time=gsl_update_time,one_week_level=one_week_level,one_month_level=one_month_level, three_months_level=one_month_level, six_months_level=six_months_level)
+            print(jjdm+'更新完成')
+        except Exception as e:
+            print('jjdm 出现异常：'+e.message)
             continue
-        gsl_update_time = res['gztime']
-        gszzl = res['gszzl']
-        # 更新一周内  一个月内   三个月内   六个月内水平值
-        # 计算出 一周内小于当前估值的比例
-        # 计算出 一个月内小于当前估值的比例
-        # 计算出 三个月内小于当前估值的比例
-        # 计算出 六个月内小于当前估值的比例
-        one_week_level = getLowerRate(jjdm,7,gsl)
-        one_month_level = getLowerRate(jjdm,30,gsl)
-        three_months_level = getLowerRate(jjdm,90,gsl)
-        six_months_level = getLowerRate(jjdm,180,gsl)
-        JiJinGuSuan.updateGusuan(jjdm=jjdm,gszzl=gszzl,gsl=gsl,guimo_number=number,gsl_update_time=gsl_update_time,one_week_level=one_week_level,one_month_level=one_month_level, three_months_level=one_month_level, six_months_level=six_months_level)
-
 

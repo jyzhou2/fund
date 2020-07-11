@@ -1,5 +1,5 @@
 from peewee import *
-database = MySQLDatabase('new_jijin_info', **{'charset': 'utf8', 'use_unicode': True, 'host': '192.168.70.205', 'user': 'root', 'password': 'hengda','port':3306})
+database = MySQLDatabase('test', **{'charset': 'utf8', 'use_unicode': True, 'host': '127.0.0.1', 'user': 'root', 'password': 'hdlnmp','port':3306})
 
 class JiJinGuSuan(Model):
     jjdm = CharField(null=True)
@@ -13,19 +13,22 @@ class JiJinGuSuan(Model):
     gszzl = CharField(null=True)  # 六个月水平
     class Meta:
         database = database
+        db_table = 'dlj_jijingusuan'
+
     staticmethod
     def updateGusuan(jjdm,gszzl,gsl, guimo_number,gsl_update_time, one_week_level, one_month_level, three_months_level,six_months_level):
-        try:
-            JiJinGuSuan.get(jjdm = jjdm)
-        except Exception as e:
+        result = JiJinGuSuan.select().where(JiJinGuSuan.jjdm == jjdm)
+        if len(result) == 0:
             JiJinGuSuan.create(jjdm= jjdm, gszzl=gszzl,gsl=gsl,gsl_update_time=gsl_update_time,guimo_number=guimo_number,one_week_level=one_week_level,
                                one_month_level=one_month_level,three_months_level=three_months_level,six_months_level=six_months_level)
-            return
+            print('插入操作已完成')
+        else:
         # 存在记录则进行更新操作
             JiJinGuSuan.update({JiJinGuSuan.gsl: gsl,JiJinGuSuan.gsl_update_time:gsl_update_time,JiJinGuSuan.guimo_number:guimo_number,
                                 JiJinGuSuan.one_week_level:one_week_level,JiJinGuSuan.one_month_level:one_month_level,
                                 JiJinGuSuan.three_months_level:three_months_level,JiJinGuSuan.six_months_level:six_months_level})\
                 .where(JiJinGuSuan.jjdm == jjdm).execute()
+            print('更新操作已完成')
 
 '''
     基金相关信息
@@ -43,6 +46,7 @@ class JiJinInfo(Model):
 
     class Meta:
         database = database
+        db_table = 'dlj_jijininfo'
 
     staticmethod
     def create_self(jjdm,py,name,type,quanpin):
@@ -61,6 +65,7 @@ class JiJinUpdateProcess(Model):
     is_processing = IntegerField(null=True, default=0)
     class Meta:
         database = database
+        db_table = 'dlj_jijinupdateprocess'
 
     staticmethod
     def updateJiJinRecord(jjdm, date):
@@ -83,6 +88,7 @@ class JiJinRecord(Model):
     rzzl = CharField(null=True)
     class Meta:
         database = database
+        db_table='dlj_jijinrecord'
 
     staticmethod
     def updateJiJinRecord(jjdm, date, dwjz, ljjz, rzzl):
@@ -109,6 +115,8 @@ class JiJinTheme(Model):
     name = CharField(null=True)
     class Meta:
         database = database
+        db_table='dlj_jijintheme'
+
 
     staticmethod
     def updateJiJinTheme(jjdm, name, theme_id):
@@ -131,6 +139,7 @@ class JijinStatics(Model):
 
     class Meta:
         database=database
+        db_table='dlj_jijinstatics'
     staticmethod
     def updateJiJinStatics(jjdm,date,type,incr,standard, squard,position_score):
         try:
@@ -154,3 +163,4 @@ class JiJinStaticsUpdate(Model):
 
     class Meta:
         database = database
+        db_table='dlj_jijinstaticsupdate'
