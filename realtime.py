@@ -57,10 +57,12 @@ def getNumber(string):
 
 def getLowerRate(jjdm, count_days, current_gsl):
     all_week = JiJinRecord.select().where(JiJinRecord.jjdm == jjdm).order_by(JiJinRecord.date.desc()).limit(count_days)
+    print('总的 要求数量'+count_days+"实际数量："+len(all_week))
     ids = []
     for item in all_week:
         ids.append(item.id)
     lower_day_count =  JiJinRecord.select().where((JiJinRecord.jjdm == jjdm) & (JiJinRecord.id in ids) & (JiJinRecord.dwjz <current_gsl)).count()
+    print('比例 要求数量' + count_days + "实际数量：" + str(lower_day_count))
     return lower_day_count/(len(ids))
 
 
