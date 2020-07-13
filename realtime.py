@@ -99,7 +99,9 @@ def jj_single_rate(i):
                                      six_months_level=six_months_level)
             print(jjdm + '更新完成')
         except Exception as e:
-            print('jjdm 出现异常：' + e.message)
+            time.sleep(4)
+            print("重新处理"+jjdm)
+            jj_single_rate(i)
             return
 
 
