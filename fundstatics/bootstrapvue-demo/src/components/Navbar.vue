@@ -1,8 +1,10 @@
 <template>
     <div>
-      <b-navbar toggleable="lg" type="dark" variant="success">
+      <b-navbar toggleable="lg" type="dark" variant="dark">
         <b-container>
-            <b-navbar-brand href="#">Mealzers</b-navbar-brand>
+            <b-navbar-brand href="#">基金数据分析</b-navbar-brand>
+            <b-navbar-brand href="#">Python记录</b-navbar-brand>
+            <b-navbar-brand href="#">Laravel心得</b-navbar-brand>
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
             <b-collapse id="nav-collapse" is-nav>
               <!-- Right aligned nav items -->
@@ -11,7 +13,7 @@
                   <b-form-input
                     size="sm"
                     class="mr-sm-2"
-                    placeholder="Search for a meal"
+                    placeholder="Search ..."
                     v-model="meal"
                     ></b-form-input>
                   <b-button
