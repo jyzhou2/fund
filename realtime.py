@@ -103,6 +103,8 @@ def jj_single_rate(i):
             return
 
 
+# 先进行删除操作
+JiJinGuSuan.delete().execute()
 '''
     基金信息估算
 '''
@@ -112,7 +114,11 @@ def jj_rate():
         print(i)
         jj_single_rate(i)
 
-model = JiJinInfo.get(JiJinInfo.jjdm=='000037')
-jj_single_rate(model)
+def gusuan_modify():
+    gusuan_list = JiJinGuSuan.select().where(JiJinGuSuan.one_week_level==0)
+    for i in gusuan_list:
+        model = JiJinInfo.get(JiJinInfo.jjdm== i.jjdm)
+        if model:
+            jj_single_rate(model)
 
 
