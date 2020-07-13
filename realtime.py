@@ -107,6 +107,7 @@ def jj_single_rate(i):
 def jj_rate():
     jjdm_list = JiJinInfo.select()
     for i in jjdm_list:
+        print(i)
         jj_single_rate(i)
 
 jj_single_rate('000037')
