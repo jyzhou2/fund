@@ -122,3 +122,6 @@ def gusuan_modify():
             jj_single_rate(model)
 
 
+jj_rate()
+gusuan_modify()
+
