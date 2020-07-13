@@ -110,6 +110,7 @@ def jj_rate():
         print(i)
         jj_single_rate(i)
 
-jj_single_rate('000037')
+model = JiJinInfo.get(JiJinInfo.jjdm=='000037')
+jj_single_rate(model)
 
 
