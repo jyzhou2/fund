@@ -37,7 +37,7 @@
 <br>
 
     <div class="text-center">
-  <h2>栏目介绍 <b-badge>New</b-badge></h2>
+  <h2>专栏介绍 <b-badge>New</b-badge></h2>
 
   <h6>Example heading <b-badge>New</b-badge></h6>
 </div>
