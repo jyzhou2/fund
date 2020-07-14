@@ -62,8 +62,9 @@
               style="max-width: 20rem;"
               class="mb-2">
               <b-card-text>{{data.desc}}</b-card-text>
-
-              <b-button href="jijin_info.html" variant="primary">查看详情</b-button>
+<router-link to="/jijinInfo">
+              <b-button  variant="primary">查看详情</b-button>
+</router-link>
             </b-card>
 
           </b-col>
