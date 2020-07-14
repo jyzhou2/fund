@@ -44,10 +44,10 @@
     <div class="text-center">
   <h2>专栏介绍 <b-badge>New</b-badge></h2>
 
-  <h6>Example heading <b-badge>New</b-badge></h6>
+  <h6>Column introduction<b-badge>New</b-badge></h6>
 </div>
    <b-container>
-    <div v-if="meals.length">
+    <div >
       <b-row>
         <div v-bind:key="data.index" v-for="data in meals">
           <b-col l="3">
@@ -56,19 +56,18 @@
               v-bind:img-src="data.strCategoryThumb"
               img-alt="Image"
               img-top
+              img-height="200"
               tag="article"
               style="max-width: 20rem;"
               class="mb-2">
-              <b-card-text>{{ `${data.strCategoryDescription.slice(0,100)}...` }}</b-card-text>
-              <b-button href="#" variant="primary">View food</b-button>
+              <b-card-text>{{data.desc}}</b-card-text>
+              <b-button href="#" variant="primary">查看详情</b-button>
             </b-card>
           </b-col>
         </div>
       </b-row>
     </div>
-    <div v-else>
-      <h5>No meals available yet ?</h5>
-    </div>
+
   </b-container>
 
 
@@ -85,25 +84,41 @@
   }
 </style>
 <script>
-  import axios from "axios";
 
   export default {
 
     data() {
      return {
-      meals: []
+      meals: [
+        {'title':'基金数据分析',
+        'strCategoryThumb':'http://81.70.21.205/img/data_analysize.jpg',
+          'desc':'111'}
+
+              ]
     };
     },
     mounted() {
-    axios
-      .get("https://www.themealdb.com/api/json/v1/1/categories.php")
-      .then(response => {
+       this.meals= [
+               {
+         'title': '基金数据分析',
+         'strCategoryThumb': 'http://81.70.21.205/img/data_analysize.jpg',
+                 'desc':'数据分析思考和实现过程'
+          },
+                {
+         'title': 'Python 记录',
+         'strCategoryThumb': 'http://81.70.21.205/img/python.jpeg',
+                                   'desc':'记录数据分析过程中的技术问题'
 
-        this.meals = response.data.categories.slice(0,3);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+          },
+                {
+         'title': 'Laravel心得',
+         'strCategoryThumb': 'http://81.70.21.205/img/laravel.png',
+                                   'desc':'世纪工作中遇到的Laravel问题'
+
+          },
+
+              ];
+
   }
   }
 </script>
