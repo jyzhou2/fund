@@ -51,6 +51,7 @@
       <b-row>
         <div v-bind:key="data.index" v-for="data in meals">
           <b-col l="3">
+
             <b-card
               v-bind:title="data.strCategory"
               v-bind:img-src="data.strCategoryThumb"
@@ -61,8 +62,10 @@
               style="max-width: 20rem;"
               class="mb-2">
               <b-card-text>{{data.desc}}</b-card-text>
-              <b-button href="#" variant="primary">查看详情</b-button>
+
+              <b-button href="jijin_info.html" variant="primary">查看详情</b-button>
             </b-card>
+
           </b-col>
         </div>
       </b-row>
