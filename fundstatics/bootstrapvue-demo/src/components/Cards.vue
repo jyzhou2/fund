@@ -113,7 +113,7 @@
                 {
          'title': 'Laravel心得',
          'strCategoryThumb': 'http://81.70.21.205/img/laravel.png',
-                                   'desc':'世纪工作中遇到的Laravel问题'
+                                   'desc':'实际工作中遇到的Laravel问题'
 
           },
 
