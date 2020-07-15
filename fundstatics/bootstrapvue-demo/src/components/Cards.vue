@@ -62,11 +62,11 @@
               style="max-width: 20rem;"
               class="mb-2">
               <b-card-text>{{data.desc}}</b-card-text>
-<router-link :to="JiJinList">
-              <b-button  variant="primary">查看详情</b-button>
-</router-link>
 
-                <router-link :to="{ name: 'user', params: { userId: 123 }}">User</router-link>
+              <b-button  variant="primary">查看详情</b-button>
+
+
+
 
             </b-card>
 
