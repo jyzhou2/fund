@@ -65,6 +65,9 @@
 <router-link :to="JiJinList">
               <b-button  variant="primary">查看详情</b-button>
 </router-link>
+
+                <router-link :to="{ name: 'user', params: { userId: 123 }}">User</router-link>
+
             </b-card>
 
           </b-col>

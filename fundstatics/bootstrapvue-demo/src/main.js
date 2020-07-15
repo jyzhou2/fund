@@ -3,17 +3,21 @@ import App from './App.vue'
 import  BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import JiJinList from './components/JiJinList'
 import VueRouter from 'vue-router';
+const User = {
+  template: '<div>User {{ $route.params.id }}</div>'
+}
+
 const router = new VueRouter({
-  routes:  [
+  routes: [
     {
-      path:'/jijininfo_list',
-      name:'jijin',
-      component:JiJinList
+      path: '/user/:userId',
+      name: 'user',
+      component: User
     }
   ]
 })
+
 Vue.use(BootstrapVue)
 Vue.use(router)
 Vue.config.productionTip = false
