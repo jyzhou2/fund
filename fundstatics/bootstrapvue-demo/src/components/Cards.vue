@@ -64,7 +64,7 @@
                                     class="mb-2">
                                 <b-card-text>{{data.desc}}</b-card-text>
 
-                                <b-button href="/JiJinList" variant="primary">查看详情</b-button>
+                                <b-button v-bind:href="data.href"  variant="primary">查看详情</b-button>
 
 
                             </b-card>
@@ -90,9 +90,7 @@
 
     export default {
         methods: {
-            go() {
-                this.$router.push('name')
-            }
+
         },
         data() {
             return {
@@ -111,18 +109,21 @@
                 {
                     'title': '基金数据分析',
                     'strCategoryThumb': 'http://81.70.21.205/img/data_analysize.jpg',
-                    'desc': '数据分析思考和实现过程'
+                    'desc': '数据分析思考和实现过程',
+                    'href':'JiJinList'
                 },
                 {
                     'title': 'Python 记录',
                     'strCategoryThumb': 'http://81.70.21.205/img/python.jpeg',
-                    'desc': '记录数据分析过程中的技术问题'
+                    'desc': '记录数据分析过程中的技术问题',
+                    'href':'python'
 
                 },
                 {
                     'title': 'Laravel心得',
                     'strCategoryThumb': 'http://81.70.21.205/img/laravel.png',
-                    'desc': '实际工作中遇到的Laravel问题'
+                    'desc': '实际工作中遇到的Laravel问题',
+                    'href':'laravel'
 
                 },
 
