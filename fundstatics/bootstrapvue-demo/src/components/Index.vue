@@ -1,16 +1,16 @@
 <template>
     <div>
-        <Cards/>
+        <AllColumns/>
     </div>
 </template>
 
 <script>
-    import Cards from './Cards.vue'
+    import AllColumns from './AllColumns.vue'
 
     export default {
         name: 'cards',
         components: {
-            Cards
+            AllColumns
         },
         data() {
             return {};

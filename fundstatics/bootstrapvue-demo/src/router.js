@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import JiJinList from './components/JiJinList'
-import helloWorld from './components/HelloWorld'
+import helloWorld from './components/Index'
 
 Vue.use(Router)
 export default new Router({

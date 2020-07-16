@@ -2,21 +2,21 @@
     <div id="app">
         <Navbar/>
         <router-view>
-            <HelloWorld/>
+            <Index/>
         </router-view>
 
 
     </div>
 </template>
 <script>
-    import HelloWorld from './components/HelloWorld.vue'
+    import Index from './components/Index.vue'
     import Navbar from './components/Navbar.vue';
 
     export default {
         name: 'navbar',
         components: {
             Navbar,
-            HelloWorld
+            Index
         }
     }
 </script>
