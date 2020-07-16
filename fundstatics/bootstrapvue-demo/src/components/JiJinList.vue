@@ -1,7 +1,7 @@
 <template>
-<div>
-    this is jijinList
-</div>
+    <div>
+        this is jijinList
+    </div>
 
 </template>
 

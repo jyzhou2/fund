@@ -1,22 +1,21 @@
 <template>
-  <div>
-    <Cards />
-  </div>
+    <div>
+        <Cards/>
+    </div>
 </template>
 
 <script>
-import Cards from './Cards.vue'
-export default {
-  name:'cards',
-  components: {
-    Cards
-  },
-  data() {
-    return {
+    import Cards from './Cards.vue'
 
+    export default {
+        name: 'cards',
+        components: {
+            Cards
+        },
+        data() {
+            return {};
+        },
     };
-  },
-};
 </script>
 <style scoped>
 </style>
