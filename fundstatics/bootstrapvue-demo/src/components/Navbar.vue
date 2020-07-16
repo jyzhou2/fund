@@ -2,9 +2,9 @@
     <div>
         <b-navbar toggleable="lg" type="dark" variant="dark">
             <b-container>
-                <b-navbar-brand href="#">基金数据分析</b-navbar-brand>
-                <b-navbar-brand href="#">Python记录</b-navbar-brand>
-                <b-navbar-brand href="#">Laravel心得</b-navbar-brand>
+                <b-navbar-brand href="/JiJinList">基金数据分析</b-navbar-brand>
+                <b-navbar-brand href="/python">Python记录</b-navbar-brand>
+                <b-navbar-brand href="/laravel">Laravel心得</b-navbar-brand>
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
                 <b-collapse id="nav-collapse" is-nav>
                     <!-- Right aligned nav items -->
