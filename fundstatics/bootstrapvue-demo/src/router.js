@@ -1,7 +1,7 @@
 import JiJinList from './components/JiJinList'
-const routers=[
+const routes=[
     {path:'/home',
     name:'home',
     component:JiJinList}
 ]
-export default routers
+export default routes

@@ -38,8 +38,7 @@
 
 <br>
 <br>
-<br>
-<br>
+
 
     <div class="text-center">
   <h2>专栏介绍 <b-badge>New</b-badge></h2>
@@ -62,9 +61,8 @@
               style="max-width: 20rem;"
               class="mb-2">
               <b-card-text>{{data.desc}}</b-card-text>
-              <router-link id="jijininfo" to="/home">
+
               <b-button  variant="primary">查看详情</b-button>
-</router-link>
 
 
 
