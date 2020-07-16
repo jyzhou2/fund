@@ -83,7 +83,7 @@
 
 </template>
 <style>
-    .w-100 {
+    #tags-basic {
         height: 25px !important;
     }
 
