@@ -62,7 +62,7 @@
               class="mb-2">
               <b-card-text>{{data.desc}}</b-card-text>
 
-              <b-button  variant="primary">查看详情</b-button>
+              <b-button href="/JiJinList" variant="primary">查看详情</b-button>
 
 
 
@@ -91,7 +91,11 @@
 <script>
 
   export default {
-
+methods:{
+  go(){
+    this.$router.push('name')
+  }
+},
     data() {
      return {
       meals: [

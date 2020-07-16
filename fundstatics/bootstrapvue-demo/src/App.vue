@@ -1,8 +1,9 @@
 <template>
   <div id="app">
      <Navbar />
+      <router-view>
      <HelloWorld/>
-
+</router-view>
 
 
   </div>

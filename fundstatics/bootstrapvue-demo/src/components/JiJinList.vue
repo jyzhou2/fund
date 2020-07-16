@@ -1,6 +1,6 @@
 <template>
 <div>
-    dada
+    this is jijinList
 </div>
 
 </template>
@@ -11,6 +11,3 @@
     }
 </script>
 
-<style scoped>
-
-</style>
