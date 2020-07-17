@@ -13,37 +13,39 @@
                                 <b-col>
                                     <b-form-tags input-id="tags-basic" class="mb-1" no-add-on-enter separator=" "
                                                  placeholder="选择基金主题"
-                                                 v-model="value"></b-form-tags>
+                                                 v-model="theme"></b-form-tags>
                                 </b-col>
                                 <b-col>
-                                    <b-form-input type="number" id="jijinGuiMo" placeholder="输入基金规模"></b-form-input>
+                                    <b-form-input type="number" v-model="guimo"
+                                                  placeholder="输入基金规模"></b-form-input>
                                 </b-col>
                                 <b-col>
-                                    <b-form-select v-model="selected" :options="week_options">
-                                        <b-form-select-option :value="null">周分析</b-form-select-option>
+                                    <b-form-select v-model="week_selected" :options="week_options">
+
 
                                     </b-form-select>
                                 </b-col>
                                 <b-col>
-                                    <b-form-select v-model="selected" :options="week_options">
-                                        <b-form-select-option :value="null">月分析</b-form-select-option>
+                                    <b-form-select v-model="month_selected" :options="month_options">
 
                                     </b-form-select>
                                 </b-col>
                                 <b-col>
-                                    <b-form-select v-model="selected" :options="week_options">
-                                        <b-form-select-option :value="null">三月分析</b-form-select-option>
+                                    <b-form-select v-model="three_months_selected" :options="three_months_options">
+
                                     </b-form-select>
                                 </b-col>
                                 <b-col>
-                                    <b-form-select v-model="selected" :options="week_options">
-                                        <b-form-select-option :value="null">半年分析</b-form-select-option>
+                                    <b-form-select v-model="half_year_selected" :options="half_year_options">
                                     </b-form-select>
                                 </b-col>
                                 <b-col>
-                                    <b-form-select v-model="selected" :options="week_options">
-                                        <b-form-select-option :value="null">年分析</b-form-select-option>
+                                    <b-form-select v-model="year_selected" :options="year_options">
                                     </b-form-select>
+                                </b-col>
+                                <b-col>
+                                    <b-button @click="search">Search
+                                    </b-button>
                                 </b-col>
                             </b-row>
                         </b-container>
@@ -54,21 +56,15 @@
                         <div class="overflow-auto">
 
 
-                            <p class="mt-3">Current Page: {{ currentPage }}</p>
+
 
                             <b-table
                                     id="my-table"
                                     :items="items"
-                                    :per-page="perPage"
-                                    :current-page="currentPage"
+
                                     small
                             ></b-table>
-                            <b-pagination
-                                    v-model="currentPage"
-                                    :total-rows="rows"
-                                    :per-page="perPage"
-                                    aria-controls="my-table"
-                            ></b-pagination>
+
                         </div>
                     </div>
 
@@ -109,12 +105,28 @@
     }
 </style>
 <script>
+
+    var self;
     export default {
+        created: function () {
+            self = this
+        },
         data() {
+
             return {
                 value: [],
-                selected: null,
+                theme:'',
+                week_selected: null,
+                guimo: 0,
+                month_selected: null,
+                three_months_selected: null,
+                half_year_selected: null,
+                year_selected: null,
                 week_options: ['正序'],
+                month_options: ['正序'],
+                three_months_options: ['正序'],
+                half_year_options: ['正序'],
+                year_options: ['正序'],
                 perPage: 3,
                 currentPage: 1,
                 items: [
@@ -123,7 +135,59 @@
                 ]
             }
         },
-        name: "JiJinList"
+        name: "JiJinList",
+        methods: {
+            //  搜索
+            search() {
+                var url="";
+                url = 'http://81.70.21.205/api/fund_list?p=w&';
+                url +='guimo='+ self.guimo+"&"
+                url += 'theme='+self.theme+"&"
+                url += 'week_selected='+self.week_selected+"&"
+
+                url+= 'month_selected='+ self.month_selected+"&"
+                url+= 'three_months_selected='+ self.three_months_selected+"&"
+                url+= 'half_year_selected='+ self.half_year_selected+"&"
+                url+= 'year_selected='+ self.year_selected+"&"
+
+                this.axios.get(url).then((response) => {
+                    var datas = response.data;
+                    datas= datas.data
+                    var i=null;
+                    self.items = []
+                    for(i in datas){
+                        var cur_item = datas[i]
+                        self.items.push({
+                            'JJDM': cur_item.jjdm,
+                            'GUIMO': cur_item.guimo_number,
+                            'WEEK': cur_item.one_week_level,
+                            'MONTH': cur_item.one_month_level,
+                            'TWEEK': cur_item.three_months_level,
+                            'HYEAR': cur_item.six_months_level,
+                            'YEAR': cur_item.six_months_level,
+
+                        })
+                        console.log(i)
+                    }
+                })
+                /*
+                var guimo = self.guimo
+                guimo += ''
+                var theme = self.theme
+                theme += ''
+                var week_selected = self.week_selected
+                week_selected += ''
+                var month_selected = self.month_selected
+                month_selected += ''
+                var three_months_selected = self.three_months_selected
+                three_months_selected += ''
+                var half_year_selected = self.half_year_selected
+                half_year_selected += ''
+                var year_selected = self.year_selected
+                year_selected += ''*/
+            },
+
+        }
     }
 </script>
 
