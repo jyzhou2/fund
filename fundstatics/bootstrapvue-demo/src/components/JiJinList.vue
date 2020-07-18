@@ -69,8 +69,8 @@
                     </div>
 
                 </b-tab>
-                <b-tab title="实时财经消息"><p>I'm the second tab</p></b-tab>
-                <b-tab title="数据分析知识"><p>I'm a disabled tab!</p></b-tab>
+                <b-tab title="数据分析知识"><p>I'm the second tab</p></b-tab>
+                <b-tab title="实时财经消息"><p>I'm a disabled tab!</p></b-tab>
             </b-tabs>
 
         </div>
