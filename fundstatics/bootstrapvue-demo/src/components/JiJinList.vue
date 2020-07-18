@@ -130,7 +130,7 @@
                 perPage: 3,
                 currentPage: 1,
                 items: [
-                    {JJDM: 1, GUIMO: 'Fred', WEEK: 'Flintstone', MONTH: '0', TWEEK: 2, HYEAR: 6, YEAR: 9},
+
 
                 ]
             }
@@ -158,13 +158,13 @@
                     for(i in datas){
                         var cur_item = datas[i]
                         self.items.push({
-                            'JJDM': cur_item.jjdm,
-                            'GUIMO': cur_item.guimo_number,
-                            'WEEK': cur_item.one_week_level,
-                            'MONTH': cur_item.one_month_level,
-                            'TWEEK': cur_item.three_months_level,
-                            'HYEAR': cur_item.six_months_level,
-                            'YEAR': cur_item.six_months_level,
+                            '名称': cur_item.name,
+                            '规模': cur_item.guimo_number,
+                            '周水平': cur_item.one_week_level,
+                            '月水平': cur_item.one_month_level,
+                            '三月水平': cur_item.three_months_level,
+                            '半年水平': cur_item.six_months_level,
+                            '年水平': cur_item.six_months_level,
 
                         })
                         console.log(i)
