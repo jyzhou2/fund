@@ -115,7 +115,7 @@
             //  搜索
             search() {
                 var url = "";
-                url = 'http://81.70.21.205/api/fund_list?p=w&';
+                url = 'http://81.70.21.205:82/api/fund_list?p=w&';
                 url += 'guimo=' + self.guimo + "&"
                 url += 'theme=' + self.theme + "&"
                 url += 'week_selected=' + self.week_selected + "&"
