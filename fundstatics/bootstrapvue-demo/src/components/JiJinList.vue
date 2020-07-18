@@ -30,18 +30,37 @@
                         <!--  这里是搜索数结果数据 -->
                         <br>
                         <br>
-                        <div class="overflow-auto">
 
 
-                            <b-table
-                                    striped hover
-                                    id="my-table"
-                                    :items="items"
+                            <el-table
+                                    v-loading="loading"
+                                    :data="items"
+                                    style="width: 100%">
+                                <el-table-column
+                                        prop="name"
+                                        label="名称"
+                                        width="180">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="guimo"
+                                        label="规模"
+                                        width="180">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="level"
+                                        label="水平(周-月-三月-半年)">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="update_time"
+                                        label="更新时间">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="recommand"
+                                        label="推荐">
+                                </el-table-column>
+                            </el-table>
 
-                                    small
-                            ></b-table>
 
-                        </div>
                     </div>
 
                 </b-tab>
@@ -55,16 +74,18 @@
 
 </template>
 <style>
-    .table{
+    .table {
         width: 88%;
     }
+
     td {
         height: 45px !important;
     }
 
-    tr{
+    tr {
         height: 45px !important;
     }
+
     #tags-basic {
         height: 25px !important;
     }
@@ -91,17 +112,16 @@
     }
 </style>
 <script>
-
     var self;
     export default {
         created: function () {
             self = this
         },
         data() {
-
             return {
                 value: [],
-                theme: '',
+                loading:true,
+                theme: [],
                 week_selected: null,
                 guimo: 5,
 
@@ -118,14 +138,9 @@
                 url = 'http://81.70.21.205:82/api/fund_list?p=w&';
                 url += 'guimo=' + self.guimo + "&"
                 url += 'theme=' + self.theme + "&"
-                url += 'week_selected=' + self.week_selected + "&"
-
-                url += 'month_selected=' + self.month_selected + "&"
-                url += 'three_months_selected=' + self.three_months_selected + "&"
-                url += 'half_year_selected=' + self.half_year_selected + "&"
-                url += 'year_selected=' + self.year_selected + "&"
-
+                self.loading = true
                 this.axios.get(url).then((response) => {
+                    self.loading = false
                     var datas = response.data;
                     datas = datas.data
                     var i = null;
@@ -133,11 +148,11 @@
                     for (i in datas) {
                         var cur_item = datas[i]
                         self.items.push({
-                            '名称': cur_item.name,
-                            '规模': cur_item.guimo_number,
-                            '水平(周-月-三月-半年)': cur_item.one_week_level+"-"+cur_item.one_month_level+"-"+cur_item.three_months_level+"-"+cur_item.six_months_level,
-                            '更新时间': cur_item.gsl_update_time,
-                            '推荐值':'暂无'
+                            'name': cur_item.name,
+                            'guimo': cur_item.guimo_number,
+                            'level': cur_item.one_week_level + "-" + cur_item.one_month_level + "-" + cur_item.three_months_level + "-" + cur_item.six_months_level,
+                            'update_time': cur_item.gsl_update_time,
+                            'recommand': '暂无'
                         })
                     }
                 })
