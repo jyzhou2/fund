@@ -32,33 +32,34 @@
                         <br>
 
 
-                            <el-table
-                                    v-loading="loading"
-                                    :data="items"
-                                    style="width: 100%">
-                                <el-table-column
-                                        prop="name"
-                                        label="名称"
-                                        width="180">
-                                </el-table-column>
-                                <el-table-column
-                                        prop="guimo"
-                                        label="规模"
-                                        width="180">
-                                </el-table-column>
-                                <el-table-column
-                                        prop="level"
-                                        label="水平(周-月-三月-半年)">
-                                </el-table-column>
-                                <el-table-column
-                                        prop="update_time"
-                                        label="更新时间">
-                                </el-table-column>
-                                <el-table-column
-                                        prop="recommand"
-                                        label="推荐">
-                                </el-table-column>
-                            </el-table>
+                        <el-table
+                                v-loading="loading"
+                                :data="items"
+
+                                style="width: 100%">
+                            <el-table-column
+                                    prop="name"
+                                    label="名称"
+                                    width="180">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="guimo"
+                                    label="规模"
+                                    width="180">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="level"
+                                    label="水平(周-月-三月-半年)">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="update_time"
+                                    label="更新时间">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="recommand"
+                                    label="推荐">
+                            </el-table-column>
+                        </el-table>
 
 
                     </div>
@@ -120,7 +121,7 @@
         data() {
             return {
                 value: [],
-                loading:true,
+                loading: false,
                 theme: [],
                 week_selected: null,
                 guimo: 5,
