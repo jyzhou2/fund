@@ -55,6 +55,9 @@
 
 </template>
 <style>
+    .table{
+        width: 88%;
+    }
     td {
         height: 45px !important;
     }
@@ -134,7 +137,7 @@
                             '规模': cur_item.guimo_number,
                             '水平(周-月-三月-半年)': cur_item.one_week_level+"-"+cur_item.one_month_level+"-"+cur_item.three_months_level+"-"+cur_item.six_months_level,
                             '更新时间': cur_item.gsl_update_time,
-                            '推荐值':1
+                            '推荐值':'暂无'
                         })
                     }
                 })
