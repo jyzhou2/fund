@@ -22,8 +22,17 @@ class CurvePloy():
             index = index + 1
         y = pd.to_numeric(y)
         self.x = date
-        z1 = np.polyfit(date, y, 2)  # 用3次多项式拟合
-        p1 = np.poly1d(z1)
+        z1 = np.polyfit(date, y, 2)  # 用2次多项式拟合
+        p1 = np.poly1d(z1)  # 获得多项式
+        yvals = p1(date)  # 可直接使用yvals=np.polyval(z1,xxx)
+        plt.plot(date, y, '*', label='original values')
+        plt.plot(date, yvals, 'r', label='polyfit values')
+        plt.xlabel('x axis')
+        plt.ylabel('y axis')
+        plt.legend(loc=4)  # 指定legend在图中的位置，类似象限的位置
+        plt.title('polyfitting')
+        plt.show()
+        plt.savefig('1.png')
         # 获得 a b c
         c = p1[0]
         b = p1[1]
