@@ -63,10 +63,11 @@ class CurvePloy():
         b = result[1]
         c = result[2]
         recommand = self.get_recommand(a,b,c)
-        print(self.get_recommand(a,b,c))
+        print(self.jjdm+" 推荐值是"+recommand)
         JiJinGuSuan.update({JiJinGuSuan.recommand:recommand}).where(JiJinGuSuan.jjdm == self.jjdm)
 
 info_list = JiJinGuSuan.select()
 for info in info_list:
+    print('正在处理基金'+ info.jjdm)
     mode = CurvePloy(info.jjdm,7)
     mode.handle()
