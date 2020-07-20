@@ -64,7 +64,7 @@ class CurvePloy():
         c = result[2]
         recommand = self.get_recommand(a,b,c)
         print(self.jjdm+" 推荐值是"+ str(recommand))
-        JiJinGuSuan.update({JiJinGuSuan.recommand:recommand}).where(JiJinGuSuan.jjdm == self.jjdm)
+        JiJinGuSuan.update({JiJinGuSuan.recommand:recommand}).where(JiJinGuSuan.jjdm == self.jjdm).execute()
 
 info_list = JiJinGuSuan.select()
 for info in info_list:
