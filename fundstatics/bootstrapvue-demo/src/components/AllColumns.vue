@@ -121,7 +121,7 @@
                 },
                 {
                     'title': 'Laravel心得',
-                    'strCategoryThumb': 'http://81.70.21.205/img/laravel.png',
+                    'strCategoryThumb': 'http://81.70.21.205:82/img/laravel.png',
                     'desc': '实际工作中遇到的Laravel问题',
                     'href':'laravel'
 
