@@ -44,8 +44,8 @@ class CurvePloy():
             return 0
         recommand = 0;
         max_pos_x = 0-(b/(2*a))
-        print(max_pos_x)
-        print(self.x)
+       # print(max_pos_x)
+       # print(self.x)
         for cur_x in self.x:
             if max_pos_x < cur_x:
                 recommand = recommand+1
