@@ -14,20 +14,20 @@
             <!-- Text slides with image -->
             <b-carousel-slide
 
-                    img-src="http://81.70.21.205/img/data_analysize.jpg"
+                    img-src="http://81.70.21.205:82/img/data_analysize.jpg"
             ></b-carousel-slide>
 
             <!-- Slides with custom text -->
             <b-carousel-slide
 
-                    img-src="http://81.70.21.205/img/python.jpeg">
+                    img-src="http://81.70.21.205:82/img/python.jpeg">
 
             </b-carousel-slide>
 
             <!-- Slides with image only -->
             <b-carousel-slide
 
-                    img-src="http://81.70.21.205/img/laravel.png"></b-carousel-slide>
+                    img-src="http://81.70.21.205:82/img/laravel.png"></b-carousel-slide>
 
             <!-- Slides with img slot -->
 
@@ -97,7 +97,7 @@
                 meals: [
                     {
                         'title': '基金数据分析',
-                        'strCategoryThumb': 'http://81.70.21.205/img/data_analysize.jpg',
+                        'strCategoryThumb': 'http://81.70.21.205:82/img/data_analysize.jpg',
                         'desc': '111'
                     }
 
@@ -108,13 +108,13 @@
             this.meals = [
                 {
                     'title': '基金数据分析',
-                    'strCategoryThumb': 'http://81.70.21.205/img/data_analysize.jpg',
+                    'strCategoryThumb': 'http://81.70.21.205:82/img/data_analysize.jpg',
                     'desc': '数据分析思考和实现过程',
                     'href':'JiJinList'
                 },
                 {
                     'title': 'Python 记录',
-                    'strCategoryThumb': 'http://81.70.21.205/img/python.jpeg',
+                    'strCategoryThumb': 'http://81.70.21.205:82/img/python.jpeg',
                     'desc': '记录数据分析过程中的技术问题',
                     'href':'python'
 

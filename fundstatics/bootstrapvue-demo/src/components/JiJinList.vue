@@ -153,7 +153,7 @@
                             'guimo': cur_item.guimo_number,
                             'level': cur_item.one_week_level + "-" + cur_item.one_month_level + "-" + cur_item.three_months_level + "-" + cur_item.six_months_level,
                             'update_time': cur_item.gsl_update_time,
-                            'recommand': '暂无'
+                            'recommand': cur_item.recommand
                         })
                     }
                 })
