@@ -32,11 +32,29 @@
                         <br>
 
 
+                        <el-popover
+                                placement="top-start"
+
+                                width="160"
+                                v-model="visible">
+                            <p>这是一段内容这是一段内容确定删除吗？</p>
+                            <div style="text-align: right; margin: 0">
+                                <el-button size="mini" type="text" @click="visible = false">取消</el-button>
+                                <el-button type="primary" size="mini" @click="visible = false">确定</el-button>
+                            </div>
+
+                        </el-popover>
+
+
                         <el-table
                                 v-loading="loading"
                                 :data="items"
+                                @cell-mouse-enter="mouseenter"
+                                @cell-mouse-leave="mouseleave"
 
                                 style="width: 100%">
+
+
                             <el-table-column
                                     prop="name"
                                     label="名称"
@@ -57,7 +75,8 @@
                             </el-table-column>
                             <el-table-column
                                     prop="recommand"
-                                    label="推荐">
+                                    label="推荐" @click="popOver()">
+
                             </el-table-column>
                         </el-table>
 
@@ -128,12 +147,23 @@
 
                 perPage: 3,
                 currentPage: 1,
-                items: []
+                items: [],
+                popovershow: true,
+                visible: false
             }
         },
         name: "JiJinList",
         methods: {
             //  搜索
+            mouseenter(row) {
+                console.log(row)
+                self.visible = true
+            },
+             mouseleave(row) {
+                console.log(row)
+                self.visible = false
+            }
+            ,
             search() {
                 var url = "";
                 url = 'http://81.70.21.205:82/api/fund_list?p=w&';
@@ -153,7 +183,8 @@
                             'guimo': cur_item.guimo_number,
                             'level': cur_item.one_week_level + "-" + cur_item.one_month_level + "-" + cur_item.three_months_level + "-" + cur_item.six_months_level,
                             'update_time': cur_item.gsl_update_time,
-                            'recommand': cur_item.recommand
+                            'recommand': cur_item.recommand,
+                            'jjdm': cur_item.jjdm
                         })
                     }
                 })
