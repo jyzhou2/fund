@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 import matplotlib.pyplot as plt
-from models import JiJinRecord
+from models import JiJinRecord,JiJinGuSuan
 import pandas as pd
 
 
@@ -62,7 +62,11 @@ class CurvePloy():
         a = result[0]
         b = result[1]
         c = result[2]
+        recommand = self.get_recommand(a,b,c)
         print(self.get_recommand(a,b,c))
+        JiJinGuSuan.update({JiJinGuSuan.recommand:recommand}).where(JiJinGuSuan.jjdm == self.jjdm)
 
-mode = CurvePloy('000004',7)
-mode.handle()
+info_list = JiJinGuSuan.select()
+for info in info_list:
+    mode = CurvePloy(info.jjdm,7)
+    mode.handle()
