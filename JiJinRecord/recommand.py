@@ -32,7 +32,7 @@ class CurvePloy():
         plt.legend(loc=4)  # 指定legend在图中的位置，类似象限的位置
         plt.title('polyfitting')
         plt.show()
-        plt.savefig('1.png')
+        plt.savefig('/home/www/wwwroot/fund_view/public/imgs/'+self.jjdm+'.png')
         # 获得 a b c
         c = p1[0]
         b = p1[1]
@@ -52,8 +52,6 @@ class CurvePloy():
 
         return recommand
 
-
-
         # 如果定点坐标小于  样本数据x坐标的最小值，则表示一直在下跌，推荐值是样本数量的个数
 
         # 如果定点坐标 处于 样本数据x坐标的中间，则推荐值样本数据x坐标中大于max_pos_x的个数
@@ -64,7 +62,7 @@ class CurvePloy():
         a = result[0]
         b = result[1]
         c = result[2]
-        print( self.get_recommand(a,b,c))
+        print(self.get_recommand(a,b,c))
 
 mode = CurvePloy('000004',7)
 mode.handle()
