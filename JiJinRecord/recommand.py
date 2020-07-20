@@ -32,7 +32,7 @@ class CurvePloy():
         plt.legend(loc=4)  # 指定legend在图中的位置，类似象限的位置
         plt.title('polyfitting')
         plt.show()
-        plt.savefig('/home/www/wwwroot/fund_view/public/imgs/'+self.jjdm+'.png')
+        plt.savefig('/home/www/wwwroot/fund_view/public/img/'+self.jjdm+'.png')
         # 获得 a b c
         c = p1[0]
         b = p1[1]
