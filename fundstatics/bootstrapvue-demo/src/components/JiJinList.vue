@@ -32,20 +32,6 @@
                         <br>
 
 
-                        <el-popover
-                                placement="top-start"
-
-                                width="160"
-                                v-model="visible">
-                            <p>这是一段内容这是一段内容确定删除吗？</p>
-                            <div style="text-align: right; margin: 0">
-                                <el-button size="mini" type="text" @click="visible = false">取消</el-button>
-                                <el-button type="primary" size="mini" @click="visible = false">确定</el-button>
-                            </div>
-
-                        </el-popover>
-
-
                         <el-table
                                 v-loading="loading"
                                 :data="items"
@@ -53,6 +39,7 @@
                                 @cell-mouse-leave="mouseleave"
 
                                 style="width: 100%">
+
 
 
                             <el-table-column
@@ -74,8 +61,21 @@
                                     label="更新时间">
                             </el-table-column>
                             <el-table-column
-                                    prop="recommand"
-                                    label="推荐" @click="popOver()">
+
+                                    label="推荐" >
+
+                                <template slot-scope="scope">
+                                    <el-popover width="160" :ref="`popover-${scope.$index}`" trigger="hover">
+                                        <p>确定删除该项吗？</p>
+                                        <div style="text-align: right; margin: 0">
+                                            <el-button type="text" size="mini" @click="handleClose(scope.$index)">
+                                                取消
+                                            </el-button>
+                                            <el-button type="danger" size="mini">确定</el-button>
+                                        </div>
+                                        <el-button type="text" slot="reference">{{ scope.row.recommand }}</el-button>
+                                    </el-popover>
+                                </template>
 
                             </el-table-column>
                         </el-table>
@@ -159,7 +159,10 @@
                 console.log(row)
                 self.visible = true
             },
-             mouseleave(row) {
+            handleClose(index) {
+                this.$refs[`popover-${index}`].doClose()
+            },
+            mouseleave(row) {
                 console.log(row)
                 self.visible = false
             }
