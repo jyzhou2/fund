@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from models import JiJinRecord,JiJinGuSuan
 import pandas as pd
+import os
+
 
 
 class CurvePloy():
@@ -34,7 +36,12 @@ class CurvePloy():
         plt.legend(loc=4)  # 指定legend在图中的位置，类似象限的位置
         plt.title('polyfitting')
         plt.show()
-        plt.savefig('/home/www/wwwroot/fund_view/public/img/'+self.jjdm+'.png')
+        '''
+            文件如果存在
+        '''
+        if os.path.exists('/home/www/wwwroot/fund/fundstatics/bootstrapvue-demo/dist/'+self.jjdm+'.png'):
+            os.remove('/home/www/wwwroot/fund/fundstatics/bootstrapvue-demo/dist/'+self.jjdm+'.png')
+        plt.savefig('/home/www/wwwroot/fund/fundstatics/bootstrapvue-demo/dist/'+self.jjdm+'.png')
         # 获得 a b c
         c = p1[0]
         b = p1[1]
@@ -66,7 +73,7 @@ class CurvePloy():
         c = result[2]
         recommand = self.get_recommand(a,b,c)
         print(self.jjdm+" 推荐值是"+ str(recommand))
-        JiJinGuSuan.update({JiJinGuSuan.recommand:recommand,JiJinGuSuan.jijin_pic:'http://81.70.21.205/img/'+self.jjdm+".png"}).where(JiJinGuSuan.jjdm == self.jjdm).execute()
+        JiJinGuSuan.update({JiJinGuSuan.recommand:recommand,JiJinGuSuan.jijin_pic:'http://81.70.21.205/'+self.jjdm+".png"}).where(JiJinGuSuan.jjdm == self.jjdm).execute()
 
 info_list = JiJinGuSuan.select()
 for info in info_list:
