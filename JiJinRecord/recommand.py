@@ -14,20 +14,22 @@ class CurvePloy():
     def get_ploy1d(self):
         info_list = JiJinRecord.select().where(JiJinRecord.jjdm == self.jjdm).order_by(JiJinRecord.date.desc()).limit(self.count)
         y = []
+        x_index = []
         date = []
         index = 0.1
         for info in info_list:
             y.append(info.dwjz)
-            date.append(index)
+            date.append(info.date)
+            x_index.append(index)
             index = index + 1
         y = pd.to_numeric(y)
-        self.x = date
-        z1 = np.polyfit(date, y, 2)  # 用2次多项式拟合
+        self.x = x_index
+        z1 = np.polyfit(x_index, y, 2)  # 用2次多项式拟合
         p1 = np.poly1d(z1)  # 获得多项式
-        yvals = p1(date)  # 可直接使用yvals=np.polyval(z1,xxx)
+        yvals = p1(x_index)  # 可直接使用yvals=np.polyval(z1,xxx)
         plt.plot(date, y, '*', label='original values')
         plt.plot(date, yvals, 'r', label='polyfit values')
-        plt.xlabel('x axis')
+        plt.xlabel('date')
         plt.ylabel('y axis')
         plt.legend(loc=4)  # 指定legend在图中的位置，类似象限的位置
         plt.title('polyfitting')
@@ -64,7 +66,7 @@ class CurvePloy():
         c = result[2]
         recommand = self.get_recommand(a,b,c)
         print(self.jjdm+" 推荐值是"+ str(recommand))
-        JiJinGuSuan.update({JiJinGuSuan.recommand:recommand}).where(JiJinGuSuan.jjdm == self.jjdm).execute()
+        JiJinGuSuan.update({JiJinGuSuan.recommand:recommand,JiJinGuSuan.jijin_pic:'http://81.70.21.205/img/'+self.jjdm+".png"}).where(JiJinGuSuan.jjdm == self.jjdm).execute()
 
 info_list = JiJinGuSuan.select()
 for info in info_list:
