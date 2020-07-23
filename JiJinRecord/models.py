@@ -1,5 +1,7 @@
 # coding: UTF-8
 from peewee import *
+import sys
+sys.path.append("..")
 import datetime
 database = MySQLDatabase('test', **{'charset': 'utf8', 'use_unicode': True, 'host': '81.70.21.205', 'user': 'root', 'password': 'hdlnmp','port':3306})
 
