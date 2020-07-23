@@ -35,13 +35,26 @@
                         <el-table
                                 v-loading="loading"
                                 :data="items"
-                                @cell-mouse-enter="mouseenter"
-                                @cell-mouse-leave="mouseleave"
 
                                 style="width: 100%">
 
+                            <el-table-column
 
+                                    label="推荐">
 
+                                <template slot-scope="scope">
+                                    <el-popover width="160" :ref="`popover-${scope.$index}`" trigger="hover">
+
+                                        <template>
+                                            <img :src="scope.row.jijin_pic"
+                                                 style="margin-left: 30%;width: 500px;height: 200px"/>
+                                        </template>
+
+                                        <el-button type="text" slot="reference">{{ scope.row.recommand }}</el-button>
+                                    </el-popover>
+                                </template>
+
+                            </el-table-column>
                             <el-table-column
                                     prop="name"
                                     label="名称"
@@ -60,27 +73,8 @@
                                     prop="update_time"
                                     label="更新时间">
                             </el-table-column>
-                            <el-table-column
 
-                                    label="推荐" >
-
-                                <template slot-scope="scope">
-                                    <el-popover width="160" :ref="`popover-${scope.$index}`" trigger="hover">
-                                        <p>确定删除该项吗？</p>
-                                        <div style="text-align: right; margin: 0">
-                                            <el-button type="text" size="mini" @click="handleClose(scope.$index)">
-                                                取消
-                                            </el-button>
-                                            <el-button type="danger" size="mini">确定</el-button>
-                                        </div>
-                                        <el-button type="text" slot="reference">{{ scope.row.recommand }}</el-button>
-                                    </el-popover>
-                                </template>
-
-                            </el-table-column>
                         </el-table>
-
-
                     </div>
 
                 </b-tab>
@@ -155,18 +149,8 @@
         name: "JiJinList",
         methods: {
             //  搜索
-            mouseenter(row) {
-                console.log(row)
-                self.visible = true
-            },
-            handleClose(index) {
-                this.$refs[`popover-${index}`].doClose()
-            },
-            mouseleave(row) {
-                console.log(row)
-                self.visible = false
-            }
-            ,
+
+
             search() {
                 var url = "";
                 url = 'http://81.70.21.205:82/api/fund_list?p=w&';
@@ -187,7 +171,8 @@
                             'level': cur_item.one_week_level + "-" + cur_item.one_month_level + "-" + cur_item.three_months_level + "-" + cur_item.six_months_level,
                             'update_time': cur_item.gsl_update_time,
                             'recommand': cur_item.recommand,
-                            'jjdm': cur_item.jjdm
+                            'jjdm': cur_item.jjdm,
+                            'jijin_pic': cur_item.jijin_pic
                         })
                     }
                 })

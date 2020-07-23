@@ -42,6 +42,12 @@ class CurvePloy():
         if os.path.exists('/home/www/wwwroot/fund/fundstatics/bootstrapvue-demo/dist/'+self.jjdm+'.png'):
             os.remove('/home/www/wwwroot/fund/fundstatics/bootstrapvue-demo/dist/'+self.jjdm+'.png')
         plt.savefig('/home/www/wwwroot/fund/fundstatics/bootstrapvue-demo/dist/'+self.jjdm+'.png')
+        '''
+            清空画布
+        '''
+        plt.clf()  # 清图。
+        plt.cla()  # 清坐标轴。
+        plt.close()  # 关窗口
         # 获得 a b c
         c = p1[0]
         b = p1[1]
