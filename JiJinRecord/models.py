@@ -67,6 +67,8 @@ class JiJinGuSuan(Model):
     six_months_level = CharField(null=True)  # 六个月水平
     gszzl = CharField(null=True)  # 六个月水平
     recommand = DoubleField(null=True)  # 六个月水平
+    jijin_pic = CharField(null=True)  # 六个月水平
+
     class Meta:
         database = database
         db_table = 'dlj_jijingusuan'
