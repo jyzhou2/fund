@@ -39,15 +39,15 @@
                                 style="width: 100%">
 
                             <el-table-column
-
+   width="100"
                                     label="推荐">
 
                                 <template slot-scope="scope">
-                                    <el-popover width="160" :ref="`popover-${scope.$index}`" trigger="hover">
+                                    <el-popover width="100" :ref="`popover-${scope.$index}`" trigger="hover">
 
                                         <template>
                                             <img :src="scope.row.jijin_pic"
-                                                 style="margin-left: 30%;width: 500px;height: 200px"/>
+                                                 style="margin-left: 30%;width: 300px;height: 200px"/>
                                         </template>
 
                                         <el-button type="text" slot="reference">{{ scope.row.recommand }}</el-button>

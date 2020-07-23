@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from models import JiJinRecord,JiJinGuSuan
 import pandas as pd
 import os
-
+import time
 
 
 class CurvePloy():
@@ -21,7 +21,10 @@ class CurvePloy():
         index = 0.1
         for info in info_list:
             y.append(info.dwjz)
-            date.append(info.date)
+            ans_time_stamp = time.mktime(time.strptime(info.date, "%Y-%m-%d"))
+            struct_time = time.localtime(ans_time_stamp)  # 得到结构化时间格式
+            now_time = time.strftime("%m-%d", struct_time)
+            date.append(now_time)
             x_index.append(index)
             index = index + 1
         y = pd.to_numeric(y)
