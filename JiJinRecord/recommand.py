@@ -46,7 +46,7 @@ class CurvePloy():
         plt.ylabel('y axis')
         plt.legend(loc=4)  # 指定legend在图中的位置，类似象限的位置
         plt.title(self.jjdm)
-        plt.show()
+        #plt.show()
         '''
             文件如果存在
         '''
