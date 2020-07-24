@@ -98,4 +98,3 @@ for info in info_list:
     print('正在处理基金'+ info.jjdm)
     mode = CurvePloy(info.jjdm,7)
     mode.handle()
-    break
