@@ -20,7 +20,7 @@ class CurvePloy():
         recordid = []
         for tmp_item in raw_info_list:
             recordid.append(tmp_item.id)
-        info_list = JiJinRecord.select().where(JiJinRecord.id in recordid).order_by(JiJinRecord.date.asc())
+        info_list = JiJinRecord.select().where(JiJinRecord.id.in_(recordid)).order_by(JiJinRecord.date.asc())
         # 进行倒序操作
         print(info_list)
 
