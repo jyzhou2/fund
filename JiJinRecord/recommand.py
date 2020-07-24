@@ -16,13 +16,14 @@ class CurvePloy():
     def get_ploy1d(self):
         # 获取最近7天的数据，然后再倒序输出
         raw_info_list = JiJinRecord.select().where(JiJinRecord.jjdm == self.jjdm).order_by(JiJinRecord.date.desc()).limit(self.count)
-        info_list=[]
+        # 获得record_id
+        recordid = []
         for tmp_item in raw_info_list:
-            info_list.append(tmp_item)
+            recordid.append(tmp_item.id)
         # 进行倒序操作
+        print(recordid)
+        info_list = []
 
-        info_list = info_list.reverse()
-        print(info_list)
         y = []
         x_index = []
         date = []
