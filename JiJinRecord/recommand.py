@@ -20,7 +20,9 @@ class CurvePloy():
         for tmp_item in raw_info_list:
             info_list.append(tmp_item)
         # 进行倒序操作
+
         info_list = info_list.reverse()
+        print(info_list)
         y = []
         x_index = []
         date = []
