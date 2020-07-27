@@ -10,11 +10,23 @@
 
                         <b-container class="bv-example-row">
                             <b-row>
+
                                 <b-col>
-                                    <b-form-tags input-id="tags-basic" class="mb-1" no-add-on-enter separator=" "
-                                                 placeholder="选择基金主题"
-                                                 v-model="theme"></b-form-tags>
+
+
+                                    <el-select v-model="SelectJiJinThemes" filterable allow-create default-first-option clearable
+                                               placeholder="请选择基金主题" style="width:280px">
+                                        <el-option v-for="item in JiJinThemes" :key="item.title" :label="item.title"
+                                                   v-bind:value="item.title">
+                                            <span style="float: left">{{ item.title }}</span>
+                                            <span style="margin-left:15px;color: #8492a6; font-size: 13px">({{ item.title }})</span>
+                                        </el-option>
+                                    </el-select>
+
+
                                 </b-col>
+
+
                                 <b-col>
                                     <b-form-input type="number" v-model="guimo"
                                                   placeholder="输入基金规模"></b-form-input>
@@ -39,7 +51,7 @@
                                 style="width: 100%">
 
                             <el-table-column
-   width="100"
+                                    width="100"
                                     label="推荐">
 
                                 <template slot-scope="scope">
@@ -130,6 +142,7 @@
     export default {
         created: function () {
             self = this
+            this.mount_select()
         },
         data() {
             return {
@@ -143,19 +156,27 @@
                 currentPage: 1,
                 items: [],
                 popovershow: true,
-                visible: false
+                visible: false,
+                JiJinThemes: [],
+                SelectJiJinThemes:""
             }
         },
         name: "JiJinList",
         methods: {
             //  搜索
-
+            mount_select() {
+                var theme_url = "";
+                theme_url = 'http://81.70.21.205:82/api/getThemeList?p=w&';
+                this.axios.get(theme_url).then((response) => {
+                    self.JiJinThemes = response.data.data
+                })
+            },
 
             search() {
                 var url = "";
                 url = 'http://81.70.21.205:82/api/fund_list?p=w&';
                 url += 'guimo=' + self.guimo + "&"
-                url += 'theme=' + self.theme + "&"
+                url += 'theme=' + self.SelectJiJinThemes + "&"
                 self.loading = true
                 this.axios.get(url).then((response) => {
                     self.loading = false
@@ -177,7 +198,8 @@
                     }
                 })
 
-            },
+            }
+            ,
 
         }
     }
