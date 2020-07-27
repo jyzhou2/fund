@@ -178,7 +178,7 @@
                 url += 'guimo=' + self.guimo + "&"
                 url += 'theme=' + self.SelectJiJinThemes + "&"
                 self.loading = true
-                this.axios.get(url).then((response) => {
+                this.axios.get(url,{timeout:300000}).then((response) => {
                     self.loading = false
                     var datas = response.data;
                     datas = datas.data
