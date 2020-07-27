@@ -14,7 +14,16 @@ class CurvePloy():
         self.x = []
 
     def get_ploy1d(self):
-        info_list = JiJinRecord.select().where(JiJinRecord.jjdm == self.jjdm).order_by(JiJinRecord.date.desc()).limit(self.count)
+        # 获取最近7天的数据，然后再倒序输出
+        raw_info_list = JiJinRecord.select().where(JiJinRecord.jjdm == self.jjdm).order_by(JiJinRecord.date.desc()).limit(self.count)
+        # 获得record_id
+        recordid = []
+        for tmp_item in raw_info_list:
+            recordid.append(tmp_item.id)
+        info_list = JiJinRecord.select().where(JiJinRecord.id.in_(recordid)).order_by(JiJinRecord.date.asc())
+        # 进行倒序操作
+        print(info_list)
+
         y = []
         x_index = []
         date = []
@@ -38,7 +47,7 @@ class CurvePloy():
         plt.ylabel('y axis')
         plt.legend(loc=4)  # 指定legend在图中的位置，类似象限的位置
         plt.title(self.jjdm)
-        plt.show()
+        #plt.show()
         '''
             文件如果存在
         '''
