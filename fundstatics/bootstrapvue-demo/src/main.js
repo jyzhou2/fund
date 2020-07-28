@@ -9,7 +9,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import VueAxios from 'vue-axios'
 
-
+axios.defaults.baseURL='http://81.70.21.205:82/api/'
 Vue.use(VueAxios, axios)
 Vue.use(BootstrapVue)
 Vue.use(ElementUI)

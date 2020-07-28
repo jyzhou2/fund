@@ -14,12 +14,13 @@
                                 <b-col>
 
 
-                                    <el-select v-model="SelectJiJinThemes" filterable allow-create default-first-option clearable
+                                    <el-select v-model="SelectJiJinThemes" filterable allow-create default-first-option
+                                               clearable
                                                placeholder="请选择基金主题" style="width:280px">
                                         <el-option v-for="item in JiJinThemes" :key="item.title" :label="item.title"
                                                    v-bind:value="item.title">
                                             <span style="float: left">{{ item.title }}</span>
-                                            <span style="margin-left:15px;color: #8492a6; font-size: 13px">({{ item.title }})</span>
+                                            <span style="margin-left:15px;color: #8492a6; font-size: 13px">({{ item.label }})</span>
                                         </el-option>
                                     </el-select>
 
@@ -67,11 +68,13 @@
                                 </template>
 
                             </el-table-column>
-                            <el-table-column
-                                    prop="name"
-                                    label="名称"
-                                    width="180">
+                            <el-table-column label="名称" width="180">
+                                <template slot-scope="scope">
+                                    <el-button type="text" @click="jumpToJJDM(scope.row.jjdm)"> {{scope.row.name}}</el-button>
+                                </template>
                             </el-table-column>
+
+
                             <el-table-column
                                     prop="guimo"
                                     label="规模"
@@ -80,6 +83,10 @@
                             <el-table-column
                                     prop="level"
                                     label="水平(周-月-三月-半年)">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="risk_level"
+                                    label="风险等级">
                             </el-table-column>
                             <el-table-column
                                     prop="update_time"
@@ -158,7 +165,7 @@
                 popovershow: true,
                 visible: false,
                 JiJinThemes: [],
-                SelectJiJinThemes:""
+                SelectJiJinThemes: ""
             }
         },
         name: "JiJinList",
@@ -172,13 +179,16 @@
                 })
             },
 
+            jumpToJJDM(jjdm){
+                window.open("http://fund.eastmoney.com/"+jjdm+".html")
+            },
             search() {
                 var url = "";
-                url = 'http://81.70.21.205:82/api/fund_list?p=w&';
+                url = '/fund_list?p=w&';
                 url += 'guimo=' + self.guimo + "&"
                 url += 'theme=' + self.SelectJiJinThemes + "&"
                 self.loading = true
-                this.axios.get(url,{timeout:300000}).then((response) => {
+                self.axios.get(url, {timeout: 300000}).then((response) => {
                     self.loading = false
                     var datas = response.data;
                     datas = datas.data
@@ -193,7 +203,8 @@
                             'update_time': cur_item.gsl_update_time,
                             'recommand': cur_item.recommand,
                             'jjdm': cur_item.jjdm,
-                            'jijin_pic': cur_item.jijin_pic
+                            'jijin_pic': cur_item.jijin_pic,
+                            'risk_level':cur_item.jijin_type
                         })
                     }
                 })
