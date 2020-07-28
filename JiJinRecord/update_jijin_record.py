@@ -32,10 +32,6 @@ class UpdateJijinRecord():
             else:
                 for item in models:
                     # 如果当前执行时间在20点以后，则不予处理，如果在20点以前，如果item.date是昨天的，当前基金不予处理
-                    if cur_hour <= 20:
-                        if str(yesterday) == str(item.date):
-                            print(str(i.jjdm) + "已经是最新的，无需处理")
-                            continue
                     print('更新' + str(item.date) + "之后的数据")
                     self.proc_single_jj(i.jjdm, item.date)
 
