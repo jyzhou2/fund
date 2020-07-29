@@ -4,10 +4,8 @@
 
             <b-tabs content-class="mt-3">
                 <b-tab title="基金数据搜索" active>
-
                     <div id="data">
                         <br>
-
                         <b-container class="bv-example-row">
                             <b-row>
 
@@ -39,12 +37,9 @@
                                 </b-col>
                             </b-row>
                         </b-container>
-
                         <!--  这里是搜索数结果数据 -->
                         <br>
                         <br>
-
-
                         <el-table
                                 v-loading="loading"
                                 :data="items"
@@ -70,7 +65,8 @@
                             </el-table-column>
                             <el-table-column label="名称" width="180">
                                 <template slot-scope="scope">
-                                    <el-button type="text" @click="jumpToJJDM(scope.row.jjdm)"> {{scope.row.name}}</el-button>
+                                    <el-button type="text" @click="jumpToJJDM(scope.row.jjdm)"> {{scope.row.name}}
+                                    </el-button>
                                 </template>
                             </el-table-column>
 
@@ -95,9 +91,8 @@
 
                         </el-table>
                     </div>
-
                 </b-tab>
-                <b-tab title="数据分析知识"><p>I'm the second tab</p></b-tab>
+                <b-tab title="数据分析知识" @click="jumpto_data_analysize()"></b-tab>
                 <b-tab title="实时财经消息"><p>I'm a disabled tab!</p></b-tab>
             </b-tabs>
 
@@ -170,6 +165,9 @@
         },
         name: "JiJinList",
         methods: {
+            jumpto_data_analysize(){
+                window.location.href='/ArticleList';
+            },
             //  搜索
             mount_select() {
                 var theme_url = "";
@@ -179,8 +177,8 @@
                 })
             },
 
-            jumpToJJDM(jjdm){
-                window.open("http://fund.eastmoney.com/"+jjdm+".html")
+            jumpToJJDM(jjdm) {
+                window.open("http://fund.eastmoney.com/" + jjdm + ".html")
             },
             search() {
                 var url = "";
@@ -204,7 +202,7 @@
                             'recommand': cur_item.recommand,
                             'jjdm': cur_item.jjdm,
                             'jijin_pic': cur_item.jijin_pic,
-                            'risk_level':cur_item.jijin_type
+                            'risk_level': cur_item.jijin_type
                         })
                     }
                 })
