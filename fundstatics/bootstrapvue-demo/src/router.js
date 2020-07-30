@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import JiJinList from './components/JiJinList'
 import helloWorld from './components/Index'
 import ArticleList from './components/ArticleList'
+import ArticleDetail from './components/ArticleDetail'
 
 Vue.use(Router)
 export default new Router({
@@ -22,6 +23,12 @@ export default new Router({
                 path:'/ArticleList',
                 name:'articleLIst',
                 component:ArticleList
+            }
+            ,
+            {
+                path:'/ArticleDetail',
+                name:'ArticleDetail',
+                component:ArticleDetail
             }
         ]
     }

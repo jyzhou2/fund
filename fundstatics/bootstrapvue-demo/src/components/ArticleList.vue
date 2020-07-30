@@ -2,7 +2,7 @@
     <div>
         <div id="nav">
 
-            <b-tabs  content-class="mt-3">
+            <b-tabs content-class="mt-3">
                 <b-tab @click="jumpto_data_JiJinList()" title="基金数据搜索" active>
 
                 </b-tab>
@@ -14,9 +14,13 @@
                                      class="image">
                                 <div style="padding: 14px;">
                                     <span>{{o.title}}</span>
-                                    <div class="bottom clearfix">
-                                        <time class="time">{{ o.updated_at }}</time>
-                                        <el-button type="text" class="button">查看详情</el-button>
+
+                                    <div class="right clearfix">
+                                        <span style="font-size: 14px">{{o.sub_title}}</span>
+
+                                       <!-- <time class="time" style="margin-left: 0%">{{ o.updated_at }}</time>
+                                       -->
+                                        <el-button type="text" @click="jumpToArticle(o.article_id)" class="button">查看详情</el-button>
                                     </div>
                                 </div>
                             </el-card>
@@ -65,16 +69,16 @@
 </style>
 
 <script>
-      var self;
+    var self;
     export default {
         created: function () {
-              self = this
-
+            self = this
+            self.get_article_list()
         },
         data() {
             return {
                 currentDate: new Date(),
-                article_list[]
+                article_list: []
             }
         },
         name: "ArticleList",
@@ -82,11 +86,15 @@
             jumpto_data_JiJinList() {
                 window.location.href = '/JiJinLIst';
             },
-            get_article_list(){
-             theme_url = '/articleList?p=w&cate_id=1';
+            get_article_list() {
+                var theme_url = '/articleList?p=w&cate_id=1';
                 self.axios.get(theme_url).then((response) => {
                     self.article_list = response.data.data
                 })
+            },
+            jumpToArticle(article_id){
+                window.location.href = '/ArticleDetail?article_id='+article_id;
+
             }
         }
     }
