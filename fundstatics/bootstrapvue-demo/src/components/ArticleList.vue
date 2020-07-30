@@ -85,7 +85,7 @@
             get_article_list(){
              theme_url = '/articleList?p=w&cate_id=1';
                 self.axios.get(theme_url).then((response) => {
-                    self.JiJinThemes = response.data.data
+                    self.article_list = response.data.data
                 })
             }
         }
