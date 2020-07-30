@@ -65,10 +65,10 @@
 </style>
 
 <script>
-    //  var self;
+      var self;
     export default {
         created: function () {
-            //  self = this
+              self = this
 
         },
         data() {
