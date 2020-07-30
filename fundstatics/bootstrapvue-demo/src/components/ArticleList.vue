@@ -8,15 +8,15 @@
                 </b-tab>
                 <b-tab title="数据分析知识" active>
                     <el-row>
-                        <el-col :span="8" v-for="(o, index) in 2" :key="o" :offset="index > 0 ? 2 : 0">
+                        <el-col :span="8" v-for="(o, index) in article_list" :key="o" :offset="index > 0 ? 2 : 0">
                             <el-card :body-style="{ padding: '0px' }">
-                                <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+                                <img :src="o.default_img"
                                      class="image">
                                 <div style="padding: 14px;">
-                                    <span>好吃的汉堡</span>
+                                    <span>{{o.title}}</span>
                                     <div class="bottom clearfix">
-                                        <time class="time">{{ currentDate }}</time>
-                                        <el-button type="text" class="button">操作按钮</el-button>
+                                        <time class="time">{{ o.updated_at }}</time>
+                                        <el-button type="text" class="button">查看详情</el-button>
                                     </div>
                                 </div>
                             </el-card>
@@ -73,13 +73,20 @@
         },
         data() {
             return {
-                currentDate: new Date()
+                currentDate: new Date(),
+                article_list[]
             }
         },
         name: "ArticleList",
         methods: {
             jumpto_data_JiJinList() {
                 window.location.href = '/JiJinLIst';
+            },
+            get_article_list(){
+             theme_url = '/articleList?p=w&cate_id=1';
+                self.axios.get(theme_url).then((response) => {
+                    self.JiJinThemes = response.data.data
+                })
             }
         }
     }
