@@ -2,9 +2,9 @@
     <div>
         <div id="nav">
 
-            <b-tabs content-class="mt-3">
 
-                <b-tab title="Vue使用记录" active>
+
+
                     <el-row>
                         <el-col :span="8" v-for="(o, index) in article_list" :key="o" :offset="index > 0 ? 2 : 0">
                             <el-card :body-style="{ padding: '0px' }">
@@ -24,8 +24,6 @@
                             </el-card>
                         </el-col>
                     </el-row>
-                </b-tab>
-            </b-tabs>
 
         </div>
 
