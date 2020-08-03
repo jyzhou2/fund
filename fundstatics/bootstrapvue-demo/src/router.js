@@ -30,6 +30,12 @@ export default new Router({
                 name:'ArticleDetail',
                 component:ArticleDetail
             }
+             ,
+            {
+                path:'/vue',
+                name:'vue',
+                component:ArticleList
+            }
         ]
     }
 )
