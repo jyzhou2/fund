@@ -4,6 +4,7 @@ import JiJinList from './components/JiJinList'
 import helloWorld from './components/Index'
 import ArticleList from './components/ArticleList'
 import ArticleDetail from './components/ArticleDetail'
+import vueList from './components/VueList'
 
 Vue.use(Router)
 export default new Router({
@@ -34,7 +35,7 @@ export default new Router({
             {
                 path:'/vue',
                 name:'vue',
-                component:ArticleList
+                component:vueList
             }
         ]
     }
