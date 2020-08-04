@@ -140,7 +140,8 @@
                 guimo: 5,
                 perPage: 3,
                 currentPage: 1,
-                items: [],
+                items: [
+                    ],
                 popovershow: true,
                 visible: false,
                 JiJinThemes: [],
