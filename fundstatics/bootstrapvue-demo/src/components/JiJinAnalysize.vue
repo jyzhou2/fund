@@ -27,11 +27,11 @@
             <!--  这里是搜索数结果数据 -->
             <br>
             <br>
-            <el-table>
+            <el-table
                 :data="items"
 
                 v-loading = "loading"
-                element-loading-background = "rgba(0, 0, 0, 0.5)"
+
                 element-loading-text = "数据正在加载中"
                 element-loading-spinner = "el-icon-loading"
                 style="width: 100%">
