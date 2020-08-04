@@ -5,6 +5,7 @@ import helloWorld from './components/Index'
 import ArticleList from './components/ArticleList'
 import ArticleDetail from './components/ArticleDetail'
 import vueList from './components/VueList'
+import JiJinAnalysize from './components/JiJinAnalysize'
 
 Vue.use(Router)
 export default new Router({
@@ -13,7 +14,14 @@ export default new Router({
             {
                 path: '/JiJinList',
                 name: 'JiJinList',
-                component: JiJinList
+                component: JiJinList,
+                children: [
+                    {
+                        path: 'JiJinAnalysize',
+                        name: 'JiJinAnalysize',
+                        component: JiJinAnalysize,
+                    },
+                ]
             },
             {
                 path: '/',
@@ -21,21 +29,21 @@ export default new Router({
                 component: helloWorld
             },
             {
-                path:'/ArticleList',
-                name:'articleLIst',
-                component:ArticleList
+                path: '/ArticleList',
+                name: 'articleLIst',
+                component: ArticleList
             }
             ,
             {
-                path:'/ArticleDetail',
-                name:'ArticleDetail',
-                component:ArticleDetail
+                path: '/ArticleDetail',
+                name: 'ArticleDetail',
+                component: ArticleDetail
             }
-             ,
+            ,
             {
-                path:'/vue',
-                name:'vue',
-                component:vueList
+                path: '/vue',
+                name: 'vue',
+                component: vueList
             }
         ]
     }
