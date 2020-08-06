@@ -10,7 +10,7 @@ class SendDingDingMsg():
     def sendMsg(self,msg):
         program = {
             "msgtype": "text",
-            "text": {"content": "???"+msg},
+            "text": {"content": "warn:"+msg},
         }
         headers = {'Content-Type': 'application/json'}
         f = requests.post(self.url, data=json.dumps(program), headers=headers)
