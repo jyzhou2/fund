@@ -4,6 +4,10 @@ import time
 import json
 import re
 from models import JiJinInfo, JiJinGuSuan,JiJinRecord
+from warn import SendDingDingMsg
+
+mode = SendDingDingMsg()
+
 class RealTime():
 
     def __init__(self, jjdm):
@@ -95,12 +99,13 @@ def jj_single_rate(i):
             six_months_level = getLowerRate(jjdm, 180, gsl)
             JiJinGuSuan.updateGusuan(jjdm=jjdm, gszzl=gszzl, gsl=gsl, guimo_number=number,
                                      gsl_update_time=gsl_update_time, one_week_level=one_week_level,
-                                     one_month_level=one_month_level, three_months_level=one_month_level,
+                                     one_month_level=one_month_level, three_months_level=three_months_level,
                                      six_months_level=six_months_level)
             print(jjdm + '更新完成')
         except Exception as e:
             time.sleep(4)
             print("重新处理"+jjdm)
+            mode.sendMsg("重新处理"+jjdm)
             jj_single_rate(i)
             return
 
@@ -126,4 +131,6 @@ def gusuan_modify():
 
 jj_rate()
 gusuan_modify()
+
+mode.sendMsg('基金估算信息统计完成')
 

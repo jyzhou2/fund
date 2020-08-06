@@ -2,12 +2,15 @@ import sys
 sys.path.append("..")
 import datetime
 from models import JiJinUpdateProcess,JiJinRecord
+from warn import SendDingDingMsg
 from JiJinInfo.models import JiJinInfo
 import time
 import requests
 import json
 
+mode = SendDingDingMsg()
 class UpdateJijinRecord():
+
 
     def getYesterday(self):
         today = datetime.date.today()
@@ -61,12 +64,15 @@ class UpdateJijinRecord():
         jj_jz = json.loads(response_text)
 
         if jj_jz is None:
+            mode.sendMsg(jjdm+'未找到基金净值')
             return
         jj_data = jj_jz['Data']
         if jj_data is None:
+            mode.sendMsg(jjdm + '未找到jj_data')
             return
         jj_list = jj_data['LSJZList']
         if jj_list is None:
+            mode.sendMsg(jjdm + 'LSJZList')
             return
         # 倒序排列，先处理老数据，最后处理新数据
         jj_list.reverse()
@@ -84,3 +90,4 @@ if not JiJinUpdateProcess.table_exists():
     JiJinUpdateProcess.create_table()
 model=UpdateJijinRecord()
 model.update_all_jijin()
+mode.sendMsg('基金记录更新完成')
