@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="nav" style="width: 1000px;margin-top: 2%">
+        <div id="nav" style="width: 1200px;margin-top: 2%">
             <b-container class="bv-example-row">
                 <b-row>
                     <b-col>
@@ -14,9 +14,15 @@
                             </el-option>
                         </el-select>
                     </b-col>
-                    <b-col>
+
+                      <b-col>
+                        <b-form-input type="number" v-model="type" filterable allow-create default-first-option
+                                   clearable
+                                   placeholder="请选择基金类型" style="width:200px"></b-form-input>
+                    </b-col>
+                     <b-col>
                         <b-form-input type="number" v-model="guimo"
-                                      placeholder="输入基金规模"></b-form-input>
+                                      placeholder="输入基金规模" ></b-form-input>
                     </b-col>
                     <b-col>
                         <b-button @click="search">Search
@@ -145,7 +151,8 @@
                 popovershow: true,
                 visible: false,
                 JiJinThemes: [],
-                SelectJiJinThemes: ""
+                SelectJiJinThemes: "",
+                type:''
             }
         },
         name: "JiJinList",
