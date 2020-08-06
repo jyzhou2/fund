@@ -2,7 +2,7 @@ import sys
 sys.path.append("..")
 import datetime
 from models import JiJinUpdateProcess,JiJinRecord
-from warn import SendDingDingMsg
+from MsgDao import SendDingDingMsg
 from JiJinInfo.models import JiJinInfo
 import time
 import requests

@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
+sys.path.append("..")
 from models import JiJinRecord,JiJinGuSuan
-from warn import SendDingDingMsg
+from MsgDao import MsgDao
 import pandas as pd
 import os
 import time
 
-msgControl = SendDingDingMsg()
+
+msgControl = MsgDao()
 class CurvePloy():
     def __init__(self,jjdm,count):
         self.jjdm = jjdm

@@ -4,9 +4,9 @@ import time
 import json
 import re
 from models import JiJinInfo, JiJinGuSuan,JiJinRecord
-from warn import SendDingDingMsg
+from MsgDao import MsgDao
 
-msgControl = SendDingDingMsg()
+msgControl = MsgDao()
 
 class RealTime():
 
