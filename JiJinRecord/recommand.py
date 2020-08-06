@@ -7,7 +7,7 @@ import pandas as pd
 import os
 import time
 
-mode = SendDingDingMsg()
+msgControl = SendDingDingMsg()
 class CurvePloy():
     def __init__(self,jjdm,count):
         self.jjdm = jjdm
@@ -99,4 +99,4 @@ for info in info_list:
     print('正在处理基金'+ info.jjdm)
     mode = CurvePloy(info.jjdm,7)
     mode.handle()
-mode.sendMsg('基金估算完成')
+msgControl.sendMsg('基金估算完成')

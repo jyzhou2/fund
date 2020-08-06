@@ -6,7 +6,7 @@ import re
 from models import JiJinInfo, JiJinGuSuan,JiJinRecord
 from warn import SendDingDingMsg
 
-mode = SendDingDingMsg()
+msgControl = SendDingDingMsg()
 
 class RealTime():
 
@@ -105,7 +105,7 @@ def jj_single_rate(i):
         except Exception as e:
             time.sleep(4)
             print("重新处理"+jjdm)
-            mode.sendMsg("重新处理"+jjdm)
+            msgControl.sendMsg("重新处理"+jjdm)
             jj_single_rate(i)
             return
 
@@ -132,5 +132,5 @@ def gusuan_modify():
 jj_rate()
 gusuan_modify()
 
-mode.sendMsg('基金估算信息统计完成')
+msgControl.sendMsg('基金估算信息统计完成')
 
