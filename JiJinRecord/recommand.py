@@ -3,7 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 sys.path.append("..")
-from models import JiJinRecord,JiJinGuSuan
+from models.JiJinRecord import JiJinRecord
+from models.JiJinGuSuan import JiJinGuSuan
 from MsgDao import MsgDao
 import pandas as pd
 import os

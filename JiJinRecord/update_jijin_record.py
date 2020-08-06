@@ -1,16 +1,19 @@
 import sys
+
 sys.path.append("..")
 import datetime
-from models import JiJinUpdateProcess,JiJinRecord
-from MsgDao import SendDingDingMsg
+from models.JiJinRecord import JiJinRecord
+from models.JiJinUpdateProcess import JiJinUpdateProcess
+from MsgDao import MsgDao
 from JiJinInfo.models import JiJinInfo
 import time
 import requests
 import json
 
-mode = SendDingDingMsg()
-class UpdateJijinRecord():
+mode = MsgDao()
 
+
+class UpdateJijinRecord():
 
     def getYesterday(self):
         today = datetime.date.today()
@@ -27,7 +30,7 @@ class UpdateJijinRecord():
         yesterday = self.getYesterday()
         cur_hour = time.localtime().tm_hour
         for i in jjdm_list:
-            print('尝试更新' + str(i.jjdm)+"的基金记录")
+            print('尝试更新' + str(i.jjdm) + "的基金记录")
             models = JiJinUpdateProcess.select().where(JiJinUpdateProcess.jjdm == i.jjdm)
             if len(models) == 0:
                 print('未找到更新记录，正在尝试获取信息' + str(i.jjdm))
@@ -41,7 +44,8 @@ class UpdateJijinRecord():
     '''
         更新单个基金的记录
     '''
-    def proc_single_jj(self,jjdm, date=''):
+
+    def proc_single_jj(self, jjdm, date=''):
         if date == '':
             date = '2019-07-01'
         url = 'http://api.fund.eastmoney.com/f10/lsjz?callback=jQuery18309366863931227072_1587472982780&fundCode=' + str(
@@ -64,7 +68,7 @@ class UpdateJijinRecord():
         jj_jz = json.loads(response_text)
 
         if jj_jz is None:
-            mode.sendMsg(jjdm+'未找到基金净值')
+            mode.sendMsg(jjdm + '未找到基金净值')
             return
         jj_data = jj_jz['Data']
         if jj_data is None:
@@ -83,11 +87,12 @@ class UpdateJijinRecord():
             rzzl = item['JZZZL']
             JiJinRecord.updateJiJinRecord(jjdm=jjdm, date=date, dwjz=dwjz, ljjz=ljjz, rzzl=rzzl)
 
+
 if not JiJinRecord.table_exists():
     JiJinRecord.create_table()
 
 if not JiJinUpdateProcess.table_exists():
     JiJinUpdateProcess.create_table()
-model=UpdateJijinRecord()
+model = UpdateJijinRecord()
 model.update_all_jijin()
 mode.sendMsg('基金记录更新完成')

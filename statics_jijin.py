@@ -1,7 +1,12 @@
 import pandas as pd
-from models import JiJinRecord,JijinStatics,JiJinInfo,JiJinStaticsUpdate
+from models.JiJinRecord import JiJinRecord
+from models.JijinStatics import JijinStatics
+from models.JiJinInfo import JiJinInfo
+from models.JijinStatics import JijinStatics
+from models.JiJinStaticsUpdate import JiJinStaticsUpdate
 import numpy as np
 from peewee import DoesNotExist
+from MsgDao import MsgDao
 class StaticsJijin():
     # 构造函数，获得基金代码
     def __init__(self,jjdm):
@@ -208,16 +213,14 @@ def get_all_jijin_statics(jjdm):
             print("未找到更新记录，未找到基金记录，本次执行结束")
             return
 
-'''
-model = StaticsJijin('000001')
-model.handle('2018-07-02')
-exit()
-'''
+msg = MsgDao()
+
 jj_records = JiJinInfo.select()
 for item in jj_records:
     print('正在统计' + item.jjdm+'的相关信息 ')
     jjdm = item.jjdm
     get_all_jijin_statics(jjdm)
+msg.sendMsg('基金统计信息完成')
 
 
 

@@ -3,10 +3,15 @@ import datetime
 import time
 import json
 import re
-from models import JiJinInfo, JiJinGuSuan,JiJinRecord
+
+from models.JiJinInfo import JiJinInfo
+from models.JiJinRecord import JiJinRecord
+from models.JiJinGuSuan import JiJinGuSuan
+
 from MsgDao import MsgDao
 
 msgControl = MsgDao()
+
 
 class RealTime():
 
@@ -26,10 +31,10 @@ class RealTime():
 
     def getGuSuan(self):
         timeStamp = self.getTodayTimeLimit()
-        url = 'http://fundgz.1234567.com.cn/js/'+str(self.jjdm)+'.js?rt='+str(timeStamp)
+        url = 'http://fundgz.1234567.com.cn/js/' + str(self.jjdm) + '.js?rt=' + str(timeStamp)
         response = requests.get(url)
         response_text = response.text
-        print("url:"+url+" 基金代码"+self.jjdm+"return:"+response_text)
+        print("url:" + url + " 基金代码" + self.jjdm + "return:" + response_text)
         response_text = response_text.replace('jsonpgz(', '')
         response_text = response_text.replace(');', '')
         try:
@@ -50,6 +55,7 @@ class RealTime():
         res['gztime'] = gztime
         return res
 
+
 def getNumber(string):
     number = re.search("\d+(\.\d+)亿", string)  # 提取指定字符前的数字
     if number is not None:
@@ -61,18 +67,21 @@ def getNumber(string):
 
 def getLowerRate(jjdm, count_days, current_gsl):
     all_week = JiJinRecord.select().where(JiJinRecord.jjdm == jjdm).order_by(JiJinRecord.date.desc()).limit(count_days)
-    print('总的 要求数量'+str(count_days)+"实际数量："+str(len(all_week)))
+    print('总的 要求数量' + str(count_days) + "实际数量：" + str(len(all_week)))
     ids = []
     for item in all_week:
         ids.append(item.id)
-    lower_day_count = JiJinRecord.select().where((JiJinRecord.jjdm == jjdm) & (JiJinRecord.id in ids) & (JiJinRecord.dwjz <current_gsl)).count()
+    lower_day_count = JiJinRecord.select().where(
+        (JiJinRecord.jjdm == jjdm) & (JiJinRecord.id in ids) & (JiJinRecord.dwjz < current_gsl)).count()
     print('比例 要求数量' + str(count_days) + "实际数量：" + str(lower_day_count))
-    return lower_day_count/(len(ids))
+    return lower_day_count / (len(ids))
 
 
 '''
     单个基金估算 
 '''
+
+
 def jj_single_rate(i):
     jjdm = i.jjdm
     jijinguimo = i.jijin_guimo
@@ -104,8 +113,8 @@ def jj_single_rate(i):
             print(jjdm + '更新完成')
         except Exception as e:
             time.sleep(4)
-            print("重新处理"+jjdm)
-            msgControl.sendMsg("重新处理"+jjdm)
+            print("重新处理" + jjdm)
+            msgControl.sendMsg("重新处理" + jjdm)
             jj_single_rate(i)
             return
 
@@ -115,16 +124,19 @@ JiJinGuSuan.delete().execute()
 '''
     基金信息估算
 '''
+
+
 def jj_rate():
     jjdm_list = JiJinInfo.select()
     for i in jjdm_list:
         print(i)
         jj_single_rate(i)
 
+
 def gusuan_modify():
-    gusuan_list = JiJinGuSuan.select().where(JiJinGuSuan.one_week_level==0)
+    gusuan_list = JiJinGuSuan.select().where(JiJinGuSuan.one_week_level == 0)
     for i in gusuan_list:
-        model = JiJinInfo.get(JiJinInfo.jjdm== i.jjdm)
+        model = JiJinInfo.get(JiJinInfo.jjdm == i.jjdm)
         if model:
             jj_single_rate(model)
 
@@ -133,4 +145,3 @@ jj_rate()
 gusuan_modify()
 
 msgControl.sendMsg('基金估算信息统计完成')
-
