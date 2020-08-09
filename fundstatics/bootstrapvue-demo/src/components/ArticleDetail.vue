@@ -7,17 +7,7 @@
 
                 </b-tab>
                 <b-tab title="数据分析知识" active>
-
-                    <div id="main">
-                        <mavon-editor
-                                :subfield="false"
-                                :boxShadow="false"
-                                defaultOpen="preview"
-                                :toolbarsFlag="false"
-                                :ishljs="true" v-model="value">eqweqweqweq</mavon-editor>
-
-                    </div>
-
+                    <Editor :content="content" @change="autoSave" type="editor"></Editor>
                 </b-tab>
                 <b-tab title="实时财经消息"><p>I'm a disabled tab!</p></b-tab>
             </b-tabs>
@@ -29,27 +19,35 @@
 </template>
 
 <script>
-
-    var self;
+    import Editor from '@/components/Editormd'
+let self;
     export default {
+        components: {Editor},
         created: function () {
             self = this
-            self.getArticleDeatil()
         },
         data() {
             return {
-                value:'ddadjasdlal',
+                content: 'dsdlsdjowdjoediowende',//这里是初始化是编辑器回显内容
             }
         },
-        name: "ArticleList",
-        methods: {
-            getArticleDeatil() {
+        props: {},
+        mounted() {
+            self.getArticleDeatil()
+        },
+        methods:
+            {
+                autoSave(html, text) {
+                    console.log(html)
+                    console.log(text)
+                },
+                getArticleDeatil() {
+                    var theme_url = '/articleDetail?p=w&article_id=1';
+                    self.axios.get(theme_url).then((response) => {
+                        self.content = response.data.data.content
+                    })
+                },
 
-                var theme_url = '/articleDetail?p=w&article_id=1';
-                self.axios.get(theme_url).then((response) => {
-                    self.value = response.data.data.content
-                })
             }
-        }
     }
 </script>
