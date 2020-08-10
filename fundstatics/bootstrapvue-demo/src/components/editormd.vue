@@ -5,8 +5,6 @@
     </div>
 </template>
 <script>
-
-
     import scriptjs from 'scriptjs'
 
     const defaultConfig = {
@@ -16,28 +14,28 @@
         // theme: 'dark',
         // previewTheme: 'dark',
         // editorTheme: 'pastel-on-dark',
-        markdown: '',      // 默认填充内容
-        lineWrapping: true, // 编辑框不换行
-        codeFold: true,                 // 代码折叠
-        placeholder: '请输入...',
+        markdown: '',      // 預設填充內容
+        lineWrapping: true, // 編輯框不換行
+        codeFold: true,                 // 程式碼摺疊
+        placeholder: '請輸入...',
         syncScrolling: true,
-        saveHTMLToTextarea: true,       // 保存 HTML 到 Textarea
+        saveHTMLToTextarea: true,       // 儲存 HTML 到 Textarea
         searchReplace: true,
-        watch: true,                                // 实时预览
-        htmlDecode: "style,script,iframe|on*",      // 开启 HTML 标签解析，为了安全性，默认不开启
-        toolbar: true,                  //工具栏
-        previewCodeHighlight: true,     // 预览 HTML 的代码块高亮，默认开启
+        watch: true,                                // 實時預覽
+        htmlDecode: "style,script,iframe|on*",      // 開啟 HTML 標籤解析，為了安全性，預設不開啟
+        toolbar: true,                  //工具欄
+        previewCodeHighlight: true,     // 預覽 HTML 的程式碼塊高亮，預設開啟
         emoji: true,
         taskList: true,
         tocm: true,                     // Using [TOCM]
-        tex: true,                      // 开启科学公式TeX语言支持，默认关闭
-        flowChart: true,                // 开启流程图支持，默认关闭
-        sequenceDiagram: true,          // 开启时序/序列图支持，默认关闭,
-        // dialogLockScreen: false,      // 设置弹出层对话框不锁屏，全局通用，默认为true
-        // dialogShowMask: false,        // 设置弹出层对话框显示透明遮罩层，全局通用，默认为true
-        // dialogDraggable: false,       // 设置弹出层对话框不可拖动，全局通用，默认为true
-        // dialogMaskOpacity: 0.4,       // 设置透明遮罩层的透明度，全局通用，默认值为0.1
-        // dialogMaskBgColor: "#000",    // 设置透明遮罩层的背景颜色，全局通用，默认为#fff
+        tex: true,                      // 開啟科學公式TeX語言支援，預設關閉
+        flowChart: true,                // 開啟流程圖支援，預設關閉
+        sequenceDiagram: true,          // 開啟時序/序列圖支援，預設關閉,
+        // dialogLockScreen: false,      // 設定彈出層對話方塊不鎖屏，全域性通用，預設為true
+        // dialogShowMask: false,        // 設定彈出層對話方塊顯示透明遮罩層，全域性通用，預設為true
+        // dialogDraggable: false,       // 設定彈出層對話方塊不可拖動，全域性通用，預設為true
+        // dialogMaskOpacity: 0.4,       // 設定透明遮罩層的透明度，全域性通用，預設值為0.1
+        // dialogMaskBgColor: "#000",    // 設定透明遮罩層的背景顏色，全域性通用，預設為#fff
         // imageUpload: false,
         // imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
         // imageUploadURL: "./php/upload.php",
@@ -51,23 +49,25 @@
         //    // this.resize("100%", 640);
         // },
     };
+    let vm;
     export default {
+        name: 'BaseInput',
         props: {
             editorId: {
                 'type': String,
                 'default': 'markdown-editor'
             },
-            onchange: { // 内容改变时回调，返回（html, markdown, text）
+            onchange: { // 內容改變時回撥，返回（html, markdown, text）
                 type: Function
             },
-            config: { // 编辑器配置
+            config: { // 編輯器配置
                 type: Object
             },
             initData: {
                 'type': String
             },
             initDataDelay: {
-                'type': Number, // 延迟初始化数据时间，单位毫秒
+                'type': Number, // 延遲初始化資料時間，單位毫秒
                 'default': 0
             }
         },
@@ -114,27 +114,13 @@
             setMarkdown: function (markdown) {
                 return this.editor.setMarkdown(markdown)
             },
-            init(id) {
-                let vm = this
-                let editor = vm.$store.state.editor
-                if (editor.goEdit) {
-                    editor.goEdit = false
-                } else {
-                    editor.isEditing = false
-                }
-                vm.axios.get('/interfaceApi/getDocById/' + id)
-                    .then(function (response) {
-                        let doc = response.data.pageInfo.list[0]
-                        vm.doc = doc
-                        let md = doc.content
-                        vm.initEditor(md)
-                    })
-                    .catch(function (error) {
-                        vm.$message({
-                            message: error.data.serverResult.resultMessage,
-                            type: 'error'
-                        })
-                    })
+            init() {
+
+                let doc = {'content': '312313123'}
+                vm.doc = doc
+                let md = doc.content
+                vm.initEditor(md)
+
             },
             initEditor: function (markdown) {
                 let vm = this
@@ -149,7 +135,7 @@
                     vm.$nextTick(() => {
                         vm.editor = window.editormd(vm.editorId, config)
                         vm.editor.on('load', () => {
-                            setTimeout(() => { // hack bug: 一个页面多个编辑器只能初始化其中一个数据问题
+                            setTimeout(() => { // hack bug: 一個頁面多個編輯器只能初始化其中一個數據問題
                                 vm.initData && vm.editor.setMarkdown(vm.initData)
                             }, vm.initDataDelay)
                         })
@@ -166,20 +152,11 @@
             }
         },
         mounted: function () {
-            let vm = this
-            let docId = vm.$router.currentRoute.name
-            vm.init(docId)
+            vm = this
+
+            vm.init()
             vm.timer = setInterval(function () {
-                if (vm.editor && vm.jsLoadOver) {
-                    try {
-                        vm.watch()
-                        vm.previewing()
-                        vm.previewing()
-                        window.clearInterval(vm.timer)
-                        vm.timer = null
-                    } catch (e) {
-                    }
-                }
+
             }, 80)
         },
         destroyed: function () {
