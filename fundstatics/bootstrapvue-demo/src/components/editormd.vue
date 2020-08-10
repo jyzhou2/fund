@@ -1,25 +1,26 @@
 <template>
-  <div class="markdown-view-box">
-    <link rel="stylesheet" href="/static/editor.md/css/editormd.min.css">
-    <link rel="stylesheet" href="/static/editor.md/examples/css/style.css" />
-    <link rel="stylesheet" href="/static/editor.md/css/editormd.preview.min.css" />
-    <div id="markdown-view">
-      <textarea style="display: none;">ebqwkeqwkeqw</textarea>
+    <div class="markdown-view-box">
+        <link rel="stylesheet" href="/static/editor.md/css/editormd.min.css">
+        <link rel="stylesheet" href="/static/editor.md/examples/css/style.css"/>
+        <link rel="stylesheet" href="/static/editor.md/css/editormd.preview.min.css"/>
+        <div id="markdown-view">
+            <textarea style="display: none;">ebqwkeqwkeqw</textarea>
+        </div>
     </div>
-  </div>
 </template>
 <script>
-  import scriptjs from 'scriptjs'
- let defaultConfig ={
-        placeholder : "请输入要发布的内容...",//这里不设置则为默认的
-        width   : "90%",
-        height  : 640,
-        syncScrolling : "single",
-        path    : "/static/editor.md/lib/",//lib路径
-        imageUpload : true,
-        imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-        imageUploadURL : "/fileUpload",//图片上传请求Url
-        saveHTMLToTextarea : true,//保存html到textarea
+    import scriptjs from 'scriptjs'
+
+    let defaultConfig = {
+        placeholder: "请输入要发布的内容...",//这里不设置则为默认的
+        width: "90%",
+        height: 640,
+        syncScrolling: "single",
+        path: "/static/editor.md/lib/",//lib路径
+        imageUpload: true,
+        imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+        imageUploadURL: "/fileUpload",//图片上传请求Url
+        saveHTMLToTextarea: true,//保存html到textarea
         emoji: true,
         taskList: true,
         tocm: true,         // Using [TOCM]
@@ -27,7 +28,7 @@
         flowChart: true,             // 开启流程图支持，默认关闭
         sequenceDiagram: true,// 开启时序/序列图支持，默认关闭
         //下面这一行将使用dark主题
-        previewTheme : "dark"
+        previewTheme: "dark"
 
         //editor.md期望得到一个json格式的上传后的返回值，格式是这样的：
         /*
@@ -38,108 +39,96 @@
          }
          */
     }
-  export default {
-    props: {
-      viewId: {
-        'type': String,
-        'default': 'markdown-view'
-      },
-      config: { // 编辑器配置
-        type: Object
-      },
-      initData: {
-        'type': String
-      },
-      initDataDelay: {
-        'type': Number, // 延迟初始化数据时间，单位毫秒
-        'default': 0
-      }
-    },
-    data: function () {
-      return {
-        doc: {},
-        editor: null
-      }
-    },
-    methods: {
-      fetchScript: function (url) {
-        return new Promise((resolve) => {
-          scriptjs(url, () => {
-            resolve()
-          })
-        })
-      },
-      getDoc: function () {
-        return this.doc
-      },
-      getConfig: function () {
-        return { ...defaultConfig, ...this.config }
-      },
-      forceUpdate: function () {
-        this.$forceUpdate()
-      },
-      initView: function () {
-        (async () => {
-          await this.fetchScript('/static/editor.md/jquery-2.1.1.min.js')
-          await this.fetchScript('/static/editor.md/lib/marked.min.js')
-          await this.fetchScript('/static/editor.md/lib/prettify.min.js')
-          await this.fetchScript('/static/editor.md/lib/raphael.min.js')
-          await this.fetchScript('/static/editor.md/lib/underscore.min.js')
-          await this.fetchScript('/static/editor.md/lib/sequence-diagram.min.js')
-          await this.fetchScript('/static/editor.md/lib/flowchart.min.js')
-          await this.fetchScript('/static/editor.md/lib/jquery.flowchart.min.js')
-          await this.fetchScript('/static/editor.md/editormd.min.js')
-          this.$nextTick(() => {
-            this.editor = window.editormd.markdownToHTML(this.viewId, this.getConfig())
-          })
-        })()
-      },
-      setDoc (doc) {
-        if (doc) {
-          let vm = this
-          vm.doc = doc
-          let markdownViewDiv = document.getElementById('markdown-view')
-          if (markdownViewDiv) {
-            markdownViewDiv.innerHTML = '<textarea style="display: none;"></textarea>'
-            vm.initView()
-            if (doc.content) {
-              markdownViewDiv.getElementsByTagName('textarea')[0].innerHTML = doc.content
+    export default {
+        props: {
+            viewId: {
+                'type': String,
+                'default': 'markdown-view'
+            },
+            config: { // 编辑器配置
+                type: Object
+            },
+            initData: {
+                'type': String
+            },
+            initDataDelay: {
+                'type': Number, // 延迟初始化数据时间，单位毫秒
+                'default': 0
             }
-          }
-        }
-      },
-      showContent (id) {
-        let vm = this
-        vm.$store.state.editor.isEditing = false
-        vm.axios.get('/interfaceApi/getDocById/' + id)
-          .then(function (response) {
-            if (response.data && response.data.pageInfo && response.data.pageInfo.list && response.data.pageInfo.list.length > 0) {
-              let doc = response.data.pageInfo.list[0]
-              if (doc) {
-                vm.doc = doc
+        },
+        data: function () {
+            return {
+                doc: {},
+                editor: null
+            }
+        },
+        methods: {
+            fetchScript: function (url) {
+                return new Promise((resolve) => {
+                    scriptjs(url, () => {
+                        resolve()
+                    })
+                })
+            },
+            getDoc: function () {
+                return this.doc
+            },
+            getConfig: function () {
+                return {...defaultConfig, ...this.config}
+            },
+            forceUpdate: function () {
+                this.$forceUpdate()
+            },
+            initView: function () {
+                (async () => {
+                    await this.fetchScript('/static/editor.md/jquery-2.1.1.min.js')
+                    await this.fetchScript('/static/editor.md/lib/marked.min.js')
+                    await this.fetchScript('/static/editor.md/lib/prettify.min.js')
+                    await this.fetchScript('/static/editor.md/lib/raphael.min.js')
+                    await this.fetchScript('/static/editor.md/lib/underscore.min.js')
+                    await this.fetchScript('/static/editor.md/lib/sequence-diagram.min.js')
+                    await this.fetchScript('/static/editor.md/lib/flowchart.min.js')
+                    await this.fetchScript('/static/editor.md/lib/jquery.flowchart.min.js')
+                    await this.fetchScript('/static/editor.md/editormd.min.js')
+                    this.$nextTick(() => {
+                        this.editor = window.editormd.markdownToHTML(this.viewId, this.getConfig())
+                    })
+                })()
+            },
+            setDoc(doc) {
+                if (doc) {
+                    let vm = this
+                    vm.doc = doc
+                    let markdownViewDiv = document.getElementById('markdown-view')
+                    if (markdownViewDiv) {
+                        markdownViewDiv.innerHTML = '<textarea style="display: none;"></textarea>'
+                        vm.initView()
+                        if (doc.content) {
+                            markdownViewDiv.getElementsByTagName('textarea')[0].innerHTML = doc.content
+                        }
+                    }
+                }
+            },
+            showContent() {
+                let vm = this
+                let doc =  {content:"weqweqw"}
+                vm.doc =doc
                 let markdownViewDiv = document.getElementById('markdown-view')
                 if (markdownViewDiv) {
-                  markdownViewDiv.innerHTML = '<textarea style="display: none;"></textarea>'
-                  vm.initView()
-                  if (doc.content) {
-                    markdownViewDiv.getElementsByTagName('textarea')[0].innerHTML = doc.content
-                  }
+                    markdownViewDiv.innerHTML = '<textarea style="display: none;"></textarea>'
+                    vm.initView()
+                    if (doc.content) {
+                        markdownViewDiv.getElementsByTagName('textarea')[0].innerHTML = doc.content
+                    }
                 }
-              }
+
             }
-          })
-          .catch(function (error) {
-            vm.$message({
-              message: error.data.serverResult.resultMessage,
-              type: 'error'
-            })
-          })
-      }
-    },
-    mounted: function () {
-      let vm = this
-      let docId = vm.$router.currentRoute.name
-      vm.showContent(docId)
+
+
+        },
+        mounted: function () {
+            let vm = this
+            vm.showContent()
+        }
     }
-  }
 </script>
