@@ -1,8 +1,7 @@
 <template>
     <div>
 
-                <BaseInput></BaseInput>
-
+        <BaseInput></BaseInput>
 
     </div>
 </template>
@@ -23,6 +22,6 @@
         methods: {},
 
     }
-//https://www.jb51.net/article/178777.htm
+    //https://www.jb51.net/article/178777.htm
 </script>
 

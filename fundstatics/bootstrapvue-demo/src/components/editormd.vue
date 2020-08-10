@@ -1,170 +1,145 @@
 <template>
-    <div class="markdown-editor-box">
-        <link rel="stylesheet" href="/static/editor.md/css/editormd.min.css">
-        <div :id="editorId"></div>
+  <div class="markdown-view-box">
+    <link rel="stylesheet" href="/static/editor.md/css/editormd.min.css">
+    <link rel="stylesheet" href="/static/editor.md/examples/css/style.css" />
+    <link rel="stylesheet" href="/static/editor.md/css/editormd.preview.min.css" />
+    <div id="markdown-view">
+      <textarea style="display: none;">ebqwkeqwkeqw</textarea>
     </div>
+  </div>
 </template>
 <script>
-    import scriptjs from 'scriptjs'
-
-    const defaultConfig = {
-        width: "100%",
-        height: 600,
-        path: '/static/editor.md/lib/',
-        // theme: 'dark',
-        // previewTheme: 'dark',
-        // editorTheme: 'pastel-on-dark',
-        markdown: '',      // 預設填充內容
-        lineWrapping: true, // 編輯框不換行
-        codeFold: true,                 // 程式碼摺疊
-        placeholder: '請輸入...',
-        syncScrolling: true,
-        saveHTMLToTextarea: true,       // 儲存 HTML 到 Textarea
-        searchReplace: true,
-        watch: true,                                // 實時預覽
-        htmlDecode: "style,script,iframe|on*",      // 開啟 HTML 標籤解析，為了安全性，預設不開啟
-        toolbar: true,                  //工具欄
-        previewCodeHighlight: true,     // 預覽 HTML 的程式碼塊高亮，預設開啟
+  import scriptjs from 'scriptjs'
+ let defaultConfig ={
+        placeholder : "请输入要发布的内容...",//这里不设置则为默认的
+        width   : "90%",
+        height  : 640,
+        syncScrolling : "single",
+        path    : "/static/editor.md/lib/",//lib路径
+        imageUpload : true,
+        imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+        imageUploadURL : "/fileUpload",//图片上传请求Url
+        saveHTMLToTextarea : true,//保存html到textarea
         emoji: true,
         taskList: true,
-        tocm: true,                     // Using [TOCM]
-        tex: true,                      // 開啟科學公式TeX語言支援，預設關閉
-        flowChart: true,                // 開啟流程圖支援，預設關閉
-        sequenceDiagram: true,          // 開啟時序/序列圖支援，預設關閉,
-        // dialogLockScreen: false,      // 設定彈出層對話方塊不鎖屏，全域性通用，預設為true
-        // dialogShowMask: false,        // 設定彈出層對話方塊顯示透明遮罩層，全域性通用，預設為true
-        // dialogDraggable: false,       // 設定彈出層對話方塊不可拖動，全域性通用，預設為true
-        // dialogMaskOpacity: 0.4,       // 設定透明遮罩層的透明度，全域性通用，預設值為0.1
-        // dialogMaskBgColor: "#000",    // 設定透明遮罩層的背景顏色，全域性通用，預設為#fff
-        // imageUpload: false,
-        // imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-        // imageUploadURL: "./php/upload.php",
-        // onload: function() {
-        //    // this.fullscreen();
-        //    // this.unwatch();
-        //    // this.watch().fullscreen();
-        //    // this.setMarkdown("#PHP");
-        //    // this.width("100%");
-        //    // this.height(480);
-        //    // this.resize("100%", 640);
-        // },
-    };
-    let vm;
-    export default {
-        name: 'BaseInput',
-        props: {
-            editorId: {
-                'type': String,
-                'default': 'markdown-editor'
-            },
-            onchange: { // 內容改變時回撥，返回（html, markdown, text）
-                type: Function
-            },
-            config: { // 編輯器配置
-                type: Object
-            },
-            initData: {
-                'type': String
-            },
-            initDataDelay: {
-                'type': Number, // 延遲初始化資料時間，單位毫秒
-                'default': 0
-            }
-        },
-        data: function () {
-            return {
-                editor: null,
-                timer: null,
-                doc: {},
-                jsLoadOver: false
-            }
-        },
-        methods: {
-            fetchScript: function (url) {
-                return new Promise((resolve) => {
-                    scriptjs(url, () => {
-                        resolve()
-                    })
-                })
-            },
-            getConfig: function () {
-                return {...defaultConfig, ...this.config}
-            },
-            getEditor: function () {
-                return this.editor
-            },
-            getDoc: function () {
-                return this.doc
-            },
-            watch: function () {
-                return this.editor.watch()
-            },
-            unwatch: function () {
-                return this.editor.unwatch()
-            },
-            previewing: function () {
-                return this.editor.previewing()
-            },
-            getHTML: function () {
-                return this.editor.getHTML()
-            },
-            getMarkdown: function () {
-                return this.editor.getMarkdown()
-            },
-            setMarkdown: function (markdown) {
-                return this.editor.setMarkdown(markdown)
-            },
-            init() {
+        tocm: true,         // Using [TOCM]
+        tex: true,                   // 开启科学公式TeX语言支持，默认关闭
+        flowChart: true,             // 开启流程图支持，默认关闭
+        sequenceDiagram: true,// 开启时序/序列图支持，默认关闭
+        //下面这一行将使用dark主题
+        previewTheme : "dark"
 
-                let doc = {'content': '312313123'}
-                vm.doc = doc
-                let md = doc.content
-                vm.initEditor(md)
-
-            },
-            initEditor: function (markdown) {
-                let vm = this
-                let config = vm.getConfig()
-                if (markdown) {
-                    config.markdown = markdown
-                }
-                (async () => {
-                    await vm.fetchScript('/static/editor.md/jquery.min.js')
-                    await vm.fetchScript('/static/editor.md/editormd.min.js')
-                    vm.jsLoadOver = true
-                    vm.$nextTick(() => {
-                        vm.editor = window.editormd(vm.editorId, config)
-                        vm.editor.on('load', () => {
-                            setTimeout(() => { // hack bug: 一個頁面多個編輯器只能初始化其中一個數據問題
-                                vm.initData && vm.editor.setMarkdown(vm.initData)
-                            }, vm.initDataDelay)
-                        })
-                        vm.onchange && vm.editor.on('change', () => {
-                            let html = vm.editor.getPreviewedHTML()
-                            vm.onchange({
-                                markdown: vm.editor.getMarkdown(),
-                                html: html,
-                                text: window.$(html).text()
-                            })
-                        })
-                    })
-                })()
-            }
-        },
-        mounted: function () {
-            vm = this
-
-            vm.init()
-            vm.timer = setInterval(function () {
-
-            }, 80)
-        },
-        destroyed: function () {
-            let vm = this
-            if (vm.timer != null) {
-                window.clearInterval(vm.timer)
-                vm.timer = null
-            }
-        }
+        //editor.md期望得到一个json格式的上传后的返回值，格式是这样的：
+        /*
+         {
+         success : 0 | 1,           // 0 表示上传失败，1 表示上传成功
+         message : "提示的信息，上传成功或上传失败及错误信息等。",
+         url     : "图片地址"        // 上传成功时才返回
+         }
+         */
     }
+  export default {
+    props: {
+      viewId: {
+        'type': String,
+        'default': 'markdown-view'
+      },
+      config: { // 编辑器配置
+        type: Object
+      },
+      initData: {
+        'type': String
+      },
+      initDataDelay: {
+        'type': Number, // 延迟初始化数据时间，单位毫秒
+        'default': 0
+      }
+    },
+    data: function () {
+      return {
+        doc: {},
+        editor: null
+      }
+    },
+    methods: {
+      fetchScript: function (url) {
+        return new Promise((resolve) => {
+          scriptjs(url, () => {
+            resolve()
+          })
+        })
+      },
+      getDoc: function () {
+        return this.doc
+      },
+      getConfig: function () {
+        return { ...defaultConfig, ...this.config }
+      },
+      forceUpdate: function () {
+        this.$forceUpdate()
+      },
+      initView: function () {
+        (async () => {
+          await this.fetchScript('/static/editor.md/jquery-2.1.1.min.js')
+          await this.fetchScript('/static/editor.md/lib/marked.min.js')
+          await this.fetchScript('/static/editor.md/lib/prettify.min.js')
+          await this.fetchScript('/static/editor.md/lib/raphael.min.js')
+          await this.fetchScript('/static/editor.md/lib/underscore.min.js')
+          await this.fetchScript('/static/editor.md/lib/sequence-diagram.min.js')
+          await this.fetchScript('/static/editor.md/lib/flowchart.min.js')
+          await this.fetchScript('/static/editor.md/lib/jquery.flowchart.min.js')
+          await this.fetchScript('/static/editor.md/editormd.min.js')
+          this.$nextTick(() => {
+            this.editor = window.editormd.markdownToHTML(this.viewId, this.getConfig())
+          })
+        })()
+      },
+      setDoc (doc) {
+        if (doc) {
+          let vm = this
+          vm.doc = doc
+          let markdownViewDiv = document.getElementById('markdown-view')
+          if (markdownViewDiv) {
+            markdownViewDiv.innerHTML = '<textarea style="display: none;"></textarea>'
+            vm.initView()
+            if (doc.content) {
+              markdownViewDiv.getElementsByTagName('textarea')[0].innerHTML = doc.content
+            }
+          }
+        }
+      },
+      showContent (id) {
+        let vm = this
+        vm.$store.state.editor.isEditing = false
+        vm.axios.get('/interfaceApi/getDocById/' + id)
+          .then(function (response) {
+            if (response.data && response.data.pageInfo && response.data.pageInfo.list && response.data.pageInfo.list.length > 0) {
+              let doc = response.data.pageInfo.list[0]
+              if (doc) {
+                vm.doc = doc
+                let markdownViewDiv = document.getElementById('markdown-view')
+                if (markdownViewDiv) {
+                  markdownViewDiv.innerHTML = '<textarea style="display: none;"></textarea>'
+                  vm.initView()
+                  if (doc.content) {
+                    markdownViewDiv.getElementsByTagName('textarea')[0].innerHTML = doc.content
+                  }
+                }
+              }
+            }
+          })
+          .catch(function (error) {
+            vm.$message({
+              message: error.data.serverResult.resultMessage,
+              type: 'error'
+            })
+          })
+      }
+    },
+    mounted: function () {
+      let vm = this
+      let docId = vm.$router.currentRoute.name
+      vm.showContent(docId)
+    }
+  }
 </script>
