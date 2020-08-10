@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="/static/editor.md/examples/css/style.css"/>
         <link rel="stylesheet" href="/static/editor.md/css/editormd.preview.min.css"/>
         <div id="markdown-view">
-            <textarea style="display: none;">ebqwkeqwkeqw</textarea>
+            <textarea style="display: none;" id="markdown-view">ebqwkeqwkeqw</textarea>
         </div>
     </div>
 </template>
@@ -111,7 +111,7 @@
             },
             showContent() {
                 let vm = this
-                let doc =  {content:"weqweqw"}
+                let doc =  {content:"# weqweqw"}
                 vm.doc =doc
                 let markdownViewDiv = document.getElementById('markdown-view')
                 if (markdownViewDiv) {
