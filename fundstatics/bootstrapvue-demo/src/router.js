@@ -22,6 +22,11 @@ export default new Router({
                         name: 'JiJinAnalysize',
                         component: JiJinAnalysize,
                     },
+                     {
+                        path: 'articleList/:cate/',
+                        name: 'articleList',
+                        component: ArticleList,
+                    },
                 ]
             },
             {

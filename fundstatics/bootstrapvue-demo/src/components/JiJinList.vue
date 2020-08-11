@@ -14,7 +14,7 @@
                 </el-menu-item>
                 <el-menu-item index="3">
                     <i class="el-icon-s-data"></i>
-                    <span slot="title">数据分析</span>
+                    <span slot="title" @click="get_article_list_for_data()">数据分析</span>
                 </el-menu-item>
                 <el-menu-item index="4">
                     <i class="el-icon-s-platform"></i>
@@ -55,6 +55,10 @@
             },
             jumpto_data_analysize() {
                 location.href = "/JiJinList/JiJinAnalysize"
+            },
+            get_article_list_for_data(){
+                location.href = "/JiJinList/articleList/1"  // 数据分析
+
             }
         }
     }
