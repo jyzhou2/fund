@@ -34,6 +34,7 @@
     .div_view{
         margin-left: 90%;
         font-size: 10px;
+        color: cornflowerblue;
     }
     .update_time{
         font-size: 10px;
