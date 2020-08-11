@@ -1,16 +1,9 @@
 <template>
     <div>
-        <el-card class="box-card">
-            <div v-for="o in 4" :key="o" class="text item">
-                {{'列表内容 ' + o }}
-            </div>
+        <el-card class="box-card" :key="item.title" v-for="item in article_list">
+            <div>{{item.title}}</div>
         </el-card>
 
-        <el-card class="box-card">
-            <div v-for="o in 4" :key="o" class="text item">
-                {{'列表内容 ' + o }}
-            </div>
-        </el-card>
 
     </div>
 
@@ -36,6 +29,7 @@
     export default {
         created: function () {
             self = this
+
             self.get_article_list()
         },
         data() {
@@ -46,10 +40,13 @@
         },
         name: "ArticleList",
         methods: {
-           get_article_list(){
-               var type = self.$route.params.cate
-               console.log(type)
-           }
+            get_article_list() {
+                var type = self.$route.params.cate
+                var theme_url = '/articleList?p=w&cate_id=' + type;
+                self.axios.get(theme_url).then((response) => {
+                    self.article_list = response.data.data
+                })
+            }
         }
     }
 </script>
