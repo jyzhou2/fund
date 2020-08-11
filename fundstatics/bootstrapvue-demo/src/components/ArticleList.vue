@@ -1,7 +1,16 @@
 <template>
     <div>
         <el-card class="box-card" :key="item.title" v-for="item in article_list">
-            <div>{{item.title}}</div>
+            <span class="title">{{item.title}}</span>
+            <div class="div_updated_at">
+                <span class="update_time">{{item.updated_at}}</span>
+            </div>
+             <div class="div_content">
+                <span class="content">{{item.sub_title}}</span>
+            </div>
+             <div class="div_view">
+                <span class="view_btn">查看详情</span>
+            </div>
         </el-card>
 
 
@@ -11,6 +20,28 @@
 <style>
     .text {
         font-size: 14px;
+    }
+
+    .div_content{
+
+    }
+    .content{
+
+    }
+    .div_updated_at {
+        margin-left: 82%;
+    }
+    .div_view{
+        margin-left: 90%;
+        font-size: 10px;
+    }
+    .update_time{
+        font-size: 10px;
+    }
+    .title {
+        font-size: 20px;
+        text-align: center;
+        margin-left: 40%;
     }
 
     .item {
