@@ -69,8 +69,8 @@
                 location.href = "/JiJinList/articleList/2"  // laravel
 
             }, get_article_list_for_vue() {
-                location.href = "/JiJinList/articleDetail/1"  // laravel
-                //   location.href = "/JiJinList/articleList/4"  // laravel
+                //location.href = "/JiJinList/articleDetail/1"  // laravel
+                   location.href = "/JiJinList/articleList/4"  // laravel
 
             }
 
