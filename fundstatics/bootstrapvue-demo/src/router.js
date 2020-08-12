@@ -4,9 +4,7 @@ import JiJinList from './components/JiJinList'
 import helloWorld from './components/Index'
 import ArticleList from './components/ArticleList'
 import ArticleDetail from './components/ArticleDetail'
-import vueList from './components/VueList'
 import JiJinAnalysize from './components/JiJinAnalysize'
-import editor from './components/editormd'
 
 Vue.use(Router)
 export default new Router({
@@ -22,39 +20,24 @@ export default new Router({
                         name: 'JiJinAnalysize',
                         component: JiJinAnalysize,
                     },
-                     {
+                    {
                         path: 'articleList/:cate/',
                         name: 'articleList',
                         component: ArticleList,
                     },
+
+                    {
+                        path: '/ArticleDetail/:article_id',
+                        name: 'ArticleDetail',
+                        component: ArticleDetail
+                    }
+
                 ]
             },
             {
                 path: '/',
                 name: 'home',
                 component: helloWorld
-            },
-            {
-                path: '/ArticleList',
-                name: 'articleLIst',
-                component: ArticleList
-            }
-            ,
-            {
-                path: '/ArticleDetail',
-                name: 'ArticleDetail',
-                component: ArticleDetail
-            }
-            ,
-            {
-                path: '/vue',
-                name: 'vue',
-                component: vueList
-            } ,
-            {
-                path: '/md',
-                name: 'md',
-                component: editor
             }
         ]
     }

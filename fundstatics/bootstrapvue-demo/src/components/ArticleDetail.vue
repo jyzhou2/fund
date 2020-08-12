@@ -1,7 +1,6 @@
 <template>
     <div>
         <BaseInput v-if="!editor.isEditing" ref="markdownView"></BaseInput>
-
     </div>
 </template>
 
@@ -23,9 +22,20 @@
         created() {
             vm = this
         },
-        methods: {},
+
+        methods: {
+            fillArticleDetail() {
+                var type = vm.$route.params.article_id
+                var theme_url = '/articleDetail?p=w&article_id=' + type;
+                vm.axios.get(theme_url).then((response) => {
+                    vm.article_list = response.data.data
+                    vm.$refs.markdownView.showContent('## 这不是测试内容')
+
+                })
+            }
+        },
         mounted() {
-            vm.$refs.markdownView.showContent('## 这不是测试内容')
+            vm.fillArticleDetail()
         }
 
     }

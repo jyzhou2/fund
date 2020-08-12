@@ -9,7 +9,7 @@
                 <span class="content">{{item.sub_title}}</span>
             </div>
              <div class="div_view">
-                <span class="view_btn">查看详情</span>
+                <span class="view_btn" @click="get_article_detail(item.article_id)">查看详情</span>
             </div>
         </el-card>
 
@@ -78,6 +78,10 @@
                 self.axios.get(theme_url).then((response) => {
                     self.article_list = response.data.data
                 })
+            },
+            get_article_detail(article_id){
+                console.log(article_id)
+                location.href="/JiJinList/ArticleDetail/"+article_id
             }
         }
     }

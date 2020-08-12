@@ -22,16 +22,16 @@
                 </el-menu-item>
                 <el-menu-item index="5">
                     <i class="el-icon-setting"></i>
-                    <span slot="title">Laravel</span>
+                    <span slot="title" @click="get_article_list_for_laravel()">Laravel</span>
                 </el-menu-item>
 
                 <el-menu-item index="6">
                     <i class="el-icon-s-open"></i>
-                    <span slot="title">Python基础</span>
+                    <span slot="title" @click="get_article_list_for_python()">Python基础</span>
                 </el-menu-item>
                 <el-menu-item index="7">
                     <i class="el-icon-info"></i>
-                    <span slot="title">VUE</span>
+                    <span slot="title" @click="get_article_list_for_vue()">VUE</span>
                 </el-menu-item>
 
             </el-menu>
@@ -56,10 +56,21 @@
             jumpto_data_analysize() {
                 location.href = "/JiJinList/JiJinAnalysize"
             },
-            get_article_list_for_data(){
+            get_article_list_for_data() {
                 location.href = "/JiJinList/articleList/1"  // 数据分析
+            },
+            get_article_list_for_python() {
+                location.href = "/JiJinList/articleList/3"  // python
+
+            },
+            get_article_list_for_laravel() {
+                location.href = "/JiJinList/articleList/2"  // laravel
+
+            }, get_article_list_for_vue() {
+                location.href = "/JiJinList/articleList/4"  // laravel
 
             }
+
         }
     }
 </script>
