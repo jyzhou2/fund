@@ -6,8 +6,7 @@
 
 <script>
     import BaseInput from '@/components/editormd.vue'
-
-    let vm;
+    var self;
     export default {
 
         components: {
@@ -20,25 +19,25 @@
             }
         },
         created() {
-            vm = this
+            self = this
+            console.log(1111)
         },
 
         methods: {
             fillArticleDetail() {
-                var type = vm.$route.params.article_id
+                var type = self.$route.params.article_id
                 var theme_url = '/articleDetail?p=w&article_id=' + type;
-                vm.axios.get(theme_url).then((response) => {
-                    vm.article_list = response.data.data
-                    vm.$refs.markdownView.showContent('## 这不是测试内容')
+                self.axios.get(theme_url).then((response) => {
+                    self.article_list = response.data.content
+                    self.$refs.markdownView.showContent('## 这不是测试内容')
 
                 })
             }
         },
         mounted() {
-            vm.fillArticleDetail()
+            self.fillArticleDetail()
         }
 
     }
-    //https://www.jb51.net/article/178777.htm
 </script>
 

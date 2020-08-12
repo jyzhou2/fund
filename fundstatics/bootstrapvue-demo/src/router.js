@@ -5,6 +5,7 @@ import helloWorld from './components/Index'
 import ArticleList from './components/ArticleList'
 import ArticleDetail from './components/ArticleDetail'
 import JiJinAnalysize from './components/JiJinAnalysize'
+import editor from './components/editormd'
 
 Vue.use(Router)
 export default new Router({
@@ -38,6 +39,17 @@ export default new Router({
                 path: '/',
                 name: 'home',
                 component: helloWorld
+            },
+            {
+                path: '/testmd',
+                name: 'md',
+                component: editor
+            }
+            ,
+            {
+                path: '/testDetail',
+                name: 'testDetail',
+                component: ArticleDetail
             }
         ]
     }

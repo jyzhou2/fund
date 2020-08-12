@@ -37,9 +37,11 @@
             </el-menu>
         </el-col>
         <el-col :span="32">
-            <router-view>
-                <Index/>
-            </router-view>
+            <div>
+                <router-view>
+                    <Index/>
+                </router-view>
+            </div>
         </el-col>
     </el-row>
 
@@ -67,7 +69,8 @@
                 location.href = "/JiJinList/articleList/2"  // laravel
 
             }, get_article_list_for_vue() {
-                location.href = "/JiJinList/articleList/4"  // laravel
+                location.href = "/JiJinList/articleDetail/1"  // laravel
+                //   location.href = "/JiJinList/articleList/4"  // laravel
 
             }
 

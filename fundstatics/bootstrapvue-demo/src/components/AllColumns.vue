@@ -110,7 +110,7 @@
                     'title': '基金数据分析',
                     'strCategoryThumb': 'http://81.70.21.205:82/img/data_analysize.jpg',
                     'desc': '数据分析思考和实现过程',
-                    'href':'JiJinList'
+                    'href':'JiJinList/JiJinAnalysize'
                 },
                 {
                     'title': 'Python 记录',
