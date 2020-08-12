@@ -36,7 +36,7 @@
 
             </el-menu>
         </el-col>
-        <el-col :span="32">
+        <el-col :span="32" style="width: 80%">
             <div>
                 <router-view>
                     <Index/>
