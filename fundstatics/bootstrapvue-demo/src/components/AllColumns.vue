@@ -116,14 +116,14 @@
                     'title': 'Python 记录',
                     'strCategoryThumb': 'http://81.70.21.205:82/img/python.jpeg',
                     'desc': '记录数据分析过程中的技术问题',
-                    'href':'python'
+                    'href':'/JiJinList/articleList/3'
 
                 },
                 {
                     'title': 'Laravel心得',
                     'strCategoryThumb': 'http://81.70.21.205:82/img/laravel.png',
                     'desc': '实际工作中遇到的Laravel问题',
-                    'href':'laravel'
+                    'href':'/JiJinList/articleList/2'
 
                 },
 
