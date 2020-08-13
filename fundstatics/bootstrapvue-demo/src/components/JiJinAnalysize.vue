@@ -16,9 +16,9 @@
                     </b-col>
 
                       <b-col>
-                        <b-form-input type="number" v-model="type" filterable allow-create default-first-option
-                                   clearable
-                                   placeholder="请选择基金类型" style="width:200px"></b-form-input>
+                          <el-input v-model="type" placeholder="请输入基金类型"></el-input>
+
+
                     </b-col>
                      <b-col>
                         <b-form-input type="number" v-model="guimo"
@@ -175,6 +175,7 @@
                 url = '/fund_list?p=w&';
                 url += 'guimo=' + self.guimo + "&"
                 url += 'theme=' + self.SelectJiJinThemes + "&"
+                url += 'type=' + self.type + "&"
                 self.loading = true
                 self.axios.get(url, {timeout: 300000}).then((response) => {
                     self.loading = false
