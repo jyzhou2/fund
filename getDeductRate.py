@@ -43,7 +43,7 @@ def doGuSuan(jjdm):
     gszzl = float(gszzl)
     if gszzl <=  -2:
         msg = MsgDao()
-        msg.sendMsg(jjdm+'跌幅超过预警')
+        msg.sendMsg(jjdm+'跌幅超过预警'+str(gszzl))
 
 def jj_rate():
     jjdm_list = JiJinInfo.select()
