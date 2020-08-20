@@ -40,10 +40,11 @@ def doGuSuan(jjdm):
     # 基金代码
 
     gszzl = response_json['gszzl']
+    name = response_json['name']
     gszzl = float(gszzl)
     if gszzl <=  -2:
         msg = MsgDao()
-        msg.sendMsg(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')+jjdm+'跌幅超过预警'+str(gszzl))
+        msg.sendMsg(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')+":"+name+"("+jjdm+')跌幅超过预警'+str(gszzl))
 
 def jj_rate():
     jjdm_list = JiJinInfo.select()
