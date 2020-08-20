@@ -1,5 +1,7 @@
+import sys
 import requests
-from models import JiJinTheme,JiJinInfo
+from models.JiJinInfo import JiJinInfo
+from models.JiJinTheme import JiJinTheme
 import re
 import json
 import pandas as pd
@@ -7,6 +9,7 @@ import time
 from bs4 import BeautifulSoup
 import datetime
 import random
+sys.path.append('..')
 
 class CollectJijinInfo():
 
