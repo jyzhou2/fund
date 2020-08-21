@@ -9,6 +9,7 @@ import time
 from bs4 import BeautifulSoup
 import datetime
 import random
+from DingDingMsgDao import DingDingMsgDao
 
 sys.path.append('..')
 
@@ -195,3 +196,5 @@ if __name__ == '__main__':
 
     model = CollectJijinInfo()
     model.handle()
+    msgDao = DingDingMsgDao()
+    msgDao.sendMsg('基金信息更新完成')
