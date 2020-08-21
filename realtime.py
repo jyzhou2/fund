@@ -82,7 +82,7 @@ def getLowerRate(jjdm, count_days, current_gsl):
 '''
 
 
-def jj_single_rate(i):
+def jj_single_rate(i ,times=1):
     jjdm = i.jjdm
     jijinguimo = i.jijin_guimo
     if jijinguimo is not None:
@@ -115,7 +115,9 @@ def jj_single_rate(i):
             time.sleep(4)
             print("重新处理" + jjdm)
             msgControl.sendMsg("重新处理" + jjdm)
-            jj_single_rate(i)
+            if times < 3:
+                times = times+1
+                jj_single_rate(i, times)
             return
 
 
@@ -129,7 +131,6 @@ JiJinGuSuan.delete().execute()
 def jj_rate():
     jjdm_list = JiJinInfo.select()
     for i in jjdm_list:
-        print(i)
         jj_single_rate(i)
 
 
