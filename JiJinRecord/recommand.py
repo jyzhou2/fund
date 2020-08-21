@@ -5,7 +5,7 @@ import sys
 sys.path.append("..")
 from models.JiJinRecord import JiJinRecord
 from models.JiJinGuSuan import JiJinGuSuan
-from MsgDao import MsgDao
+from DingDingMsgDao import MsgDao
 import pandas as pd
 import os
 import time

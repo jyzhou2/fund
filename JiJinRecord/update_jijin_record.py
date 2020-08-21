@@ -4,7 +4,7 @@ sys.path.append("..")
 import datetime
 from models.JiJinRecord import JiJinRecord
 from models.JiJinUpdateProcess import JiJinUpdateProcess
-from MsgDao import MsgDao
+from DingDingMsgDao import MsgDao
 from JiJinInfo.models import JiJinInfo
 import time
 import requests

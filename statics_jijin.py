@@ -6,7 +6,7 @@ from models.JijinStatics import JijinStatics
 from models.JiJinStaticsUpdate import JiJinStaticsUpdate
 import numpy as np
 from peewee import DoesNotExist
-from MsgDao import MsgDao
+from DingDingMsgDao import MsgDao
 class StaticsJijin():
     # 构造函数，获得基金代码
     def __init__(self,jjdm):

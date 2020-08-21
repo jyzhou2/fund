@@ -8,12 +8,12 @@ from models.JiJinInfo import JiJinInfo
 from models.JiJinRecord import JiJinRecord
 from models.JiJinGuSuan import JiJinGuSuan
 
-from MsgDao import MsgDao
+from DingDingMsgDao import DingDingMsgDao
 
-msgControl = MsgDao()
+msgControl = DingDingMsgDao()
 
 
-class RealTime():
+class Estimate():
 
     def __init__(self, jjdm):
         self.jjdm = jjdm
