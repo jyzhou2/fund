@@ -115,7 +115,7 @@ class EstimateAll():
                 print(jjdm + '更新完成')
             except Exception as e:
                 time.sleep(4)
-                print("重新处理" + jjdm)
+                print("重新处理" + jjdm+" err:"+e.message)
                 msgControl.sendMsg("重新处理" + jjdm)
                 if times < 3:
                     times = times + 1
