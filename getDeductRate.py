@@ -21,11 +21,13 @@ def getTodayTimeLimit():
     return timeStamp
 
 
-
 def doGuSuan(jjdm):
     timeStamp = getTodayTimeLimit()
     url = 'http://fundgz.1234567.com.cn/js/' + str(jjdm) + '.js?rt=' + str(timeStamp)
-    response = requests.get(url)
+    try:
+        response = requests.get(url)
+    except Exception as e:
+        time.sleep(3)
     response_text = response.text
     print("url:" + url + " 基金代码" + jjdm + "return:" + response_text)
     response_text = response_text.replace('jsonpgz(', '')
@@ -36,22 +38,23 @@ def doGuSuan(jjdm):
         res = {}
         res['gsl'] = None
         res['gztime'] = None
-        time.sleep(3)
         return res
-
     # 基金代码
 
     gszzl = response_json['gszzl']
     name = response_json['name']
     gszzl = float(gszzl)
-    if gszzl <=  -2:
+    if gszzl <= -2:
         msg = MsgDao()
-        msg.sendMsg(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')+":"+name+"("+jjdm+')跌幅超过预警:'+str(gszzl))
+        msg.sendMsg(
+            datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ":" + name + "(" + jjdm + ')跌幅超过预警:' + str(gszzl))
+
 
 def jj_rate():
     jjdm_list = JiJinInfo.select()
     for i in jjdm_list:
         jjdm = i.jjdm
         doGuSuan(jjdm)
+
 
 jj_rate()
