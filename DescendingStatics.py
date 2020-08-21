@@ -65,5 +65,7 @@ class DescnedingStatics:
             self.getEstimate(jjdm)
 
 
-hModal = DescnedingStatics()
-hModal.handle()
+if __name__ == "__main__":
+    hModal = DescnedingStatics()
+    hModal.handle()
+
