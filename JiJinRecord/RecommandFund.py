@@ -5,13 +5,13 @@ import sys
 sys.path.append("..")
 from models.JiJinRecord import JiJinRecord
 from models.JiJinGuSuan import JiJinGuSuan
-from DingDingMsgDao import MsgDao
+from DingDingMsgDao import DingDingMsgDao
 import pandas as pd
 import os
 import time
 
 
-msgControl = MsgDao()
+msgControl = DingDingMsgDao()
 class CurvePloy():
     def __init__(self,jjdm,count):
         self.jjdm = jjdm
@@ -98,9 +98,10 @@ class CurvePloy():
         print(self.jjdm+" 推荐值是"+ str(recommand))
         JiJinGuSuan.update({JiJinGuSuan.recommand:recommand,JiJinGuSuan.jijin_pic:'http://81.70.21.205/'+self.jjdm+".png"}).where(JiJinGuSuan.jjdm == self.jjdm).execute()
 
-info_list = JiJinGuSuan.select()
-for info in info_list:
-    print('正在处理基金'+ info.jjdm)
-    mode = CurvePloy(info.jjdm,7)
-    mode.handle()
-msgControl.sendMsg('基金估算完成')
+if __name__ == '__main__':
+    info_list = JiJinGuSuan.select()
+    for info in info_list:
+        print('正在处理基金'+ info.jjdm)
+        mode = CurvePloy(info.jjdm,7)
+        mode.handle()
+    msgControl.sendMsg('基金推荐值计算完成')
