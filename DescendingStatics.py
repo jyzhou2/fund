@@ -68,4 +68,6 @@ class DescnedingStatics:
 if __name__ == "__main__":
     hModal = DescnedingStatics()
     hModal.handle()
+    msg = DingDingMsgDao()
+    msg.sendMsg('跌幅统计完成')
 
