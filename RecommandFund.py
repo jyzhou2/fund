@@ -2,6 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
+
 sys.path.append("..")
 from models.JiJinRecord import JiJinRecord
 from models.JiJinGuSuan import JiJinGuSuan
@@ -10,17 +11,19 @@ import pandas as pd
 import os
 import time
 
-
 msgControl = DingDingMsgDao()
+
+
 class CurvePloy():
-    def __init__(self,jjdm,count):
+    def __init__(self, jjdm, count):
         self.jjdm = jjdm
         self.count = count
         self.x = []
 
     def get_ploy1d(self):
         # 获取最近7天的数据，然后再倒序输出
-        raw_info_list = JiJinRecord.select().where(JiJinRecord.jjdm == self.jjdm).order_by(JiJinRecord.date.desc()).limit(self.count)
+        raw_info_list = JiJinRecord.select().where(JiJinRecord.jjdm == self.jjdm).order_by(
+            JiJinRecord.date.desc()).limit(self.count)
         # 获得record_id
         recordid = []
         for tmp_item in raw_info_list:
@@ -52,13 +55,13 @@ class CurvePloy():
         plt.ylabel('y axis')
         plt.legend(loc=4)  # 指定legend在图中的位置，类似象限的位置
         plt.title(self.jjdm)
-        #plt.show()
+        # plt.show()
         '''
             文件如果存在
         '''
-        if os.path.exists('/home/www/wwwroot/fund/fundstatics/bootstrapvue-demo/dist/'+self.jjdm+'.png'):
-            os.remove('/home/www/wwwroot/fund/fundstatics/bootstrapvue-demo/dist/'+self.jjdm+'.png')
-        plt.savefig('/home/www/wwwroot/fund/fundstatics/bootstrapvue-demo/dist/'+self.jjdm+'.png')
+        if os.path.exists('/home/www/wwwroot/fund/fundstatics/bootstrapvue-demo/dist/' + self.jjdm + '.png'):
+            os.remove('/home/www/wwwroot/fund/fundstatics/bootstrapvue-demo/dist/' + self.jjdm + '.png')
+        plt.savefig('/home/www/wwwroot/fund/fundstatics/bootstrapvue-demo/dist/' + self.jjdm + '.png')
         '''
             清空画布
         '''
@@ -69,18 +72,18 @@ class CurvePloy():
         c = p1[0]
         b = p1[1]
         a = p1[2]
-        return [a,b,c]
+        return [a, b, c]
 
-    def get_recommand(self,a,b,c):
-        if a>0:
+    def get_recommand(self, a, b, c):
+        if a > 0:
             return 0
         recommand = 0;
-        max_pos_x = 0-(b/(2*a))
-       # print(max_pos_x)
-       # print(self.x)
+        max_pos_x = 0 - (b / (2 * a))
+        # print(max_pos_x)
+        # print(self.x)
         for cur_x in self.x:
             if max_pos_x < cur_x:
-                recommand = recommand+1
+                recommand = recommand + 1
 
         return recommand
 
@@ -94,14 +97,17 @@ class CurvePloy():
         a = result[0]
         b = result[1]
         c = result[2]
-        recommand = self.get_recommand(a,b,c)
-        print(self.jjdm+" 推荐值是"+ str(recommand))
-        JiJinGuSuan.update({JiJinGuSuan.recommand:recommand,JiJinGuSuan.jijin_pic:'http://81.70.21.205/'+self.jjdm+".png"}).where(JiJinGuSuan.jjdm == self.jjdm).execute()
+        recommand = self.get_recommand(a, b, c)
+        print(self.jjdm + " 推荐值是" + str(recommand))
+        JiJinGuSuan.update({JiJinGuSuan.recommand: recommand,
+                            JiJinGuSuan.jijin_pic: 'http://81.70.21.205/' + self.jjdm + ".png"}).where(
+            JiJinGuSuan.jjdm == self.jjdm).execute()
+
 
 if __name__ == '__main__':
     info_list = JiJinGuSuan.select()
     for info in info_list:
-        print('正在处理基金'+ info.jjdm)
-        mode = CurvePloy(info.jjdm,7)
+        print('正在处理基金' + info.jjdm)
+        mode = CurvePloy(info.jjdm, 7)
         mode.handle()
     msgControl.sendMsg('基金推荐值计算完成')

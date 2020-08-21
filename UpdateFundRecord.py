@@ -13,7 +13,7 @@ import json
 mode = MsgDao()
 
 
-class UpdateJijinRecord():
+class UpdateFundRecord():
 
     def getYesterday(self):
         today = datetime.date.today()
@@ -88,11 +88,13 @@ class UpdateJijinRecord():
             JiJinRecord.updateJiJinRecord(jjdm=jjdm, date=date, dwjz=dwjz, ljjz=ljjz, rzzl=rzzl)
 
 
-if not JiJinRecord.table_exists():
-    JiJinRecord.create_table()
+if __name__ == '__main__':
 
-if not JiJinUpdateProcess.table_exists():
-    JiJinUpdateProcess.create_table()
-model = UpdateJijinRecord()
-model.update_all_jijin()
-mode.sendMsg('基金记录更新完成')
+    if not JiJinRecord.table_exists():
+        JiJinRecord.create_table()
+
+    if not JiJinUpdateProcess.table_exists():
+        JiJinUpdateProcess.create_table()
+    model = UpdateFundRecord()
+    model.update_all_jijin()
+    mode.sendMsg('基金记录更新完成')

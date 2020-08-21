@@ -9,14 +9,15 @@ import time
 from bs4 import BeautifulSoup
 import datetime
 import random
+
 sys.path.append('..')
 
+
 class CollectJijinInfo():
-
-
     '''
         获得基金基础信息,填充到jijininfo表中
     '''
+
     def collect_basic_jijin(self):
         url_main = 'http://fund.eastmoney.com/js/fundcode_search.js'
         all_fund_data = requests.get(url_main)
@@ -33,17 +34,18 @@ class CollectJijinInfo():
             type = data.loc[cur_index][3]
             quanpin = data.loc[cur_index][4]
             JiJinInfo.create_self(jjdm=jjdm, py=py, name=name, type=type, quanpin=quanpin)
-            print('正在建立第' + str(i) + '个' + name+'基金信息')
+            print('正在建立第' + str(i) + '个' + name + '基金信息')
             # 需要获取 基金规模， 基金类型， 基金主题，所属行业，成立日
             i = i + 1
 
     '''
         建立基金主题库，同时填充主题相关基金
     '''
+
     def buildThemeJijinKu(self):
         theme_list = self.collectAllThemes()
         for item in theme_list:
-            print("正在处理主题" + item['name']+"的相关基金信息")
+            print("正在处理主题" + item['name'] + "的相关基金信息")
             self.getJiJinForTheme(item)
 
     '''
@@ -83,10 +85,10 @@ class CollectJijinInfo():
             theme_ids.append(item)
         return theme_ids
 
-
     '''
         获得单个主题下所有的基金代码，建立对应关系
     '''
+
     def getJiJinForTheme(slef, item):
         theme_id = item['theme_id']
         name = item['name']
@@ -102,28 +104,27 @@ class CollectJijinInfo():
             jjdm = fund[0:fund.index(',')]
             JiJinTheme.updateJiJinTheme(jjdm=jjdm, theme_id=theme_id, name=name)
 
-
-
     '''
         获得所有基金的基金规模，创建时间等信息
     '''
-    def UpdateAllJiJinOtherInfo(self,least_jjdm):
+
+    def UpdateAllJiJinOtherInfo(self, least_jjdm):
         jjdm_list = JiJinInfo.select()
         for item in jjdm_list:
             if item.jjdm < least_jjdm:
                 continue
             if item.jijin_type is None or len(item.jijin_type) == 0:
-                print("正在" + item.jjdm+'的基金规模等相关信息')
+                print("正在" + item.jjdm + '的基金规模等相关信息')
                 self.getJijinOtherInfo(item)
                 random_num = random.randint(0, 9)
                 time.sleep(random_num)
             else:
-                print("无需处理" + item.jjdm+'的基金规模等相关信息')
-
+                print("无需处理" + item.jjdm + '的基金规模等相关信息')
 
     '''
         获得基金的规模，创建时间，基金类型等信息
     '''
+
     def getJijinOtherInfo(self, item):
         url = 'http://fund.eastmoney.com/' + item.jjdm + '.html'
         response = requests.get(url)
@@ -176,23 +177,21 @@ class CollectJijinInfo():
     '''
         更新所有的基金信息,可以一个月或者一周处理一次
     '''
+
     def handle(self):
         # 首先进行处理,建立标准的基金库
-        #self.collect_basic_jijin()
+        # self.collect_basic_jijin()
         # 完善基金信息，包括规模，创建时间，基金类型等
         self.UpdateAllJiJinOtherInfo('')
         # 获得所有主题
         self.buildThemeJijinKu()
 
 
-if not JiJinInfo.table_exists():
-    JiJinInfo.create_table()
-if not JiJinTheme.table_exists():
-    JiJinTheme.create_table()
+if __name__ == '__main__':
+    if not JiJinInfo.table_exists():
+        JiJinInfo.create_table()
+    if not JiJinTheme.table_exists():
+        JiJinTheme.create_table()
 
-model = CollectJijinInfo()
-model.handle()
-
-'''
-https://www.jianshu.com/p/998cf125e9fc  这里是vue 和 饿了么 前端教程所在
-'''
+    model = CollectJijinInfo()
+    model.handle()
