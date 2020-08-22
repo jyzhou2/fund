@@ -2,6 +2,7 @@ from peewee import *
 import sys
 sys.path.append('..')
 from config.database import DATABASE_CONFIG
+from models.JiJinUpdateProcess import JiJinUpdateProcess
 database = MySQLDatabase('test', **{'charset': 'utf8', 'use_unicode': True, 'host': DATABASE_CONFIG['host'], 'user': DATABASE_CONFIG['user'], 'password': DATABASE_CONFIG['password'],'port':DATABASE_CONFIG['port']})
 
 '''

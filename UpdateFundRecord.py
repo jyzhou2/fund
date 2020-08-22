@@ -2,10 +2,10 @@ import sys
 
 sys.path.append("..")
 import datetime
-from models import JiJinRecord
-from models import JiJinUpdateProcess
+from models.JiJinRecord import JiJinRecord
+from models.JiJinUpdateProcess import JiJinUpdateProcess
 from DingDingMsgDao import DingDingMsgDao
-from models import JiJinInfo
+from models.JiJinInfo import JiJinInfo
 import time
 import requests
 import json
