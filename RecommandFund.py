@@ -31,8 +31,6 @@ class CurvePloy():
             recordid.append(tmp_item.id)
         info_list = JiJinRecord.select().where(JiJinRecord.id.in_(recordid)).order_by(JiJinRecord.date.asc())
         # 进行倒序操作
-        print(info_list)
-
         y = []
         x_index = []
         date = []
