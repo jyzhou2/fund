@@ -10,6 +10,7 @@ from DingDingMsgDao import DingDingMsgDao
 import pandas as pd
 import os
 import time
+from LogDao import LogDao
 
 msgControl = DingDingMsgDao()
 
@@ -98,7 +99,7 @@ class CurvePloy():
         b = result[1]
         c = result[2]
         recommand = self.get_recommand(a, b, c)
-        print(self.jjdm + " 推荐值是" + str(recommand))
+        LogDao.saveLog('recommand',self.jjdm + " 推荐值是" + str(recommand))
         JiJinGuSuan.update({JiJinGuSuan.recommand: recommand,
                             JiJinGuSuan.jijin_pic: 'http://81.70.21.205/' + self.jjdm + ".png"}).where(
             JiJinGuSuan.jjdm == self.jjdm).execute()
