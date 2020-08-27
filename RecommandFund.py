@@ -108,7 +108,7 @@ class CurvePloy():
 if __name__ == '__main__':
     info_list = JiJinGuSuan.select()
     for info in info_list:
-        print('正在处理基金' + info.jjdm)
+        LogDao.saveLog('recommand','正在处理基金' + info.jjdm)
         mode = CurvePloy(info.jjdm, 7)
         mode.handle()
     msgControl.sendMsg('基金推荐值计算完成')
