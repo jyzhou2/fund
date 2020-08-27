@@ -18,7 +18,7 @@
                     <i class="el-icon-s-data"></i>
                     <span slot="title">数据分析</span>
                 </el-menu-item>
-                <el-menu-item index="3">
+                <el-menu-item index="3" @click="get_article_list_for_struct()">
                     <i class="el-icon-s-platform"></i>
                     <span slot="title">服务架构</span>
                 </el-menu-item>
@@ -59,18 +59,20 @@
         data() {
             return {
                 navselected: "1",
-                default_active:"1",
+                default_active: "1",
                 index_to_path: {
                     "/JiJinList/JiJinAnalysize": "1",
                     "/JiJinList/articleList/1": "2",
-                    "/JiJinList/articleList/2":"4",
-                    "/JiJinList/articleList/3" : "5",
-                   "/JiJinList/articleList/4": "6",
+                    "/JiJinList/articleList/2": "4",
+                    "/JiJinList/articleList/3": "5",
+                    "/JiJinList/articleList/5": "3",
+
+                    "/JiJinList/articleList/4": "6",
                 }
             }
         },
-        mounted(){
-             vm.default_active = vm.index_to_path[this.$route.path]
+        mounted() {
+            vm.default_active = vm.index_to_path[this.$route.path]
         },
         methods: {
             selectItems(index) {
@@ -99,6 +101,10 @@
             }, get_article_list_for_vue() {
                 //location.href = "/JiJinList/articleDetail/1"  // laravel
                 location.href = "/JiJinList/articleList/4"  // laravel
+
+            }
+            , get_article_list_for_struct() {
+                location.href = "/JiJinList/articleList/5"  // 服务架构
 
             }
 
