@@ -80,5 +80,5 @@ class FileCache:
 
 
 if __name__ == '__main__':
-    FileCache.put('11','33',3)
+    #FileCache.put('11','33',3)
     print(FileCache.get('11'))
