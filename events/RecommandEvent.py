@@ -8,7 +8,7 @@ from LogDao import LogDao
 
 class RecommandEvent:
     def __init__(self):
-        self.runat = '14:00:00'
+        self.runat = '14:20:00'
         self.event_name = 'recommandevent'
 
     def handle(self):

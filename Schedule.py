@@ -1,6 +1,7 @@
 from events.CollectFundEvent import CollectFundEvent
 from events.RecommandEvent import RecommandEvent
 from events.DescendingStaticsEvent import DescendingStaticsEvent
+from events.UpdateFundRecordEvent import UpdateFundRecordEvent
 
 
 class Schedule:
@@ -8,7 +9,8 @@ class Schedule:
         collect = CollectFundEvent()
         descend = DescendingStaticsEvent()
         recommand = RecommandEvent()
-        self.events = [collect, descend,recommand]
+        updaterecord = UpdateFundRecordEvent()
+        self.events = [collect, descend,recommand,updaterecord]
 
     def handle(self):
         for item in self.events:

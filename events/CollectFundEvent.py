@@ -25,8 +25,8 @@ class CollectFundEvent:
         else:
             return
 
-
     staticmethod
+
     def updateFundInfo(event_name):
         # 开始执行操作
         FileCache.put(event_name, 1, 3600 * 23)
@@ -40,4 +40,3 @@ class CollectFundEvent:
         msgDao = DingDingMsgDao()
         msgDao.sendMsg('基金信息更新完成')
         LogDao.saveLog('collectfund', '基金信息更新完成')
-
