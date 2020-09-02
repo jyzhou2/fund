@@ -27,10 +27,10 @@ class DescendingStaticsEvent:
     staticmethod
     def updateFundInfo(event_name):
         # 开始执行操作
-        LogDao.saveLog('crond', '开始统计基金跌幅信息')
+        LogDao.saveLog('descendingstatics', '开始统计基金跌幅信息')
         hModal = DescnedingStatics()
         hModal.handle()
         msg = DingDingMsgDao()
         msg.sendMsg('跌幅统计完成')
-        LogDao.saveLog('crond', '基金跌幅统计完成')
+        LogDao.saveLog('descendingstatics', '基金跌幅统计完成')
         FileCache.put(event_name, 1, 3600 * 23)

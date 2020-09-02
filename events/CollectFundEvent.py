@@ -29,7 +29,7 @@ class CollectFundEvent:
     staticmethod
     def updateFundInfo(event_name):
         # 开始执行操作
-        LogDao.saveLog('crond', '开始更新基金信息')
+        LogDao.saveLog('collectfund', '开始更新基金信息')
         if not JiJinInfo.table_exists():
             JiJinInfo.create_table()
         if not JiJinTheme.table_exists():
@@ -38,5 +38,5 @@ class CollectFundEvent:
         model.handle()
         msgDao = DingDingMsgDao()
         msgDao.sendMsg('基金信息更新完成')
-        LogDao.saveLog('crond', '基金信息更新完成')
+        LogDao.saveLog('collectfund', '基金信息更新完成')
         FileCache.put(event_name, 1, 3600 * 23)
