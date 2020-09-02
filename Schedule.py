@@ -1,4 +1,5 @@
 from events.CollectFundEvent import CollectFundEvent
+from events.RecommandEvent import RecommandEvent
 from events.DescendingStaticsEvent import DescendingStaticsEvent
 
 
@@ -6,7 +7,8 @@ class Schedule:
     def __init__(self):
         collect = CollectFundEvent()
         descend = DescendingStaticsEvent()
-        self.events = [collect, descend]
+        recommand = RecommandEvent()
+        self.events = [collect, descend,recommand]
 
     def handle(self):
         for item in self.events:
