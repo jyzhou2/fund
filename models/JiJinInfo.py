@@ -31,3 +31,9 @@ class JiJinInfo(Model):
         except Exception as e:
             JiJinInfo.create(jjdm=jjdm, py=py, name=name, type=type, quanpin=quanpin)
             return
+
+    staticmethod
+
+    def alterFundStatus(jjdm, status):
+        JiJinInfo.update({'status': status}).where(JiJinInfo.jjdm == jjdm).execute()
+

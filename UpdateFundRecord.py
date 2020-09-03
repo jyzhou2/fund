@@ -10,7 +10,6 @@ import time
 import requests
 import json
 
-
 mode = DingDingMsgDao()
 
 
@@ -73,7 +72,8 @@ class UpdateFundRecord():
             return
         jj_data = jj_jz['Data']
         if jj_data is None:
-            mode.sendMsg(jjdm + '未找到jj_data')
+            # 修改基金状态为非正常
+            JiJinInfo.alterFundStatus(jjdm, 2)
             return
         jj_list = jj_data['LSJZList']
         if jj_list is None:
