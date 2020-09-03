@@ -29,7 +29,7 @@ class CollectFundEvent:
 
     def updateFundInfo(event_name):
         # 开始执行操作
-        FileCache.put(event_name, 1, 3600 * 23)
+        FileCache.put(event_name, 1, 3600 * 13)
         LogDao.saveLog('collectfund', '开始更新基金信息')
         if not JiJinInfo.table_exists():
             JiJinInfo.create_table()

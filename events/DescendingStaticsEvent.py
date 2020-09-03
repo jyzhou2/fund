@@ -27,7 +27,7 @@ class DescendingStaticsEvent:
     staticmethod
     def updateFundInfo(event_name):
         # 开始执行操作
-        FileCache.put(event_name, 1, 3600 * 23)
+        FileCache.put(event_name, 1, 3600 * 13)
         LogDao.saveLog('descendingstatics', '开始统计基金跌幅信息')
         hModal = DescnedingStatics()
         hModal.handle()

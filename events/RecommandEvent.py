@@ -28,7 +28,7 @@ class RecommandEvent:
     staticmethod
     def computeRecommand(event_name):
         # 开始执行操作
-        FileCache.put(event_name, 1, 3600 * 23)
+        FileCache.put(event_name, 1, 3600 * 13)
         LogDao.saveLog('recommand', '开始计算更新值')
         info_list = JiJinGuSuan.select()
         for info in info_list:

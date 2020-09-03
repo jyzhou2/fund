@@ -29,7 +29,7 @@ class UpdateFundRecordEvent:
 
     def updateFundRecord(event_name):
         # 开始执行操作
-        FileCache.put(event_name, 1, 3600 * 23)
+        FileCache.put(event_name, 1, 3600 * 13)
         LogDao.saveLog('updatefundrecord', '开始更新基金记录')
         if not JiJinRecord.table_exists():
             JiJinRecord.create_table()
