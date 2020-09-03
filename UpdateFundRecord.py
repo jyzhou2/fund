@@ -73,6 +73,8 @@ class UpdateFundRecord():
         jj_data = jj_jz['Data']
         if jj_data is None:
             # 修改基金状态为非正常
+            print('基金信息未找到')
+
             JiJinInfo.alterFundStatus(jjdm, 2)
             return
         jj_list = jj_data['LSJZList']
