@@ -15,6 +15,7 @@ class JiJinInfo(Model):
     name = CharField(null=True)
     type = CharField(null=True)
     quanpin = CharField(null=True)
+    status = CharField(null=True)
     jijin_type = CharField(null=True)
     jijin_guimo = CharField(null=True)
     jijin_create_day = CharField(null=True)
