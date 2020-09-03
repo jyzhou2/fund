@@ -26,7 +26,7 @@ class UpdateFundRecord():
     '''
 
     def update_all_jijin(self):
-        jjdm_list = JiJinInfo.select()
+        jjdm_list = JiJinInfo.where(JiJinInfo.status==1).select()
         yesterday = self.getYesterday()
         cur_hour = time.localtime().tm_hour
         for i in jjdm_list:
