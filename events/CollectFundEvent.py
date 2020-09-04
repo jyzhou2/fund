@@ -10,7 +10,7 @@ sys.path.append('..')
 
 class CollectFundEvent:
     def __init__(self):
-        self.runat = '14:00:00'
+        self.runat = '01:00:00'
         self.event_name = 'collectfundevent'
 
     def handle(self):
