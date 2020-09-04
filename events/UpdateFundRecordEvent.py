@@ -1,11 +1,12 @@
-from UpdateFundRecord import UpdateFundRecord
-from DingDingMsgDao import DingDingMsgDao
-from FileCache import FileCache
+import os
+from dao.UpdateFundRecordDao import UpdateFundRecordDao
+from dao.DingDingMsgDao import DingDingMsgDao
+from dao.FileCacheDao import FileCacheDao
 from models.JiJinRecord import JiJinRecord
 from models.JiJinRecord import JiJinUpdateProcess
 import time
-from LogDao import LogDao
-
+from dao.LogDao import LogDao
+os.path.append('..')
 
 class UpdateFundRecordEvent:
     def __init__(self):
@@ -17,7 +18,7 @@ class UpdateFundRecordEvent:
         # 大于已经要执行的时间
         if now > self.runat:
             # 今天尚未执行
-            if FileCache.get(self.event_name) is not None:
+            if FileCacheDao.get(self.event_name) is not None:
                 return
             else:
                 # 开始更新基金信息
@@ -29,7 +30,7 @@ class UpdateFundRecordEvent:
 
     def updateFundRecord(event_name):
         # 开始执行操作
-        FileCache.put(event_name, 1, 3600 * 13)
+        FileCacheDao.put(event_name, 1, 3600 * 13)
         LogDao.saveLog('updatefundrecord', '开始更新基金记录')
         if not JiJinRecord.table_exists():
             JiJinRecord.create_table()
@@ -38,6 +39,6 @@ class UpdateFundRecordEvent:
             JiJinUpdateProcess.create_table()
 
         mode = DingDingMsgDao()
-        model = UpdateFundRecord()
+        model = UpdateFundRecordDao()
         model.update_all_jijin()
         mode.sendMsg('基金记录更新完成')

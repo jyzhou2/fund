@@ -3,7 +3,7 @@ import hashlib
 import time
 import json
 
-class FileCache:
+class FileCacheDao:
 
     @staticmethod
     def getDir(key):

@@ -6,10 +6,10 @@ import requests
 import json
 import datetime
 import time
-from Dao.DingDingMsgDao import DingDingMsgDao
+from dao.DingDingMsgDao import DingDingMsgDao
 
 
-class DescnedingStatics:
+class DescnedingStaticsDao:
     '''
             获得基金更新的最近时间
     '''

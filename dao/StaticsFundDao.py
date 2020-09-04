@@ -4,7 +4,7 @@ from models.JijinStatics import JijinStatics
 from models.JiJinStaticsUpdate import JiJinStaticsUpdate
 import numpy as np
 from peewee import DoesNotExist
-from Dao.DingDingMsgDao import MsgDao
+from dao.DingDingMsgDao import DingDingMsgDao
 class StaticsJijin():
     # 构造函数，获得基金代码
     def __init__(self,jjdm):
@@ -211,7 +211,7 @@ def get_all_jijin_statics(jjdm):
             print("未找到更新记录，未找到基金记录，本次执行结束")
             return
 
-msg = MsgDao()
+msg = DingDingMsgDao()
 
 jj_records = JiJinInfo.select()
 for item in jj_records:

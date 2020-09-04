@@ -6,16 +6,16 @@ import sys
 sys.path.append("..")
 from models.JiJinRecord import JiJinRecord
 from models.JiJinGuSuan import JiJinGuSuan
-from Dao.DingDingMsgDao import DingDingMsgDao
+from dao.DingDingMsgDao import DingDingMsgDao
 import pandas as pd
 import os
 import time
-from Dao.LogDao import LogDao
+from dao.LogDao import LogDao
 
 msgControl = DingDingMsgDao()
 
 
-class CurvePloy():
+class CurvePloyDao():
     def __init__(self, jjdm, count):
         self.jjdm = jjdm
         self.count = count

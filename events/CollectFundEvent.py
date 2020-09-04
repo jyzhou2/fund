@@ -1,11 +1,12 @@
-from CollectFund import CollectJijinInfo
+import os
+from dao.CollectFundDao import CollectJijinInfoDao
 from models.JiJinInfo import JiJinInfo
 from models.JiJinTheme import JiJinTheme
-from DingDingMsgDao import DingDingMsgDao
-from FileCache import FileCache
+from dao.DingDingMsgDao import DingDingMsgDao
+from dao.FileCacheDao import FileCacheDao
 import time
-from LogDao import LogDao
-
+from dao.LogDao import LogDao
+os.path.append('..')
 
 class CollectFundEvent:
     def __init__(self):
@@ -17,7 +18,7 @@ class CollectFundEvent:
         # 大于已经要执行的时间
         if now > self.runat:
             # 今天尚未执行
-            if FileCache.get(self.event_name) is not None:
+            if FileCacheDao.get(self.event_name) is not None:
                 return
             else:
                 # 开始更新基金信息
@@ -29,13 +30,13 @@ class CollectFundEvent:
 
     def updateFundInfo(event_name):
         # 开始执行操作
-        FileCache.put(event_name, 1, 3600 * 13)
+        FileCacheDao.put(event_name, 1, 3600 * 13)
         LogDao.saveLog('collectfund', '开始更新基金信息')
         if not JiJinInfo.table_exists():
             JiJinInfo.create_table()
         if not JiJinTheme.table_exists():
             JiJinTheme.create_table()
-        model = CollectJijinInfo()
+        model = CollectJijinInfoDao()
         model.handle()
         msgDao = DingDingMsgDao()
         msgDao.sendMsg('基金信息更新完成')

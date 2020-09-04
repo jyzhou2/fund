@@ -1,8 +1,10 @@
-from DingDingMsgDao import DingDingMsgDao
-from FileCache import FileCache
+import os
+from dao.DingDingMsgDao import DingDingMsgDao
+from dao.FileCacheDao import FileCacheDao
 import time
-from LogDao import LogDao
-from DescendingStatics import DescnedingStatics
+from dao.LogDao import LogDao
+from dao.DescendingStaticsDao import DescnedingStaticsDao
+os.path.append('..')
 
 
 class DescendingStaticsEvent:
@@ -15,7 +17,7 @@ class DescendingStaticsEvent:
         # 大于已经要执行的时间
         if now > self.runat:
             # 今天尚未执行
-            if FileCache.get(self.event_name) is not None:
+            if FileCacheDao.get(self.event_name) is not None:
                 return
             else:
                 # 开始更新基金信息
@@ -27,9 +29,9 @@ class DescendingStaticsEvent:
     staticmethod
     def updateFundInfo(event_name):
         # 开始执行操作
-        FileCache.put(event_name, 1, 3600 * 13)
+        FileCacheDao.put(event_name, 1, 3600 * 13)
         LogDao.saveLog('descendingstatics', '开始统计基金跌幅信息')
-        hModal = DescnedingStatics()
+        hModal = DescnedingStaticsDao()
         hModal.handle()
         msg = DingDingMsgDao()
         msg.sendMsg('跌幅统计完成')

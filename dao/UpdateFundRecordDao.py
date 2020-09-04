@@ -4,7 +4,7 @@ sys.path.append("..")
 import datetime
 from models.JiJinRecord import JiJinRecord
 from models.JiJinUpdateProcess import JiJinUpdateProcess
-from Dao.DingDingMsgDao import DingDingMsgDao
+from dao.DingDingMsgDao import DingDingMsgDao
 from models.JiJinInfo import JiJinInfo
 import time
 import requests
@@ -13,7 +13,7 @@ import json
 mode = DingDingMsgDao()
 
 
-class UpdateFundRecord():
+class UpdateFundRecordDao():
 
     def getYesterday(self):
         today = datetime.date.today()

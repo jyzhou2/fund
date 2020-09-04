@@ -8,7 +8,7 @@ from models.JiJinInfo import JiJinInfo
 from models.JiJinRecord import JiJinRecord
 from models.JiJinGuSuan import JiJinGuSuan
 
-from Dao.DingDingMsgDao import DingDingMsgDao
+from dao.DingDingMsgDao import DingDingMsgDao
 
 msgControl = DingDingMsgDao()
 
