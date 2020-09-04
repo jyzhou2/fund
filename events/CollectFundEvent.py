@@ -1,4 +1,4 @@
-import os
+import sys
 from dao.CollectFundDao import CollectJijinInfoDao
 from models.JiJinInfo import JiJinInfo
 from models.JiJinTheme import JiJinTheme
@@ -6,7 +6,7 @@ from dao.DingDingMsgDao import DingDingMsgDao
 from dao.FileCacheDao import FileCacheDao
 import time
 from dao.LogDao import LogDao
-os.path.append('..')
+sys.path.append('..')
 
 class CollectFundEvent:
     def __init__(self):

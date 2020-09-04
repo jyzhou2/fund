@@ -1,4 +1,4 @@
-import os
+import sys
 from dao.UpdateFundRecordDao import UpdateFundRecordDao
 from dao.DingDingMsgDao import DingDingMsgDao
 from dao.FileCacheDao import FileCacheDao
@@ -6,7 +6,7 @@ from models.JiJinRecord import JiJinRecord
 from models.JiJinRecord import JiJinUpdateProcess
 import time
 from dao.LogDao import LogDao
-os.path.append('..')
+sys.path.append('..')
 
 class UpdateFundRecordEvent:
     def __init__(self):

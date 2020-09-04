@@ -1,10 +1,10 @@
-import os
+import sys
 from dao.DingDingMsgDao import DingDingMsgDao
 from dao.FileCacheDao import FileCacheDao
 import time
 from dao.LogDao import LogDao
 from dao.DescendingStaticsDao import DescnedingStaticsDao
-os.path.append('..')
+sys.path.append('..')
 
 
 class DescendingStaticsEvent:

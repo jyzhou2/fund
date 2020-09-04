@@ -1,10 +1,11 @@
+import sys
 from models.JiJinGuSuan import JiJinGuSuan
 from dao.RecommandFundDao import CurvePloyDao
 from dao.FileCacheDao import FileCacheDao
 from dao.DingDingMsgDao import DingDingMsgDao
 import time
 from dao.LogDao import LogDao
-
+sys.path.append('..')
 
 class RecommandEvent:
     def __init__(self):
