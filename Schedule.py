@@ -14,7 +14,7 @@ class Schedule:
 
     def handle(self):
         for item in self.events:
-            print(item.handle())
+            item.handle()
 
 
 if __name__ == '__main__':
