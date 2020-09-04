@@ -20,7 +20,7 @@ class FileCacheDao:
     def get(key):
         if not os.path.exists('../cache'):
             return None
-        path_list = FileCache.getDir(key)
+        path_list = FileCacheDao.getDir(key)
         if not os.path.exists('cache/' + path_list[0]):
             return None
         if not os.path.exists('cache/' + path_list[0] + "/" + path_list[1]):
@@ -45,11 +45,6 @@ class FileCacheDao:
         return json_contents[expire_time]
 
 
-
-
-
-
-
     '''
             默认过期时间是一天
     '''
@@ -58,7 +53,7 @@ class FileCacheDao:
         # 首先确定路径
         if not os.path.exists('../cache'):
             os.mkdir('../cache')
-        path_list = FileCache.getDir(key)
+        path_list = FileCacheDao.getDir(key)
         if not os.path.exists('cache/'+path_list[0]):
             os.mkdir('cache/'+path_list[0])
         if not os.path.exists('cache/'+path_list[0]+"/"+path_list[1]):
@@ -76,9 +71,3 @@ class FileCacheDao:
         # 关闭打开的文件
         fo.close()
 
-
-
-
-if __name__ == '__main__':
-    #FileCache.put('11','33',3)
-    print(FileCache.get('11'))
