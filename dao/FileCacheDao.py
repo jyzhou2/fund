@@ -18,7 +18,7 @@ class FileCacheDao:
 
     @staticmethod
     def get(key):
-        if not os.path.exists('../cache'):
+        if not os.path.exists('./cache'):
             return None
         path_list = FileCacheDao.getDir(key)
         if not os.path.exists('cache/' + path_list[0]):
@@ -51,8 +51,8 @@ class FileCacheDao:
     @staticmethod
     def put(key, value, minute=3600*24):
         # 首先确定路径
-        if not os.path.exists('../cache'):
-            os.mkdir('../cache')
+        if not os.path.exists('./cache'):
+            os.mkdir('./cache')
         path_list = FileCacheDao.getDir(key)
         if not os.path.exists('cache/'+path_list[0]):
             os.mkdir('cache/'+path_list[0])
