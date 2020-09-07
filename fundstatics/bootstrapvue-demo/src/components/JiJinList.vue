@@ -35,6 +35,10 @@
                     <i class="el-icon-info"></i>
                     <span slot="title">VUE</span>
                 </el-menu-item>
+                  <el-menu-item index="7" @click="get_article_list_for_zhengze()">
+                    <i class="el-icon-s-promotion"></i>
+                    <span slot="title">正则表达式</span>
+                </el-menu-item>
 
             </el-menu>
         </el-col>
@@ -66,8 +70,8 @@
                     "/JiJinList/articleList/2": "4",
                     "/JiJinList/articleList/3": "5",
                     "/JiJinList/articleList/5": "3",
-
                     "/JiJinList/articleList/4": "6",
+                    "/JiJinList/articleList/6": "7",
                 }
             }
         },
@@ -105,9 +109,11 @@
             }
             , get_article_list_for_struct() {
                 location.href = "/JiJinList/articleList/5"  // 服务架构
-
             }
-
+            ,
+            get_article_list_for_zhengze(){
+                   location.href = "/JiJinList/articleList/6"  // 正则表达式
+            }
         }
     }
 </script>
