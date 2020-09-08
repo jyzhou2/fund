@@ -9,11 +9,12 @@ from models.JiJinRecord import JiJinRecord
 from models.JiJinGuSuan import JiJinGuSuan
 
 from dao.DingDingMsgDao import DingDingMsgDao
+from dao.LogDao import LogDao
 
 msgControl = DingDingMsgDao()
 
 
-class Estimate():
+class EstimateDao():
 
     def __init__(self, jjdm):
         self.jjdm = jjdm
@@ -34,7 +35,7 @@ class Estimate():
         url = 'http://fundgz.1234567.com.cn/js/' + str(self.jjdm) + '.js?rt=' + str(timeStamp)
         response = requests.get(url)
         response_text = response.text
-        print("url:" + url + " 基金代码" + self.jjdm + "return:" + response_text)
+        LogDao.saveLog('estimate',"url:" + url + " 基金代码" + self.jjdm + "return:" + response_text)
         response_text = response_text.replace('jsonpgz(', '')
         response_text = response_text.replace(');', '')
         try:
@@ -71,13 +72,15 @@ class EstimateAll():
     def getLowerRate(self,jjdm, count_days, current_gsl):
         all_week = JiJinRecord.select().where(JiJinRecord.jjdm == jjdm).order_by(JiJinRecord.date.desc()).limit(
             count_days)
-        print('总的 要求数量' + str(count_days) + "实际数量：" + str(len(all_week)))
+        LogDao.saveLog('estimate','总的 要求数量' + str(count_days) + "实际数量：" + str(len(all_week)))
+
         ids = []
         for item in all_week:
             ids.append(item.id)
         lower_day_count = JiJinRecord.select().where(
             (JiJinRecord.jjdm == jjdm) & (JiJinRecord.id in ids) & (JiJinRecord.dwjz < current_gsl)).count()
-        print('比例 要求数量' + str(count_days) + "实际数量：" + str(lower_day_count))
+        LogDao.saveLog('estimate','比例 要求数量' + str(count_days) + "实际数量：" + str(lower_day_count))
+
         return lower_day_count / (len(ids))
 
     '''
@@ -96,7 +99,8 @@ class EstimateAll():
                 gsl = res['gsl']
                 if gsl is None:
                     return
-                print('开始计算' + jjdm + '的值')
+                LogDao.saveLog('estimate','开始计算' + jjdm + '的值')
+
                 gsl_update_time = res['gztime']
                 gszzl = res['gszzl']
                 # 更新一周内  一个月内   三个月内   六个月内水平值
@@ -112,10 +116,13 @@ class EstimateAll():
                                          gsl_update_time=gsl_update_time, one_week_level=one_week_level,
                                          one_month_level=one_month_level, three_months_level=three_months_level,
                                          six_months_level=six_months_level)
-                print(jjdm + '更新完成')
+
+                LogDao.saveLog('estimate',jjdm + '更新完成')
+
             except Exception as e:
                 time.sleep(4)
-                print("重新处理" + jjdm+" err:"+e.message)
+                LogDao.saveLog('estimate',"重新处理" + jjdm+" err:"+e.message)
+
                 msgControl.sendMsg("重新处理" + jjdm)
                 if times < 3:
                     times = times + 1
@@ -123,16 +130,3 @@ class EstimateAll():
                 return
 
 
-'''
-    基金信息估算
-'''
-
-
-if __name__ == "__main__":
-    # 先进行删除操作
-    JiJinGuSuan.delete().execute()
-    jjdm_list = JiJinInfo.select()
-    for i in jjdm_list:
-        hModal = EstimateAll()
-        hModal.computeJiJinEstimate(i)
-    msgControl.sendMsg('基金估算信息统计完成')
