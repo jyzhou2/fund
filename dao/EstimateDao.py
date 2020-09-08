@@ -94,7 +94,7 @@ class EstimateAll():
             try:
                 number = self.getNumber(jijinguimo)
                 # 开始更新gsl，最新的基金净值
-                rt = Estimate(jjdm)
+                rt = EstimateDao(jjdm)
                 res = rt.getGuSuan()
                 gsl = res['gsl']
                 if gsl is None:
