@@ -33,6 +33,6 @@ class EstimateEvent():
         JiJinGuSuan.delete().execute()
         jjdm_list = JiJinInfo.select()
         for i in jjdm_list:
-            hModal = EstimateDao()
+            hModal = EstimateDao(i.jjdm)
             hModal.computeJiJinEstimate(i)
         msgControl.sendMsg('基金估算信息统计完成')
